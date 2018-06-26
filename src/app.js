@@ -9,6 +9,8 @@ import { combineReducers } from 'redux';
 
 import styles from './app.less';
 
+import { Starter } from './components/Starter/Starter';
+
 // import { rootReducer, rootEpic } from './redux/root';
 
 // const epicMiddleware = createEpicMiddleware(rootEpic);
@@ -27,7 +29,7 @@ import styles from './app.less';
 const renderApp = () => (
   render(
     <div className="container">
-      content
+      <Starter />
     </div>,
     document.getElementById('app')
   )
