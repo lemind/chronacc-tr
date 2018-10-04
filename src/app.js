@@ -11,20 +11,20 @@ import styles from './app.less';
 
 import { Starter } from './components/Starter/Starter';
 
-// import { rootReducer, rootEpic } from './redux/root';
+import { rootReducer, rootEpic } from './redux/root';
 
-// const epicMiddleware = createEpicMiddleware(rootEpic);
+const epicMiddleware = createEpicMiddleware(rootEpic);
 
-// const middleware = process.env.NODE_ENV
-//   ? applyMiddleware(epicMiddleware)
-//   : composeWithDevTools(
-//     applyMiddleware(epicMiddleware)
-//   );
+const middleware = process.env.NODE_ENV
+  ? applyMiddleware(epicMiddleware)
+  : composeWithDevTools(
+    applyMiddleware(epicMiddleware)
+  );
 
-// const store = createStore(
-//   rootReducer,
-//   middleware
-// );
+const store = createStore(
+  rootReducer,
+  middleware
+);
 
 const renderApp = () => (
   render(

@@ -36,14 +36,18 @@ export const enhance = mapPropsStream(props$ => {
   const { handler: startHandler, stream: start$ } = createEventHandler();
   const { handler: stopHandler, stream: stop$ } = createEventHandler();
   const progress$ = Rx.Observable.merge(
-    start$.map(() => prev => true),
-    stop$.map(() => prev => false))
-      .startWith(false)
-      .scan((state, changeState) => changeState(state))
-
-  const timer$ = Rx.Observable.merge(
-      start$.switchMap(() => Rx.Observable.interval(1000).takeUntil(stop$)).map(() => 1)
+      start$.map(() => prev => true),
+      stop$.map(() => prev => false)
     )
+    .startWith(false)
+    .scan((state, changeState) => changeState(state))
+
+  const timer$ = start$
+    .switchMap(() => Rx.Observable
+      .interval(1000)
+      .takeUntil(stop$)
+    )
+    .map(() => 1)
     .scan((acc, n) => n === 0 ? 0 : acc + n)
     .startWith(0)
 
