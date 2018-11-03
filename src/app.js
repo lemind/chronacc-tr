@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
@@ -15,22 +15,24 @@ import { rootReducer, rootEpic } from './redux/root';
 
 const epicMiddleware = createEpicMiddleware(rootEpic);
 
-const middleware = process.env.NODE_ENV
-  ? applyMiddleware(epicMiddleware)
-  : composeWithDevTools(
-    applyMiddleware(epicMiddleware)
-  );
+// process.env.NODE_ENV
 
-const store = createStore(
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+
+const middleware = composeEnhancers(applyMiddleware(epicMiddleware));
+
+export const store = createStore(
   rootReducer,
   middleware
 );
 
 const renderApp = () => (
   render(
-    <div className="container">
-      <Starter />
-    </div>,
+    <Provider store={ store }>
+      <div className="container">
+        <Starter />
+      </div>
+    </Provider>,
     document.getElementById('app')
   )
 );

@@ -1,7 +1,8 @@
-import React from 'react';
+import React from 'react'
 // import './Starter.less';
 
-import { Timer } from './../Timer/Timer';
+import { Timer as TimerWR } from 'components/TimerWR/Timer'
+import { Tasks } from 'components/Tasks/Tasks'
 
 export class Starter extends React.Component {
   constructor(props) {
@@ -12,7 +13,8 @@ export class Starter extends React.Component {
     return (
       <header>
         <div>
-          <Timer />
+          <TimerWR />
+          <Tasks />
         </div>
       </header>
     )

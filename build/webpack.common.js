@@ -54,6 +54,15 @@ module.exports = {
       }
     ]
   },
+  resolve: {
+    alias: {
+      src: path.resolve(__dirname, '../src/'),
+      components: path.resolve(__dirname, '../src/components/'),
+      models: path.resolve(__dirname, '../src/models/'),
+      'src/redux': path.resolve(__dirname, '../src/redux/'),
+      'helpers': path.resolve(__dirname, '../src/helpers/')
+    },
+  },
   plugins: [
     new ExtractTextPlugin('styles.css'),
     new HtmlWebpackPlugin({
