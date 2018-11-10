@@ -3,7 +3,6 @@ export const initialState = {
   list: [],
   loading: false,
   error: null,
-  activeTaskId: null
 };
 
 export const reducer = (state = initialState, action) => {
@@ -51,11 +50,6 @@ export const reducer = (state = initialState, action) => {
         list: [],
         loading: false,
         error: action.error
-      };
-    case 'SET_ACTIVE_TASK':
-      return {
-        ...state,
-        activeTaskId: action.taskId
       };
     default:
       return state

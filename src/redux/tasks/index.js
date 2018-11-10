@@ -1,9 +1,10 @@
-import { actions } from './tasks.actions';
-import { reducer } from './tasks.reducer';
-import { tasksEpics } from './tasks.epics';
-import { caseFactory } from "helpers/cases";
+import { actions } from './tasks.actions'
+import { reducer } from './tasks.reducer'
+import { tasksEpics } from './tasks.epics'
+import { caseFactory } from "helpers/cases"
 import Task from 'models/Task'
-import Cases from 'src/redux/Cases';
+import Cases from 'src/redux/Cases'
+
 
 export {
   actions as tasksActions,
@@ -11,35 +12,65 @@ export {
   tasksEpics,
 }
 
-const findTaskById = state => findTaskByIdSelector(state)
-
 export class TasksCases extends Cases {
+  constructor(...params){
+    super(...params)
+  }
+
+  setObservables(){
+    return [{store: 'tasks', variables: ['list']}]
+  }
+
   startTask(task){
     const newTask = task || new Task()
-    const activeTaskId = this.state.tasks.activeTaskId
-    if (activeTaskId) {
-      const activeTask = this.getTaskById(activeTaskId)
-      activeTask.stop()
-    }
+
+    const activeTask = this.getActiveTask()
+    activeTask && activeTask.stop()
 
     newTask.start();
 
     this.dispatch(actions.addTask(newTask))
-    this.dispatch(actions.setActiveTask(newTask.id))
   }
 
   stopActiveTask(){
-    const activeTaskId = this.state.tasks.activeTaskId
-    const activeTask = this.getTaskById(activeTaskId)
+    const activeTask = this.getActiveTask()
 
     activeTask.stop()
-    this.dispatch(actions.setActiveTask(null))
     this.dispatch(actions.updateTask(activeTask))
   }
 
   getTaskById(id){
     const tasks = this.state.tasks.list
     return tasks.find(task => task.id === id)
+  }
+
+  getActiveTask(){
+    const tasks = this.state.tasks.list
+    return tasks.find(task => task.isActive)
+  }
+
+  getActiveTaskTime(){
+    const activeTask = this.getActiveTask()
+
+    let startTime = 0
+
+    if (activeTask) {
+
+      if (activeTask.periods.length) {
+        startTime = activeTask.periods.reduce((acc, item) => {
+          acc = acc + (item.endTime - item.beginTime)
+          return acc
+        }, 0)
+      }
+
+      startTime = activeTask.beginTime - startTime
+    }
+
+    if (!startTime) {
+      return null
+    }
+
+    return startTime
   }
 }
 

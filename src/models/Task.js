@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import moment from 'moment'
 import camelCase from 'lodash/camelCase'
 
 let inst = 0
@@ -10,7 +11,7 @@ const getTaskId = () => {
 export default class Task {
   constructor(initial) {
     this.id = getTaskId()
-    this.beginTime = ''
+    this.beginTime = null
     this.isActive = false
     this.periods = []
 
@@ -18,7 +19,7 @@ export default class Task {
   }
 
   start() {
-    this.beginTime = dayjs().valueOf() //ToDo: wrap dayjs
+    this.beginTime = moment().valueOf() //ToDo: wrap moment
     this.isActive = true
   }
 
@@ -26,7 +27,8 @@ export default class Task {
     this.isActive = false
     this.periods.push({
       beginTime: this.beginTime,
-      endTime: dayjs().valueOf()
+      endTime: moment().valueOf()
     })
+    this.beginTime = null
   }
 }
