@@ -18,10 +18,7 @@ export const reducer = (state = initialState, action) => {
           return item
         }
 
-        return {
-          ...item,
-          ...action.task
-        }
+        return Object.assign(item, {...action.task})
       })
       return {
         ...state,

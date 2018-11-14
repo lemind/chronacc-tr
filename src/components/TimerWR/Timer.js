@@ -29,10 +29,16 @@ export class Timer extends React.Component {
     })
   }
 
+  //ToDo: is there nice start and startTimer fns
   start(){
     const { tasksCases } = this.props
-
     tasksCases.startTask()
+    this.startTimer()
+  }
+
+  startTimer(){
+    const { tasksCases } = this.props
+
     this.toggleButton()
 
     const startTime = this.props.tasksCases.getActiveTaskTime()
@@ -65,12 +71,35 @@ export class Timer extends React.Component {
     })
   }
 
+  updateTask(e){
+    const activeTask = this.props.tasksCases.getActiveTask()
+    activeTask.description = e.target.value
+    this.props.tasksCases.updateTask(activeTask)
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const activeTask = this.props.tasksCases.getActiveTask()
+    if (activeTask && !this.state.taskInProgress) {
+      this.startTimer()
+    }
+  }
+
   render() {
     const time = this.state.time
+    const activeTask = this.props.tasksCases.getActiveTask() || {}
 
     return (
       <div>
         <div>time: { time }</div>
+        <br />
+        <div>
+          <input
+            value={ activeTask.description || '' }
+            onChange={ e => this.updateTask(e) }
+            disabled={ !activeTask.id }
+          />
+        </div>
+        <br />
         { !this.state.taskInProgress
           ? <button onClick={ () => this.start() }>Start</button>
           : <button onClick={ () => this.stop() }>Stop</button>

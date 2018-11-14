@@ -28,7 +28,6 @@ export default function withCases(...cases) {
           const state$ = this.cases[caseName].getState$()
 
           state$.subscribe((val) => {
-            console.log('))))')
             const newObservables = {}
             observables.forEach(item => {
               newObservables[item.store] = {}

@@ -22,21 +22,31 @@ export class TasksCases extends Cases {
   }
 
   startTask(task){
-    const newTask = task || new Task()
+    const newTask = task ? task : new Task()
 
     const activeTask = this.getActiveTask()
     activeTask && activeTask.stop()
 
     newTask.start();
 
-    this.dispatch(actions.addTask(newTask))
+    if (task) {
+      this.dispatch(actions.updateTask(newTask))
+    } else {
+      this.dispatch(actions.addTask(newTask))
+    }
   }
 
   stopActiveTask(){
     const activeTask = this.getActiveTask()
 
-    activeTask.stop()
-    this.dispatch(actions.updateTask(activeTask))
+    if (activeTask) {
+      activeTask.stop()
+      this.dispatch(actions.updateTask(activeTask))
+    }
+  }
+
+  updateTask(task){
+    this.dispatch(actions.updateTask(task))
   }
 
   getTaskById(id){
@@ -46,7 +56,16 @@ export class TasksCases extends Cases {
 
   getActiveTask(){
     const tasks = this.state.tasks.list
-    return tasks.find(task => task.isActive)
+    const result = tasks.find(task => {
+      if (task.isActive()) {
+        return task
+      }
+    })
+    if (result) {
+      return new Task(result)
+    } else {
+      return null
+    }
   }
 
   getActiveTaskTime(){
