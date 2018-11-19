@@ -1,8 +1,11 @@
 import React from 'react'
+import moment from 'moment'
 
 import withCases from 'helpers/withCases'
 
 import TasksCases from 'src/redux/tasks'
+
+const TIME_FORMAT = 'HH:mm:ss'
 
 @withCases(TasksCases)
 export class Tasks extends React.Component {
@@ -14,6 +17,8 @@ export class Tasks extends React.Component {
       <span> | </span>
       <span>{ task.description }</span>
       <span> | </span>
+      <span>{ this.formattedTime(task.summTime) }</span>
+      <span> | </span>
       <span>
         <button
           onClick={ () => this.continueTask(task) }
@@ -21,6 +26,12 @@ export class Tasks extends React.Component {
         >Continue</button>
       </span>
     </div>
+  }
+
+  formattedTime(raw){
+    if (!raw) return '-'
+
+    return moment(raw).utc().format(TIME_FORMAT)
   }
 
   continueTask(task){

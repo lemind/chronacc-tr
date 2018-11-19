@@ -35,4 +35,27 @@ export default class Task {
     })
     this.beginTime = null
   }
+
+  get summTime(){
+    let summTime = 0
+
+    if (this.periods.length) {
+      summTime = this.periods.reduce((acc, item) => {
+        acc = acc + (item.endTime - item.beginTime)
+        return acc
+      }, summTime)
+    }
+
+    if (!summTime) {
+      return null
+    }
+
+    return summTime
+  }
+
+  get startTime(){
+    let startTime = this.summTime ? this.summTime : 0
+
+    return this.beginTime - startTime
+  }
 }

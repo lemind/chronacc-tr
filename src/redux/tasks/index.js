@@ -71,25 +71,7 @@ export class TasksCases extends Cases {
   getActiveTaskTime(){
     const activeTask = this.getActiveTask()
 
-    let startTime = 0
-
-    if (activeTask) {
-
-      if (activeTask.periods.length) {
-        startTime = activeTask.periods.reduce((acc, item) => {
-          acc = acc + (item.endTime - item.beginTime)
-          return acc
-        }, 0)
-      }
-
-      startTime = activeTask.beginTime - startTime
-    }
-
-    if (!startTime) {
-      return null
-    }
-
-    return startTime
+    return activeTask ? activeTask.startTime : null
   }
 }
 

@@ -10,6 +10,7 @@ import withCases from 'helpers/withCases'
 import { tasksActions } from 'src/redux/tasks'
 
 const SECOND = 1000
+const TIME_FORMAT = 'HH:mm:ss'
 
 @withCases(TasksCases)
 export class Timer extends React.Component {
@@ -64,7 +65,7 @@ export class Timer extends React.Component {
   updateTimeCounter(startTime){
     const diff = moment().diff(moment(startTime))
     const time = startTime
-      ? moment(diff).utc().format('HH:mm:ss')
+      ? moment(diff).utc().format(TIME_FORMAT)
       : ''
     this.setState({
       time
