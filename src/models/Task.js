@@ -1,4 +1,3 @@
-import dayjs from 'dayjs'
 import moment from 'moment'
 
 let inst = 0
