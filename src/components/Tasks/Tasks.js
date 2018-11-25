@@ -13,6 +13,7 @@ export class Tasks extends React.Component {
     const disabled = task.isActive()
 
     return <div>
+      <span>{ task.isActive() && '----- ' }</span>
       <span>{ task.id }</span>
       <span> | </span>
       <span>{ task.description }</span>
@@ -25,6 +26,7 @@ export class Tasks extends React.Component {
           disabled={ disabled }
         >Continue</button>
       </span>
+      <span>{ task.isActive() && ' -----' }</span>
     </div>
   }
 

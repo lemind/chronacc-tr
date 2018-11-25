@@ -25,7 +25,7 @@ export class TasksCases extends Cases {
     const newTask = task ? task : new Task()
 
     const activeTask = this.getActiveTask()
-    activeTask && activeTask.stop()
+    activeTask && this.stopActiveTask()
 
     newTask.start();
 

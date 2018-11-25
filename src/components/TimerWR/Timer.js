@@ -20,42 +20,61 @@ export class Timer extends React.Component {
     this.state = {
       taskInProgress: false,
       time: null,
-      timer: null
+      timer: null,
+      activeTaskId: null
     }
   }
 
-  toggleButton(){
+  showStartButton(){
     this.setState({
-      taskInProgress: !this.state.taskInProgress
+      taskInProgress: false
     })
   }
 
-  //ToDo: is there nice start and startTimer fns
+  showStopButton(){
+    this.setState({
+      taskInProgress: true
+    })
+  }
+
+  //ToDo: is there nice start and timerStart fns
   start(){
     const { tasksCases } = this.props
     tasksCases.startTask()
-    this.startTimer()
+    this.timerStart()
   }
 
-  startTimer(){
+  timerStart(){
     const { tasksCases } = this.props
 
-    this.toggleButton()
-
     const startTime = this.props.tasksCases.getActiveTaskTime()
+    const activeTask = this.props.tasksCases.getActiveTask()
+
+    this.showStopButton()
 
     const timer = setInterval(this.updateTimeCounter.bind(this, startTime), SECOND)
+
     this.setState({
-      timer
+      timer,
+      activeTaskId: activeTask.id
     })
   }
 
   stop(){
     const { tasksCases } = this.props
     tasksCases.stopActiveTask()
-    this.toggleButton()
+    this.showStartButton()
 
+    this.timerStop()
+    this.setState({
+      activeTaskId: null,
+      taskInProgress: false
+    })
+  }
+
+  timerStop(){
     clearInterval(this.state.timer)
+
     this.setState({
       timer: null,
       time: null
@@ -78,10 +97,21 @@ export class Timer extends React.Component {
     this.props.tasksCases.updateTask(activeTask)
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentWillMount(){
     const activeTask = this.props.tasksCases.getActiveTask()
     if (activeTask && !this.state.taskInProgress) {
-      this.startTimer()
+      this.timerStart()
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const activeTask = this.props.tasksCases.getActiveTask()
+
+    if (activeTask && activeTask.id !== this.state.activeTaskId) {
+      if (prevState.activeTaskId) {
+        this.timerStop()
+      }
+      this.timerStart()
     }
   }
 
