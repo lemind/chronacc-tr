@@ -1,9 +1,9 @@
 import { actions } from './tasks.actions'
 import { reducer } from './tasks.reducer'
 import { tasksEpics } from './tasks.epics'
-import { caseFactory } from "helpers/cases"
+import { gatewayFactory } from 'helpers/gateway'
 import Task from 'models/Task'
-import Cases from 'src/redux/Cases'
+import Gateway from 'src/redux/Gateway'
 
 
 export {
@@ -12,67 +12,18 @@ export {
   tasksEpics,
 }
 
-export class TasksCases extends Cases {
+export class TasksGateway extends Gateway {
   constructor(...params){
     super(...params)
   }
 
-  setObservables(){
-    return [{store: 'tasks', variables: ['list']}]
+  updateTask(newTask){
+    this.dispatch(actions.updateTask(newTask))
   }
 
-  startTask(task){
-    const newTask = task ? task : new Task()
-
-    const activeTask = this.getActiveTask()
-    activeTask && this.stopActiveTask()
-
-    newTask.start();
-
-    if (task) {
-      this.dispatch(actions.updateTask(newTask))
-    } else {
-      this.dispatch(actions.addTask(newTask))
-    }
-  }
-
-  stopActiveTask(){
-    const activeTask = this.getActiveTask()
-
-    if (activeTask) {
-      activeTask.stop()
-      this.dispatch(actions.updateTask(activeTask))
-    }
-  }
-
-  updateTask(task){
-    this.dispatch(actions.updateTask(task))
-  }
-
-  getTaskById(id){
-    const tasks = this.state.tasks.list
-    return tasks.find(task => task.id === id)
-  }
-
-  getActiveTask(){
-    const tasks = this.state.tasks.list
-    const result = tasks.find(task => {
-      if (task.isActive()) {
-        return task
-      }
-    })
-    if (result) {
-      return new Task(result)
-    } else {
-      return null
-    }
-  }
-
-  getActiveTaskTime(){
-    const activeTask = this.getActiveTask()
-
-    return activeTask ? activeTask.startTime : null
+  addTask(newTask){
+    this.dispatch(actions.addTask(newTask))
   }
 }
 
-export default caseFactory(TasksCases)
+export default gatewayFactory(TasksGateway)

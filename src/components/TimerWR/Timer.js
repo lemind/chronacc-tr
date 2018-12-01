@@ -4,7 +4,7 @@ import moment from 'moment'
 import { connect } from 'react-redux';
 
 import Task from 'models/Task'
-import TasksCases from 'src/redux/tasks'
+import TasksCases from 'cases/tasks'
 import withCases from 'helpers/withCases'
 
 import { tasksActions } from 'src/redux/tasks'

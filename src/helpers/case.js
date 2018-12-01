@@ -1,5 +1,5 @@
-
-export function caseFactory(CaseClass) {
+// ToDo
+export function caseFactory(CaseClass, name) {
   let singleton;
   const factory = (...whatever) => {
     if (singleton == null) {
@@ -9,6 +9,6 @@ export function caseFactory(CaseClass) {
     return singleton
   }
 
-  factory.caseName = CaseClass.name
+  factory.customName = name || CaseClass.name
   return factory
 }

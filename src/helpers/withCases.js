@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import toLower from 'lodash/toLower'
-import { BehaviorSubject } from 'rxjs';
 
 // ToDo: helper string
 const firstLowerCase = (s) => {
@@ -21,7 +20,7 @@ export default function withCases(...cases) {
       componentWillMount() {
         this.cases = {};
         for (let caseItem of cases) {
-          const caseName = firstLowerCase(caseItem.caseName);
+          const caseName = firstLowerCase(caseItem.customName);
           this.cases[caseName] = caseItem();
 
           const observables = this.cases[caseName].setObservables()

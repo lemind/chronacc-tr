@@ -3,7 +3,7 @@ import moment from 'moment'
 
 import withCases from 'helpers/withCases'
 
-import TasksCases from 'src/redux/tasks'
+import TasksCases from 'cases/tasks'
 
 const TIME_FORMAT = 'HH:mm:ss'
 
@@ -13,12 +13,12 @@ export class Tasks extends React.Component {
     const disabled = task.isActive()
 
     return <div>
-      <span>{ task.isActive() && '----- ' }</span>
+      <span>{ task.isActive() && '_____ ' }</span>
       <span>{ task.id }</span>
       <span> | </span>
       <span>{ task.description }</span>
       <span> | </span>
-      <span>{ this.formattedTime(task.summTime) }</span>
+      <span>{ this.formattedTime(task.getSummTime()) }</span>
       <span> | </span>
       <span>
         <button
@@ -26,7 +26,7 @@ export class Tasks extends React.Component {
           disabled={ disabled }
         >Continue</button>
       </span>
-      <span>{ task.isActive() && ' -----' }</span>
+      <span>{ task.isActive() && ' _____' }</span>
     </div>
   }
 

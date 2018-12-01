@@ -59,8 +59,9 @@ module.exports = {
       src: path.resolve(__dirname, '../src/'),
       components: path.resolve(__dirname, '../src/components/'),
       models: path.resolve(__dirname, '../src/models/'),
+      helpers: path.resolve(__dirname, '../src/helpers/'),
+      cases: path.resolve(__dirname, '../src/cases/'),
       'src/redux': path.resolve(__dirname, '../src/redux/'),
-      'helpers': path.resolve(__dirname, '../src/helpers/')
     },
   },
   plugins: [

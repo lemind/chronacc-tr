@@ -35,7 +35,7 @@ export default class Task {
     this.beginTime = null
   }
 
-  get summTime(){
+  getSummTime(){
     let summTime = 0
 
     if (this.periods.length) {
@@ -52,8 +52,9 @@ export default class Task {
     return summTime
   }
 
-  get startTime(){
-    let startTime = this.summTime ? this.summTime : 0
+  getStartTime(){
+    const summTime = this.getSummTime()
+    let startTime = summTime ? summTime : 0
 
     return this.beginTime - startTime
   }

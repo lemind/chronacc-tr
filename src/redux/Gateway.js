@@ -1,9 +1,9 @@
-import { store } from 'src/app'
+import { store } from 'src/redux/store'
 
 import Rx from 'rxjs'
 const { Observable } = Rx;
 
-export default class Cases {
+export default class Gateway {
   constructor(){
     this.state = store.getState()
     this.dispatch = store.dispatch
@@ -12,6 +12,7 @@ export default class Cases {
     store.subscribe(() => {
       this.state = store.getState()
     })
+    this.store = store
   }
 
   setObservables(){
