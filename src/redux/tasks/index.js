@@ -17,12 +17,16 @@ export class TasksGateway extends Gateway {
     super(...params)
   }
 
-  updateTask(newTask){
-    this.dispatch(actions.updateTask(newTask))
+  updateTask(task){
+    this.dispatch(actions.updateTask(task))
   }
 
   addTask(newTask){
     this.dispatch(actions.addTask(newTask))
+  }
+
+  deleteTask(taskId){
+    this.dispatch(actions.deleteTask(taskId))
   }
 }
 

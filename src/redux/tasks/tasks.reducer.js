@@ -24,10 +24,10 @@ export const reducer = (state = initialState, action) => {
         ...state,
         list: newList
       };
-    case 'DELETE_CITY':
+    case 'DELETE_TASK':
       return {
         ...state,
-        list: state.list.filter(item => item.id !== action.cityId)
+        list: state.list.filter(item => item.id !== action.taskId)
       };
     case 'FETCH_TASKS':
       return {

@@ -37,10 +37,10 @@ export class Timer extends React.Component {
     })
   }
 
-  //ToDo: is there nice start and timerStart fns
   start(){
     const { tasksCases } = this.props
     tasksCases.startTask()
+
     this.timerStart()
   }
 
@@ -50,9 +50,9 @@ export class Timer extends React.Component {
     const startTime = this.props.tasksCases.getActiveTaskTime()
     const activeTask = this.props.tasksCases.getActiveTask()
 
-    this.showStopButton()
-
     const timer = setInterval(this.updateTimeCounter.bind(this, startTime), SECOND)
+
+    this.showStopButton()
 
     this.setState({
       timer,
@@ -63,6 +63,7 @@ export class Timer extends React.Component {
   stop(){
     const { tasksCases } = this.props
     tasksCases.stopActiveTask()
+
     this.showStartButton()
 
     this.timerStop()
@@ -86,6 +87,7 @@ export class Timer extends React.Component {
     const time = startTime
       ? moment(diff).utc().format(TIME_FORMAT)
       : ''
+
     this.setState({
       time
     })
@@ -105,6 +107,7 @@ export class Timer extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    // ToDo: not to do it every second
     const activeTask = this.props.tasksCases.getActiveTask()
 
     if (activeTask && activeTask.id !== this.state.activeTaskId) {

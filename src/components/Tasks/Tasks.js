@@ -26,6 +26,13 @@ export class Tasks extends React.Component {
           disabled={ disabled }
         >Continue</button>
       </span>
+      <span> | </span>
+      <span>
+        <button
+          onClick={ () => this.deleteTask(task) }
+          disabled={ disabled }
+        >Delete</button>
+      </span>
       <span>{ task.isActive() && ' _____' }</span>
     </div>
   }
@@ -38,6 +45,10 @@ export class Tasks extends React.Component {
 
   continueTask(task){
     this.props.tasksCases.startTask(task)
+  }
+
+  deleteTask(task){
+    this.props.tasksCases.deleteTask(task.id)
   }
 
   render() {

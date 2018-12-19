@@ -9,7 +9,7 @@ const getTaskId = () => {
 export default class Task {
   constructor(initial) {
     this.id = getTaskId()
-    this.beginTime = null
+    this.beginTime = null // current period
     this._isActive = false
     this.description = ''
     this.periods = []
@@ -19,6 +19,13 @@ export default class Task {
 
   isActive(){
     return this._isActive
+  }
+
+  hasStartedToday(){
+    const startTaskTime = moment(this.periods[0].beginTime)
+    const diff = moment().diff(startTaskTime, 'days')
+
+    return diff === 0
   }
 
   start() {

@@ -12,14 +12,29 @@ export class TasksCases extends Cases {
 
   startTask(task){
     const { tasksGateway } = this.gateways
-    const newTask = task ? task : new Task()
+    let newTask = task ? task : new Task()
+    let createTask = false
+
+    if (!task) {
+      newTask = new Task()
+      createTask = true
+    } else {
+      if (!task.hasStartedToday()) {
+        const initTask = {
+          description: task.description
+        }
+
+        newTask = new Task(initTask)
+        createTask = true
+      }
+    }
 
     const activeTask = this.getActiveTask()
     activeTask && this.stopActiveTask()
 
     newTask.start();
 
-    if (task) {
+    if (!createTask) {
       tasksGateway.updateTask(newTask)
     } else {
       tasksGateway.addTask(newTask)
@@ -41,6 +56,11 @@ export class TasksCases extends Cases {
     tasksGateway.updateTask(task)
   }
 
+  deleteTask(taskId){
+    const { tasksGateway } = this.gateways
+    tasksGateway.deleteTask(taskId)
+  }
+
   getTaskById(id){
     const tasks = this.state.tasks.list
     return tasks.find(task => task.id === id)
@@ -57,6 +77,7 @@ export class TasksCases extends Cases {
         return task
       }
     })
+
     if (result) {
       return new Task(result)
     } else {
