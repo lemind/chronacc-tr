@@ -52,7 +52,9 @@ export class Tasks extends React.Component {
   }
 
   render() {
-    const tasks = this.props.tasks ? this.props.tasks.list : []
+    let tasks = this.props.tasks ? this.props.tasks.list : []
+    tasks = Array.from(tasks)
+    tasks.reverse()
 
     return (
       <div>

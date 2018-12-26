@@ -1,70 +1,143 @@
-import React from 'react';
-import dayjs from 'dayjs';
+import React from 'react'
+import moment from 'moment'
 
-import { setObservableConfig, componentFromStream, createEventHandler,
-  compose, withHandlers, mapPropsStream } from 'recompose'
-import rxjsConfig from 'recompose/rxjsObservableConfig'
+import { connect } from 'react-redux';
 
-// import './Timer.less';
+import Task from 'models/Task'
+import TasksCases from 'cases/tasks'
+import withCases from 'helpers/withCases'
 
-setObservableConfig(rxjsConfig)
+import { tasksActions } from 'src/redux/tasks'
 
-import Rx from 'rxjs'
+const SECOND = 1000
+const TIME_FORMAT = 'HH:mm:ss'
 
-export class TimerDom extends React.Component {
+@withCases(TasksCases)
+export class Timer extends React.Component {
+  constructor(props) {
+    super(props);
 
-  getTimeBySeconds(seconds) {
-    return dayjs(0).set('second', seconds).format('mm:ss')
+    this.state = {
+      taskInProgress: false,
+      time: null,
+      timer: null,
+      activeTaskId: null
+    }
+  }
+
+  showStartButton(){
+    this.setState({
+      taskInProgress: false
+    })
+  }
+
+  showStopButton(){
+    this.setState({
+      taskInProgress: true
+    })
+  }
+
+  start(){
+    const { tasksCases } = this.props
+    tasksCases.startTask()
+
+    this.timerStart()
+  }
+
+  timerStart(){
+    const { tasksCases } = this.props
+
+    const startTime = this.props.tasksCases.getActiveTaskTime()
+    const activeTask = this.props.tasksCases.getActiveTask()
+
+    const timer = setInterval(this.updateTimeCounter.bind(this, startTime), SECOND)
+
+    this.showStopButton()
+
+    this.setState({
+      timer,
+      activeTaskId: activeTask.id
+    })
+  }
+
+  stop(){
+    const { tasksCases } = this.props
+    tasksCases.stopActiveTask()
+
+    this.showStartButton()
+
+    this.timerStop()
+    this.setState({
+      activeTaskId: null,
+      taskInProgress: false
+    })
+  }
+
+  timerStop(){
+    clearInterval(this.state.timer)
+
+    this.setState({
+      timer: null,
+      time: null
+    })
+  }
+
+  updateTimeCounter(startTime){
+    const diff = moment().diff(moment(startTime))
+    const time = startTime
+      ? moment(diff).utc().format(TIME_FORMAT)
+      : ''
+
+    this.setState({
+      time
+    })
+  }
+
+  updateTask(e){
+    const activeTask = this.props.tasksCases.getActiveTask()
+    activeTask.description = e.target.value
+    this.props.tasksCases.updateTask(activeTask)
+  }
+
+  componentWillMount(){
+    const activeTask = this.props.tasksCases.getActiveTask()
+    if (activeTask && !this.state.taskInProgress) {
+      this.timerStart()
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const activeTask = this.props.tasksCases.getActiveTask()
+
+    if (activeTask && activeTask.id !== this.state.activeTaskId) {
+      if (prevState.activeTaskId) {
+        this.timerStop()
+      }
+      this.timerStart()
+    }
   }
 
   render() {
+    const time = this.state.time
+    const activeTask = this.props.tasksCases.getActiveTask() || {}
+
     return (
-      <header>
+      <div>
+        <div>time: { time }</div>
+        <br />
         <div>
-          { !this.props.progress
-            ? <button onClick={ this.props.onStart }>start</button>
-            : <button onClick={ this.props.onStop }>stop</button>
-          }
-          <div>{ this.getTimeBySeconds(this.props.timer) }</div>
+          <input
+            value={ activeTask.description || '' }
+            onChange={ e => this.updateTask(e) }
+            disabled={ !activeTask.id }
+          />
         </div>
-      </header>
+        <br />
+        { !this.state.taskInProgress
+          ? <button onClick={ () => this.start() }>Start</button>
+          : <button onClick={ () => this.stop() }>Stop</button>
+        }
+      </div>
     )
-  };
+  }
 }
-
-export const enhance = mapPropsStream(props$ => {
-  const { handler: startHandler, stream: start$ } = createEventHandler();
-  const { handler: stopHandler, stream: stop$ } = createEventHandler();
-  const progress$ = Rx.Observable.merge(
-      start$.map(() => prev => true),
-      stop$.map(() => prev => false)
-    )
-    .startWith(false)
-    .scan((state, changeState) => changeState(state))
-
-  const timer$ = start$
-    .switchMap(() => Rx.Observable
-      .interval(1000)
-      .takeUntil(stop$)
-    )
-    .map(() => 1)
-    .scan((acc, n) => n === 0 ? 0 : acc + n)
-    .startWith(0)
-
-  const res = props$
-    .combineLatest(
-      progress$,
-      timer$,
-      (props, progress, timer) => ({
-        ...props,
-        progress,
-        timer,
-        onStart: startHandler,
-        onStop: stopHandler
-      })
-    )
-
-  return res
-})(TimerDom)
-
-export const Timer = enhance
