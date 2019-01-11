@@ -1,0 +1,17 @@
+{
+  "name": "chronacc-tr-server",
+  "version": "1.0.0",
+  "description": "time-tracker server side",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "author": "Dmitrii Lemin (leminds@gmail.com)",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.3"
+  }
+}
