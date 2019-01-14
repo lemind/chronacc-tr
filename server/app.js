@@ -1,24 +1,36 @@
-let express = require('express');
-let bodyParser = require('body-parser');
-let mongoose = require('mongoose');
+const express = require('express');
+const cors = require('cors')
+const bodyParser = require('body-parser')
+const helmet = require('helmet')
+const mongoose = require('mongoose');
 
-let app = express();
+const routes = require('./routes/')
 
-let tasksRoutes = require("./tasks-routes")
+const app = express();
 
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-app.use(bodyParser.json());
+const router = express.Router()
+const url = process.env.MONGODB_URI || "mongodb://localhost:27017/chronacc"
 
-mongoose.connect('mongodb://localhost/resthub');
-var db = mongoose.connection;
+try {
+  mongoose.connect(url, {
+    //useMongoClient: true
+  })
+} catch (error) {
+
+}
+
+routes(router)
+
+app.use(cors())
+app.use(bodyParser.json())
+app.use(helmet())
+// app.use('/static',express.static(path.join(__dirname,'static')))
+
+app.use('/api', router)
 
 var port = process.env.PORT || 3001;
 
 app.get('/', (req, res) => res.send('Hello World with Express'));
-
-app.use('/tasks', tasksRoutes)
 
 app.listen(port, function () {
     console.log("Running chronacc on port " + port);
