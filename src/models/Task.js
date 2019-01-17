@@ -1,14 +1,8 @@
 import moment from 'moment'
 
-let inst = 0
-const getTaskId = () => {
-  inst++;
-  return inst
-}
-
 export default class Task {
   constructor(initial) {
-    this.id = getTaskId()
+    this.id = 0
     this.beginTime = null // current period
     this._isActive = false
     this.description = ''
@@ -18,7 +12,7 @@ export default class Task {
   }
 
   isActive(){
-    return this._isActive
+    return !!this.beginTime
   }
 
   hasStartedToday(){

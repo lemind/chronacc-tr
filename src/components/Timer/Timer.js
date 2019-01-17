@@ -50,6 +50,8 @@ export class Timer extends React.Component {
     const startTime = this.props.tasksCases.getActiveTaskTime()
     const activeTask = this.props.tasksCases.getActiveTask()
 
+    if (!activeTask) return
+
     const timer = setInterval(this.updateTimeCounter.bind(this, startTime), SECOND)
 
     this.showStopButton()
@@ -113,6 +115,7 @@ export class Timer extends React.Component {
       if (prevState.activeTaskId) {
         this.timerStop()
       }
+
       this.timerStart()
     }
   }
@@ -120,6 +123,8 @@ export class Timer extends React.Component {
   render() {
     const time = this.state.time
     const activeTask = this.props.tasksCases.getActiveTask() || {}
+
+    if (!activeTask) return;
 
     return (
       <div>

@@ -6,8 +6,12 @@ import TasksGateway from 'src/redux/tasks'
 
 @withGateways(TasksGateway)
 export class TasksCases extends Cases {
+  constructor(props){
+    super(props);
+  }
+
   setObservables(){
-    return [{store: 'tasks', variables: ['list']}]
+    return [{store: 'tasks', variables: ['list']}] 
   }
 
   startTask(task){

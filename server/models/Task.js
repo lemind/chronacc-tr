@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 let TaskSchema = new mongoose.Schema(
   {
     description: String,
+    beginTime: Number,
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'

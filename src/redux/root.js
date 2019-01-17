@@ -8,5 +8,6 @@ export const rootReducer = combineReducers({
 });
 
 export const rootEpic = combineEpics(
-  tasksEpics.fetchTasksEpic
+  tasksEpics.fetchTasksEpic,
+  tasksEpics.addTaskEpic
 );

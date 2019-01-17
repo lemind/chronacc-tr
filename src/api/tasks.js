@@ -5,5 +5,12 @@ export const tasksAPI = {
   fetchTasks: () => {
     return ajax.getJSON(`${API_HOST}/tasks`);
   },
+  addTask: (action) => {
+    return ajax.post(
+      `${API_HOST}/task`,
+      action.task,
+      { 'Content-Type': 'application/json' }
+    );
+  },
 
 };

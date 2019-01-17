@@ -1,3 +1,11 @@
+
+// ToDo: is it needs to remove it?
+const serverDataTransform = (serverData) => {
+  const clientData = {...serverData}
+  clientData.id = serverData._id
+  return clientData;
+}
+
 export const actions = {
   fetchTasks: () => ({
     type: 'FETCH_TASKS'
@@ -6,8 +14,15 @@ export const actions = {
     type: 'FETCH_TASKS_SUCCEEDED',
     payload
   }),
-  fetchTasksFailed: (error) => ({
-    type: 'FETCH_TASKS_FAILED',
+  addTaskSucceeded: (payload) => {
+    const transformedPayload = serverDataTransform(payload)
+    return {
+      type: 'ADD_TASK_SUCCEEDED',
+      payload: transformedPayload
+    }
+  },
+  requestFailed: (error) => ({
+    type: 'REQUEST_FAILED',
     error
   }),
   setActiveTask: (taskId) => ({
