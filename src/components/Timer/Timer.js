@@ -50,7 +50,7 @@ export class Timer extends React.Component {
     const startTime = this.props.tasksCases.getActiveTaskTime()
     const activeTask = this.props.tasksCases.getActiveTask()
 
-    if (!activeTask) return
+    if (!activeTask || this.state.timer) return
 
     const timer = setInterval(this.updateTimeCounter.bind(this, startTime), SECOND)
 

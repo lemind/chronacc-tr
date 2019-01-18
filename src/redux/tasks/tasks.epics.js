@@ -18,7 +18,7 @@ tasksEpics.fetchTasksEpic = action$ =>
           })
           .catch(error => of(
             actions.fetchTasksFailed({
-              status: '' + response.status,
+              status: '' + error,
             })
           ));
       });
@@ -30,13 +30,43 @@ tasksEpics.addTaskEpic = action$ =>
       .mergeMap(action => {
         return API.addTask(action)
           .map(res => {
-            console.log('epic/resp', res.response)
-
             return actions.addTaskSucceeded(res.response.result)
           })
           .catch(error => of(
             actions.requestFailed({
-              status: '' + response.status,
+              status: '' + error,
+            })
+          ));
+      });
+  }
+
+tasksEpics.updateTaskEpic = action$ =>
+  {
+    return action$.ofType('UPDATE_TASK')
+      .mergeMap(action => {
+        return API.updateTask(action)
+          .map(res => {
+            return actions.updateTaskSucceeded(res.response.result)
+          })
+          .catch(error => of(
+            actions.requestFailed({
+              status: '' + error,
+            })
+          ));
+      });
+  }
+
+tasksEpics.deleteTaskEpic = action$ =>
+  {
+    return action$.ofType('DELETE_TASK')
+      .mergeMap(action => {
+        return API.deleteTask(action)
+          .map(res => {
+            return actions.deleteTaskSucceeded()
+          })
+          .catch(error => of(
+            actions.requestFailed({
+              status: '' + error,
             })
           ));
       });

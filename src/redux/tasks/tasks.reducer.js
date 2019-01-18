@@ -12,6 +12,7 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         list: [...state.list, action.task],
+        loading: true
       }
     case 'UPDATE_TASK':
       newList = state.list.map((item, index) => {
@@ -23,7 +24,8 @@ export const reducer = (state = initialState, action) => {
       })
       return {
         ...state,
-        list: newList
+        list: newList,
+        loading: true
       }
     case 'DELETE_TASK':
       return {
@@ -54,6 +56,24 @@ export const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         list: newList
+      }
+    case 'UPDATE_TASK_SUCCEEDED':
+      newList = state.list.map((item, index) => {
+        if (item.id !== action.payload.id) {
+          return item
+        }
+
+        return Object.assign(item, {...action.payload})
+      })
+      return {
+        ...state,
+        loading: false,
+        list: newList
+      }
+    case 'DELETE_TASK_SUCCEEDED':
+      return {
+        ...state,
+        loading: false
       }
     case 'REQUEST_FAILED':
       return {

@@ -12,5 +12,18 @@ export const tasksAPI = {
       { 'Content-Type': 'application/json' }
     );
   },
+  updateTask: (action) => {
+    return ajax.put(
+      `${API_HOST}/task`,
+      action.task,
+      { 'Content-Type': 'application/json' }
+    );
+  },
+  deleteTask: (action) => {
+    return ajax.delete(
+      `${API_HOST}/task/${ action.taskId }`,
+      { 'Content-Type': 'application/json' }
+    );
+  },
 
 };

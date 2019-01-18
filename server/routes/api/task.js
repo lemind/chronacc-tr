@@ -8,4 +8,12 @@ module.exports = (router) => {
   router
     .route('/task')
     .post(taskController.addTask)
+
+  router
+    .route('/task')
+    .put(taskController.updateTask)
+
+  router
+    .route('/task/:taskId')
+    .delete(taskController.deleteTask)
 }

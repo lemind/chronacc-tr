@@ -21,6 +21,18 @@ export const actions = {
       payload: transformedPayload
     }
   },
+  updateTaskSucceeded: (payload) => {
+    const transformedPayload = serverDataTransform(payload)
+    return {
+      type: 'UPDATE_TASK_SUCCEEDED',
+      payload: transformedPayload
+    }
+  },
+  deleteTaskSucceeded: () => {
+    return {
+      type: 'DELETE_TASK_SUCCEEDED'
+    }
+  },
   requestFailed: (error) => ({
     type: 'REQUEST_FAILED',
     error
