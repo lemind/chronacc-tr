@@ -28,6 +28,14 @@ export class TasksGateway extends Gateway {
   deleteTask(taskId){
     this.dispatch(actions.deleteTask(taskId))
   }
+
+  load(){
+    this.dispatch(actions.fetchTasks())
+  }
+
+  serverTasksPrepared(tasks){
+    this.dispatch(actions.serverTasksPrepared(tasks))
+  }
 }
 
 export default gatewayFactory(TasksGateway)

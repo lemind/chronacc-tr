@@ -6,14 +6,25 @@ const serverDataTransform = (serverData) => {
   return clientData;
 }
 
+const tasksTransform = (serverTasks) => {
+  const clientTasks = []
+  serverTasks.forEach(task => {
+    clientTasks.push(serverDataTransform(task))
+  })
+  return clientTasks
+}
+
 export const actions = {
   fetchTasks: () => ({
     type: 'FETCH_TASKS'
   }),
-  fetchTasksSucceeded: (payload) => ({
-    type: 'FETCH_TASKS_SUCCEEDED',
-    payload
-  }),
+  fetchTasksSucceeded: (payload) => {
+    const clientTasks = tasksTransform(payload)
+    return {
+      type: 'FETCH_TASKS_SUCCEEDED',
+      payload: clientTasks
+    }
+  },
   addTaskSucceeded: (payload) => {
     const transformedPayload = serverDataTransform(payload)
     return {
@@ -26,6 +37,12 @@ export const actions = {
     return {
       type: 'UPDATE_TASK_SUCCEEDED',
       payload: transformedPayload
+    }
+  },
+  serverTasksPrepared: (payload) => {
+    return {
+      type: 'SERVER_TASKS_PREPARED',
+      payload
     }
   },
   deleteTaskSucceeded: () => {

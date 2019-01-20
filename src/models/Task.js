@@ -15,11 +15,18 @@ export default class Task {
     return !!this.beginTime
   }
 
+  dayStart(){
+    if (!this.periods[0] || !this.periods[0].beginTime) return null
+    const startTaskTime = moment(this.periods[0].beginTime)
+    return moment(startTaskTime).format('DD/MM')
+  }
+
   hasStartedToday(){
     const startTaskTime = moment(this.periods[0].beginTime)
-    const diff = moment().diff(startTaskTime, 'days')
+    const targetDay = moment(startTaskTime).format('DD')
+    const today = moment().format('DD')
 
-    return diff === 0
+    return targetDay === today
   }
 
   start() {

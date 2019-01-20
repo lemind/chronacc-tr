@@ -4,8 +4,9 @@ const Task = require('./../models/Task')
 
 module.exports = {
   getTasks: (req, res, next) => {
-    //ToDo mock
-    return res.json({ data: [{ id: 1, description: 'task' }], success: true });
+    Task.find({}, (err, tasks) => {
+      return res.json({ result: tasks, success: true });
+    })
   },
   addTask: (req, res, next) => {
     const { description, periods, tags, beginTime } = req.body

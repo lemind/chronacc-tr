@@ -20,6 +20,8 @@ export class Tasks extends React.Component {
       <span> | </span>
       <span>{ this.formattedTime(task.getSummTime()) }</span>
       <span> | </span>
+      <span>{ task.dayStart() }</span>
+      <span> | </span>
       <span>
         <button
           onClick={ () => this.continueTask(task) }
@@ -49,6 +51,10 @@ export class Tasks extends React.Component {
 
   deleteTask(task){
     this.props.tasksCases.deleteTask(task.id)
+  }
+
+  componentWillMount(){
+    this.props.tasksCases.load()
   }
 
   render() {

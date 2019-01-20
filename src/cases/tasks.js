@@ -14,6 +14,24 @@ export class TasksCases extends Cases {
     return [{store: 'tasks', variables: ['list']}] 
   }
 
+  load(){
+    const { tasksGateway } = this.gateways
+    tasksGateway.load()
+
+    const states$ = tasksGateway.getState$()
+
+    states$.subscribe(data => {
+      const serverList = data.tasks.serverList
+      const clientList = []
+      if (serverList.length > 0) {
+        serverList.forEach(item => {
+          clientList.push(new Task(item))
+        })
+        tasksGateway.serverTasksPrepared(clientList)
+      }
+    })
+  }
+
   startTask(task){
     const { tasksGateway } = this.gateways
     let newTask = task ? task : new Task()
