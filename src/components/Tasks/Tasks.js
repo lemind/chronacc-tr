@@ -65,13 +65,13 @@ export class Tasks extends React.Component {
     return (
       <div>
         <br />
-        <div>Tasks</div>
+        <h5>Tasks</h5>
         { tasks.map((task, index) =>
           <div key={ task.id }>
             <br />
             { this.renderTask(task) }
           </div>
-        )}
+        ) }
       </div>
     )
   };

@@ -1,5 +1,7 @@
 import moment from 'moment'
 
+import { format, dateTime, valueOf } from 'helpers/dateTime'
+
 export default class Task {
   constructor(initial) {
     this.id = 0
@@ -17,20 +19,20 @@ export default class Task {
 
   dayStart(){
     if (!this.periods[0] || !this.periods[0].beginTime) return null
-    const startTaskTime = moment(this.periods[0].beginTime)
-    return moment(startTaskTime).format('DD/MM')
+    const startTaskTime = dateTime(this.periods[0].beginTime)
+    return format(startTaskTime, 'DD/MM')
   }
 
   hasStartedToday(){
-    const startTaskTime = moment(this.periods[0].beginTime)
-    const targetDay = moment(startTaskTime).format('DD')
-    const today = moment().format('DD')
+    const startTaskTime = dateTime(this.periods[0].beginTime)
+    const targetDay = format(startTaskTime, 'DD')
+    const today = format(null, 'DD')
 
     return targetDay === today
   }
 
   start() {
-    this.beginTime = moment().valueOf() //ToDo: wrap moment
+    this.beginTime = valueOf() //ToDo: wrap moment
     this._isActive = true
   }
 
@@ -38,7 +40,7 @@ export default class Task {
     this._isActive = false
     this.periods.push({
       beginTime: this.beginTime,
-      endTime: moment().valueOf()
+      endTime: valueOf()
     })
     this.beginTime = null
   }
