@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 
-import { connect } from 'react-redux';
+import CreatableSelect from 'react-select/lib/Creatable'
 
 import Task from 'models/Task'
 import TasksCases from 'cases/tasks'
@@ -120,11 +120,22 @@ export class Timer extends React.Component {
     }
   }
 
+  handleChangeProject(activeTask, project){
+    this.props.tasksCases.bindProject(activeTask, project)
+  }
+
   render() {
     const time = this.state.time
     const activeTask = this.props.tasksCases.getActiveTask() || {}
 
     if (!activeTask) return;
+
+    //ToDo
+    const options = [
+      { value: 'chocolate', label: 'Chocolate' },
+      { value: 'strawberry', label: 'Strawberry' },
+      { value: 'vanilla', label: 'Vanilla' }
+    ];
 
     return (
       <div>
@@ -135,6 +146,13 @@ export class Timer extends React.Component {
             value={ activeTask.description || '' }
             onChange={ e => this.updateTask(e) }
             disabled={ !activeTask.id }
+          />
+          <CreatableSelect
+            isClearable
+            name='project'
+            value={ 'selectedOption' }
+            onChange={ (project) => this.handleChangeProject(activeTask, project) }
+            options={ options }
           />
         </div>
         <br />

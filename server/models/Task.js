@@ -9,6 +9,10 @@ let TaskSchema = new mongoose.Schema(
       ref: 'User'
     },
     periods: Array,
+    project: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Project'
+    },
     tags: [
       {
         type: mongoose.Schema.Types.ObjectId,

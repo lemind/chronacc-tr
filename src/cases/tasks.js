@@ -113,6 +113,19 @@ export class TasksCases extends Cases {
     return activeTask ? activeTask.getStartTime() : null
   }
 
+  bindProject(task, project){
+    if (project.__isNew__) {
+      // ToDo: isolate transformation
+      project.isNew = true
+      delete project.__isNew__
+    }
+
+    task.project = project
+
+    const { tasksGateway } = this.gateways
+    tasksGateway.updateTask(task)
+  }
+
 }
 
 export default caseFactory(TasksCases, 'TasksCases')
