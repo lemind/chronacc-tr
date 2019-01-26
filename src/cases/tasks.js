@@ -114,12 +114,6 @@ export class TasksCases extends Cases {
   }
 
   bindProject(task, project){
-    if (project.__isNew__) {
-      // ToDo: isolate transformation
-      project.isNew = true
-      delete project.__isNew__
-    }
-
     task.project = project
 
     const { tasksGateway } = this.gateways

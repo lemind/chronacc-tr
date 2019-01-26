@@ -10,10 +10,12 @@ const createProject = async (name) => {
 
 module.exports = {
   getTasks: (req, res, next) => {
-    Task.find({}, (err, tasks) => {
-      if (err) return res.json({ success: false, error: err });
-      return res.json({ result: tasks, success: true });
-    })
+    Task.find({})
+      .populate({ path: 'project' })
+      .exec((err, tasks) => {
+        if (err) return res.json({ success: false, error: err });
+        return res.json({ result: tasks, success: true });
+      })
   },
   addTask: (req, res, next) => {
     const { description, periods, tags, beginTime } = req.body
@@ -31,7 +33,7 @@ module.exports = {
     const { id, description, periods, tags, beginTime } = req.body
 
     let { project } = req.body
-    if (project.isNew){
+    if (project && project.isNew){
       try {
         project = await createProject(project.label)
       } catch(err){
@@ -40,10 +42,10 @@ module.exports = {
       }
     }
 
-    Task.findOneAndUpdate(id,
+    Task.findOneAndUpdate( { _id: id },
       {
         description, periods, tags, beginTime,
-        project: project._id
+        project: project && project._id
       },
       { new: true },
       async (err, task) => {
@@ -58,7 +60,7 @@ module.exports = {
   deleteTask: (req, res, next) => {
     const id = req.params.taskId
 
-    Task.findOneAndDelete(id,
+    Task.findOneAndDelete({ _id: id },
       (err) => {
         if (err) return res.json({ success: false, error: err });
         return res.json({ success: true });

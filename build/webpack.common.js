@@ -62,6 +62,7 @@ module.exports = {
       helpers: path.resolve(__dirname, '../src/helpers/'),
       cases: path.resolve(__dirname, '../src/cases/'),
       'src/redux': path.resolve(__dirname, '../src/redux/'),
+      'api': path.resolve(__dirname, '../src/api/'),
     },
   },
   plugins: [

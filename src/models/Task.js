@@ -9,6 +9,7 @@ export default class Task {
     this._isActive = false
     this.description = ''
     this.periods = []
+    this.project = null
 
     Object.assign(this, initial)
   }

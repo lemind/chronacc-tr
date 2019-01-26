@@ -4,7 +4,7 @@ import 'rxjs/add/operator/catch';
 import { of } from 'rxjs/observable/of';
 
 import { actions } from './tasks.actions';
-import { API } from '../../api/index';
+import { API } from 'api/index';
 
 export const tasksEpics = {};
 
@@ -17,7 +17,7 @@ tasksEpics.fetchTasksEpic = action$ =>
             return actions.fetchTasksSucceeded(response.result)
           })
           .catch(error => of(
-            actions.fetchTasksFailed({
+            actions.requestFailed({
               status: '' + error,
             })
           ));

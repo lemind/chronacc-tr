@@ -2,9 +2,11 @@ import React from 'react'
 import moment from 'moment'
 
 import CreatableSelect from 'react-select/lib/Creatable'
+import Select from 'react-select'
 
 import Task from 'models/Task'
 import TasksCases from 'cases/tasks'
+import ProjectsCases from 'cases/projects'
 import withCases from 'helpers/withCases'
 
 import { tasksActions } from 'src/redux/tasks'
@@ -12,7 +14,7 @@ import { tasksActions } from 'src/redux/tasks'
 const SECOND = 1000
 const TIME_FORMAT = 'HH:mm:ss'
 
-@withCases(TasksCases)
+@withCases(TasksCases, ProjectsCases)
 export class Timer extends React.Component {
   constructor(props) {
     super(props);
@@ -106,6 +108,8 @@ export class Timer extends React.Component {
     if (activeTask && !this.state.taskInProgress) {
       this.timerStart()
     }
+
+    this.props.projectsCases.load()
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -120,8 +124,31 @@ export class Timer extends React.Component {
     }
   }
 
-  handleChangeProject(activeTask, project){
+  handleChangeProject(activeTask, optionProject){
+    const project = {
+      isNew: optionProject.__isNew__,
+      _id: optionProject.value
+    }
     this.props.tasksCases.bindProject(activeTask, project)
+  }
+
+  getProjectsOptions(projects){
+    if (!projects || projects.list.length < 0) return []
+    return projects.list.map(project => {
+      return this.getOptionsFromProject(project)
+    })
+  }
+
+  handleChange(selectedOption){
+    this.setState({ selectedOption });
+    console.log(`Option selected:`, selectedOption);
+  }
+
+  getOptionsFromProject(project){
+    return {
+      value: project._id,
+      label: project.name
+    }
   }
 
   render() {
@@ -130,12 +157,7 @@ export class Timer extends React.Component {
 
     if (!activeTask) return;
 
-    //ToDo
-    const options = [
-      { value: 'chocolate', label: 'Chocolate' },
-      { value: 'strawberry', label: 'Strawberry' },
-      { value: 'vanilla', label: 'Vanilla' }
-    ];
+    const options = this.getProjectsOptions(this.props.projects)
 
     return (
       <div>
@@ -150,8 +172,8 @@ export class Timer extends React.Component {
           <CreatableSelect
             isClearable
             name='project'
-            value={ 'selectedOption' }
-            onChange={ (project) => this.handleChangeProject(activeTask, project) }
+            value={ activeTask.project && this.getOptionsFromProject(activeTask.project) }
+            onChange={ (optionProject) => this.handleChangeProject(activeTask, optionProject) }
             options={ options }
           />
         </div>

@@ -1,27 +1,27 @@
 import { ajax } from 'rxjs/observable/dom/ajax';
 import { API_HOST } from '../config';
 
-export const tasksAPI = {
-  fetchTasks: () => {
-    return ajax.getJSON(`${API_HOST}/tasks`);
+export const projectsAPI = {
+  fetchProjects: () => {
+    return ajax.getJSON(`${API_HOST}/projects`);
   },
-  addTask: (action) => {
+  addProject: (action) => {
     return ajax.post(
-      `${API_HOST}/task`,
+      `${API_HOST}/project`,
       action.task,
       { 'Content-Type': 'application/json' }
     );
   },
-  updateTask: (action) => {
+  updateProject: (action) => {
     return ajax.put(
-      `${API_HOST}/task`,
+      `${API_HOST}/project`,
       action.task,
       { 'Content-Type': 'application/json' }
     );
   },
-  deleteTask: (action) => {
+  deleteProject: (action) => {
     return ajax.delete(
-      `${API_HOST}/task/${ action.taskId }`,
+      `${API_HOST}/project/${ action.projectId }`,
       { 'Content-Type': 'application/json' }
     );
   },

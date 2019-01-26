@@ -19,9 +19,9 @@ module.exports = {
 
   },
   updateProject: (req, res, next) => {
-    const { name } = req.body
+    const { id, name } = req.body
 
-    Project.findOneAndUpdate(id,
+    Project.findOneAndUpdate({ _id: id },
       {
         name
       },
@@ -35,7 +35,7 @@ module.exports = {
   deleteProject: (req, res, next) => {
     const id = req.params.projectId
 
-    Project.findOneAndDelete(id,
+    Project.findOneAndDelete({ _id: id },
       (err) => {
         if (err) return res.json({ success: false, error: err });
         return res.json({ success: true });
