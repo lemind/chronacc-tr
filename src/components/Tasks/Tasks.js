@@ -14,13 +14,15 @@ export class Tasks extends React.Component {
 
     return <div>
       <span>{ task.isActive() && '_____ ' }</span>
-      <span>{ task.id }</span>
+      <span>{ task.dayStart() }</span>
+      <span> | </span>
+      <span>{  task.id && '...' + task.id.substr(task.id.length - 5) }</span>
+      <span> | </span>
+      <span>{ task.project && task.project.name }</span>
       <span> | </span>
       <span>{ task.description }</span>
       <span> | </span>
       <span>{ this.formattedTime(task.getSummTime()) }</span>
-      <span> | </span>
-      <span>{ task.dayStart() }</span>
       <span> | </span>
       <span>
         <button

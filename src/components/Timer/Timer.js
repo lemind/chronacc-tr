@@ -175,6 +175,7 @@ export class Timer extends React.Component {
             value={ activeTask.project && this.getOptionsFromProject(activeTask.project) }
             onChange={ (optionProject) => this.handleChangeProject(activeTask, optionProject) }
             options={ options }
+            isDisabled={ !activeTask.id }
           />
         </div>
         <br />

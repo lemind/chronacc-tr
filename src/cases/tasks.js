@@ -43,7 +43,8 @@ export class TasksCases extends Cases {
     } else {
       if (!task.hasStartedToday()) {
         const initTask = {
-          description: task.description
+          description: task.description,
+          project: task.project
         }
 
         newTask = new Task(initTask)

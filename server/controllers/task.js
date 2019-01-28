@@ -20,14 +20,11 @@ module.exports = {
   addTask: (req, res, next) => {
     const { description, periods, tags, beginTime } = req.body
 
-    saveTask({ description, beginTime, periods, tags })
-
-    function saveTask(obj) {
-      new Task(obj).save((err, task) => {
+    new Task({ description, beginTime, periods, tags })
+      .save((err, task) => {
         if (err) return res.json({ success: false, error: err });
         return res.json({ result: task, success: true });
       })
-    }
   },
   updateTask: async (req, res, next) => {
     const { id, description, periods, tags, beginTime } = req.body
@@ -37,8 +34,7 @@ module.exports = {
       try {
         project = await createProject(project.label)
       } catch(err){
-        // ToDo: check
-        console.log('ERR creating project', err)
+        return res.json({ success: false, error: err });
       }
     }
 
