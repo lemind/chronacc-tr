@@ -9,6 +9,7 @@ export default class Gateway {
     this.dispatch = store.dispatch
     this.observables = null
 
+    //ToDo: unsubscribe
     store.subscribe(() => {
       this.state = store.getState()
     })

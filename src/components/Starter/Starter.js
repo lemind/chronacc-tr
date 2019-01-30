@@ -2,20 +2,17 @@ import React from 'react'
 
 import { Timer } from 'components/Timer/Timer'
 import { Tasks } from 'components/Tasks/Tasks'
+import { Menu } from 'components/common/Menu/Menu'
 
 export class Starter extends React.Component {
-  constructor(props) {
-    super();
-  }
-
   render() {
     return (
-      <header>
+      <div>
         <div>
           <Timer />
-          <Tasks />
         </div>
-      </header>
+        <Tasks /> 
+      </div>
     )
   };
 }

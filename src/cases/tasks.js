@@ -8,6 +8,8 @@ import TasksGateway from 'src/redux/tasks'
 export class TasksCases extends Cases {
   constructor(props){
     super(props);
+
+    this.states$
   }
 
   setObservables(){
@@ -18,9 +20,10 @@ export class TasksCases extends Cases {
     const { tasksGateway } = this.gateways
     tasksGateway.load()
 
-    const states$ = tasksGateway.getState$()
+    this.states$ = tasksGateway.getState$()
 
-    states$.subscribe(data => {
+    //ToDo: unsubscribe
+    this.states$.subscribe(data => {
       const serverList = data.tasks.serverList
       const clientList = []
       if (serverList.length > 0) {
