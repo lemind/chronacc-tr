@@ -15,6 +15,7 @@ export default function withCases(...cases) {
         this.state = {
           observables: {}
         }
+        this.subscribtions = []
       }
 
       componentWillMount() {
@@ -26,7 +27,7 @@ export default function withCases(...cases) {
           const observables = this.cases[caseName].setObservables()
           const state$ = this.cases[caseName].getState$()
 
-          state$.subscribe((val) => {
+          const subscribtion = state$.subscribe((val) => {
             const newObservables = {}
             observables.forEach(item => {
               newObservables[item.store] = {}
@@ -39,7 +40,15 @@ export default function withCases(...cases) {
               observables: newObservables
             })
           })
+          this.subscribtions.push(subscribtion)
         }
+      }
+
+      componentWillUnmount(){
+        this.subscribtions.forEach(subscribtion => {
+          subscribtion.unsubscribe()
+        })
+        this.unsubscribers = []
       }
 
       render() {

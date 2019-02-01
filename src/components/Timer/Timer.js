@@ -127,8 +127,10 @@ export class Timer extends React.Component {
   handleChangeProject(activeTask, optionProject){
     const project = {
       isNew: optionProject.__isNew__,
-      _id: optionProject.value
+      _id: optionProject.value,
+      name: optionProject.label
     }
+
     this.props.tasksCases.bindProject(activeTask, project)
   }
 

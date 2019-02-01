@@ -32,7 +32,7 @@ module.exports = {
     let { project } = req.body
     if (project && project.isNew){
       try {
-        project = await createProject(project.label)
+        project = await createProject(project.name)
       } catch(err){
         return res.json({ success: false, error: err });
       }

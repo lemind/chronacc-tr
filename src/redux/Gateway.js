@@ -13,6 +13,7 @@ export default class Gateway {
     store.subscribe(() => {
       this.state = store.getState()
     })
+
     this.store = store
   }
 

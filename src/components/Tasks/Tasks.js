@@ -59,6 +59,10 @@ export class Tasks extends React.Component {
     this.props.tasksCases.load()
   }
 
+  componentWillUnmount(){
+    // ToDo: unsubscribe here?
+  }
+
   render() {
     let tasks = this.props.tasks ? this.props.tasks.list : []
     tasks = Array.from(tasks)
@@ -76,5 +80,5 @@ export class Tasks extends React.Component {
         ) }
       </div>
     )
-  };
+  }
 }
