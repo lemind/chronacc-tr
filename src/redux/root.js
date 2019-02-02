@@ -1,13 +1,13 @@
-import { combineReducers } from 'redux';
-import { combineEpics } from 'redux-observable';
+import { combineReducers } from 'redux'
+import { combineEpics } from 'redux-observable'
 
-import { tasksReducer, tasksEpics } from './tasks/index';
-import { projectsReducer, projectsEpics } from './projects/index';
+import { tasksReducer, tasksEpics } from './tasks/index'
+import { projectsReducer, projectsEpics } from './projects/index'
 
 export const rootReducer = combineReducers({
   tasks: tasksReducer,
   projects: projectsReducer
-});
+})
 
 export const rootEpic = combineEpics(
   tasksEpics.fetchTasksEpic,
@@ -15,4 +15,4 @@ export const rootEpic = combineEpics(
   tasksEpics.updateTaskEpic,
   tasksEpics.deleteTaskEpic,
   projectsEpics.fetchProjectsEpic
-);
+)

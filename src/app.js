@@ -14,14 +14,13 @@ import { store, persistor } from 'src/redux/store'
 import styles from './app.less'
 
 import { Starter } from './components/Starter/Starter'
+import Root from './components/routing/Root'
 
 const renderApp = () => (
   render(
     <Provider store={ store }>
       <PersistGate loading={ null } persistor={ persistor }>
-        <div className="container">
-          <Starter />
-        </div>
+        <Root />
       </PersistGate>
     </Provider>,
     document.getElementById('app')

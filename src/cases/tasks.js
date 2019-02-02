@@ -8,6 +8,10 @@ import TasksGateway from 'src/redux/tasks'
 export class TasksCases extends Cases {
   constructor(props){
     super(props);
+
+    this.states$
+
+    this.subscribtions = []
   }
 
   setObservables(){
@@ -18,9 +22,9 @@ export class TasksCases extends Cases {
     const { tasksGateway } = this.gateways
     tasksGateway.load()
 
-    const states$ = tasksGateway.getState$()
+    this.states$ = tasksGateway.getState$()
 
-    states$.subscribe(data => {
+    const subscribtion = this.states$.subscribe(data => {
       const serverList = data.tasks.serverList
       const clientList = []
       if (serverList.length > 0) {
@@ -30,6 +34,19 @@ export class TasksCases extends Cases {
         tasksGateway.serverTasksPrepared(clientList)
       }
     })
+
+    this.subscribtions.push(subscribtion)
+  }
+
+  //ToDo: move to Cases
+  unsubscribe(){
+    const { tasksGateway } = this.gateways
+    tasksGateway.unsubscribe()
+
+    this.subscribtions.forEach(subscribtion => {
+      subscribtion.unsubscribe()
+    })
+    this.subscribtions = []
   }
 
   startTask(task){
@@ -43,7 +60,8 @@ export class TasksCases extends Cases {
     } else {
       if (!task.hasStartedToday()) {
         const initTask = {
-          description: task.description
+          description: task.description,
+          project: task.project
         }
 
         newTask = new Task(initTask)
