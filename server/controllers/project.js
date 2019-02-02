@@ -10,20 +10,21 @@ module.exports = {
     })
   },
   addProject: (req, res, next) => {
-    const { name } = req.body
+    const { name, color } = req.body
 
-    new Project({ name }).save((err, project) => {
+    new Project({ name, color }).save((err, project) => {
       if (err) return res.json({ success: false, error: err });
       return res.json({ result: project, success: true });
     })
 
   },
   updateProject: (req, res, next) => {
-    const { id, name } = req.body
+    const { id, name, color } = req.body
 
     Project.findOneAndUpdate({ _id: id },
       {
-        name
+        name,
+        color
       },
       { new: true },
       (err, project) => {

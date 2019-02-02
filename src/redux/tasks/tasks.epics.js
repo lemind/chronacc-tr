@@ -1,12 +1,14 @@
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import { of } from 'rxjs/observable/of';
+import 'rxjs/add/operator/mergeMap'
+import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/catch'
+import { of } from 'rxjs/observable/of'
 
-import { actions } from './tasks.actions';
-import { API } from 'api/index';
+import { actions } from './tasks.actions'
+import { API } from 'api/index'
 
-export const tasksEpics = {};
+export const tasksEpics = {}
+
+const DEBOUNCE_TIME = 250
 
 tasksEpics.fetchTasksEpic = action$ =>
   {
@@ -20,8 +22,8 @@ tasksEpics.fetchTasksEpic = action$ =>
             actions.requestFailed({
               status: '' + error,
             })
-          ));
-      });
+          ))
+      })
   }
 
 tasksEpics.addTaskEpic = action$ =>
@@ -36,13 +38,14 @@ tasksEpics.addTaskEpic = action$ =>
             actions.requestFailed({
               status: '' + error,
             })
-          ));
-      });
+          ))
+      })
   }
 
 tasksEpics.updateTaskEpic = action$ =>
   {
     return action$.ofType('UPDATE_TASK')
+      .debounceTime(DEBOUNCE_TIME)
       .mergeMap(action => {
         return API.updateTask(action)
           .map(res => {
@@ -52,8 +55,8 @@ tasksEpics.updateTaskEpic = action$ =>
             actions.requestFailed({
               status: '' + error,
             })
-          ));
-      });
+          ))
+      })
   }
 
 tasksEpics.deleteTaskEpic = action$ =>
@@ -68,6 +71,6 @@ tasksEpics.deleteTaskEpic = action$ =>
             actions.requestFailed({
               status: '' + error,
             })
-          ));
-      });
+          ))
+      })
   }

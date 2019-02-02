@@ -22,6 +22,7 @@ let TaskSchema = new mongoose.Schema(
   }
 );
 
+// ToDo: reconsider
 TaskSchema.methods.addPeriod = function(period) {
   this.periods.push(period)
   return this.save()

@@ -20,6 +20,6 @@ projectsEpics.fetchProjectsEpic = action$ =>
             actions.requestFailed({
               status: '' + error,
             })
-          ));
-      });
+          ))
+      })
   }

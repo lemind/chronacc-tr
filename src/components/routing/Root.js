@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import { Starter } from 'components/Starter/Starter'
 import { Projects } from 'components/projects/Index/Projects'
-import Header from 'components/common/Header/Header'
+import Header from 'components/common/blocks/Header/Header'
 
 export default class Root extends React.Component {
 
