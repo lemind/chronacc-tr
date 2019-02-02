@@ -60,7 +60,7 @@ export class Tasks extends React.Component {
   }
 
   componentWillUnmount(){
-    // ToDo: unsubscribe here?
+    this.props.tasksCases.unsubscribe && this.props.tasksCases.unsubscribe()
   }
 
   render() {

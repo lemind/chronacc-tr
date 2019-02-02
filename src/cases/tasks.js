@@ -10,6 +10,8 @@ export class TasksCases extends Cases {
     super(props);
 
     this.states$
+
+    this.subscribtions = []
   }
 
   setObservables(){
@@ -22,8 +24,7 @@ export class TasksCases extends Cases {
 
     this.states$ = tasksGateway.getState$()
 
-    //ToDo: unsubscribe
-    this.states$.subscribe(data => {
+    const subscribtion = this.states$.subscribe(data => {
       const serverList = data.tasks.serverList
       const clientList = []
       if (serverList.length > 0) {
@@ -33,6 +34,19 @@ export class TasksCases extends Cases {
         tasksGateway.serverTasksPrepared(clientList)
       }
     })
+
+    this.subscribtions.push(subscribtion)
+  }
+
+  //ToDo: move to Cases
+  unsubscribe(){
+    const { tasksGateway } = this.gateways
+    tasksGateway.unsubscribe()
+
+    this.subscribtions.forEach(subscribtion => {
+      subscribtion.unsubscribe()
+    })
+    this.subscribtions = []
   }
 
   startTask(task){

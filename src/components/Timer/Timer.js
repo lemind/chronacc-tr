@@ -86,6 +86,10 @@ export class Timer extends React.Component {
     })
   }
 
+  isTimerActive(){
+    return this.state.timer
+  }
+
   updateTimeCounter(startTime){
     const diff = moment().diff(moment(startTime))
     const time = startTime
@@ -110,6 +114,10 @@ export class Timer extends React.Component {
     }
 
     this.props.projectsCases.load()
+  }
+
+  componentWillUnmount(){
+    this.isTimerActive() && this.timerStop()
   }
 
   componentDidUpdate(prevProps, prevState) {

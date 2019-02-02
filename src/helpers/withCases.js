@@ -40,6 +40,7 @@ export default function withCases(...cases) {
               observables: newObservables
             })
           })
+
           this.subscribtions.push(subscribtion)
         }
       }
@@ -48,7 +49,7 @@ export default function withCases(...cases) {
         this.subscribtions.forEach(subscribtion => {
           subscribtion.unsubscribe()
         })
-        this.unsubscribers = []
+        this.subscribtions = []
       }
 
       render() {

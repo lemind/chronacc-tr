@@ -8,13 +8,17 @@ export default class Gateway {
     this.state = store.getState()
     this.dispatch = store.dispatch
     this.observables = null
+    this.subscriber = {}
 
-    //ToDo: unsubscribe
-    store.subscribe(() => {
+    this.subscriber = store.subscribe(() => {
       this.state = store.getState()
     })
 
     this.store = store
+  }
+
+  unsubscribe(){
+    this.subscriber.unsubscribe && this.subscriber.unsubscribe()
   }
 
   setObservables(){
