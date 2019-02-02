@@ -1,5 +1,5 @@
-import { ajax } from 'rxjs/observable/dom/ajax';
-import { API_HOST } from '../config';
+import { ajax } from 'rxjs/observable/dom/ajax'
+import { API_HOST, HEADERS } from '../config'
 
 export const projectsAPI = {
   fetchProjects: () => {
@@ -9,21 +9,21 @@ export const projectsAPI = {
     return ajax.post(
       `${API_HOST}/project`,
       action.task,
-      { 'Content-Type': 'application/json' }
-    );
+      HEADERS
+    )
   },
   updateProject: (action) => {
     return ajax.put(
       `${API_HOST}/project`,
-      action.task,
-      { 'Content-Type': 'application/json' }
-    );
+      action.project,
+      HEADERS
+    )
   },
   deleteProject: (action) => {
     return ajax.delete(
       `${API_HOST}/project/${ action.projectId }`,
-      { 'Content-Type': 'application/json' }
-    );
+      HEADERS
+    )
   },
 
 }

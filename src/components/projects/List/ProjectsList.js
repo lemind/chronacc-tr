@@ -12,6 +12,13 @@ export default class ProjectsList extends React.Component {
     this.props.projectsCases.load()
   }
 
+  onColorChange(project) {
+    return (newColor) => {
+      project.color = newColor
+      this.props.projectsCases.updateProject(project)
+    }
+  }
+
   renderProject(project){
     return <div>
       <span>{ project._id }</span>
@@ -19,7 +26,10 @@ export default class ProjectsList extends React.Component {
       <span>{ project.name }</span>
       <span> | </span>
       <span>
-        <ColorBox model={ project } />
+        <ColorBox
+          model={ project }
+          onColorChange={ this.onColorChange(project) }
+        />
       </span>
     </div>
   }

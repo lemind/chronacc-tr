@@ -1,7 +1,6 @@
 
 const Project = require('./../models/Project')
 
-
 module.exports = {
   getProjects: (req, res, next) => {
     Project.find({}, (err, projects) => {
@@ -19,9 +18,9 @@ module.exports = {
 
   },
   updateProject: (req, res, next) => {
-    const { id, name, color } = req.body
+    const { _id, name, color } = req.body
 
-    Project.findOneAndUpdate({ _id: id },
+    Project.findOneAndUpdate({ _id },
       {
         name,
         color
@@ -43,5 +42,4 @@ module.exports = {
       }
     )
   }
-
 }

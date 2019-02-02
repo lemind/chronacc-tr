@@ -23,3 +23,19 @@ projectsEpics.fetchProjectsEpic = action$ =>
           ))
       })
   }
+
+projectsEpics.updateProjectEpic = action$ =>
+  {
+    return action$.ofType('UPDATE_PROJECT')
+      .mergeMap(action => {
+        return API.updateProject(action)
+          .map(res => {
+            return actions.updateProjectSucceeded(res.response.result)
+          })
+          .catch(error => of(
+            actions.requestFailed({
+              status: '' + error,
+            })
+          ))
+      })
+  }

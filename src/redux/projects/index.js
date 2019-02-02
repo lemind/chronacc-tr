@@ -18,7 +18,7 @@ export class ProjectsGateway extends Gateway {
   }
 
   updateProject(project){
-    // this.dispatch(actions.updateProject(project))
+    this.dispatch(actions.updateProject(project))
   }
 
   addProject(newProject){

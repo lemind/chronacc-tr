@@ -19,6 +19,11 @@ export class ProjectsCases extends Cases {
     projectsGateway.load()
   }
 
+  updateProject(project){
+    const { projectsGateway } = this.gateways
+    projectsGateway.updateProject(project)
+  }
+
 }
 
 export default caseFactory(ProjectsCases, 'ProjectsCases')

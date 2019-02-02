@@ -1,4 +1,5 @@
 import React from 'react'
+import isFunction from 'lodash/isFunction'
 
 import Modal from 'components/common/elements/Modal/Modal'
 import ColorSelector from 'components/common/elements/ColorSelector/ColorSelector'
@@ -13,19 +14,21 @@ export default class ColorBox extends React.Component {
   }
 
   openModal() {
-    console.log('OPEN')
-    this.setState({ modalIsOpen: true });
+    this.setState({ modalIsOpen: true })
   }
 
   closeModal() {
-    this.setState({ modalIsOpen: false }, () => {
-      console.log('2222', this.state.modalIsOpen)
-    });
+    this.setState({ modalIsOpen: false })
   }
 
   onCloseModal() {
-    console.log('3333')
-    this.closeModal();
+    this.closeModal()
+  }
+
+  onColorChange(color){
+    const { onColorChange } = this.props
+    isFunction(onColorChange) && onColorChange(color)
+    this.closeModal()
   }
 
   render() {
@@ -56,7 +59,10 @@ export default class ColorBox extends React.Component {
           closeModal={ () => this.closeModal() }
           isOpen={ this.state.modalIsOpen }
         >
-          <ColorSelector model={ model } />
+          <ColorSelector
+            color={ model.color }
+            onColorChange={ (color) => this.onColorChange(color) }
+          />
         </Modal>
       </span>
     )
