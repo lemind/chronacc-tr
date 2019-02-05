@@ -26,7 +26,7 @@ export class ProjectsGateway extends Gateway {
   }
 
   deleteProject(projectId){
-    // this.dispatch(actions.deleteProject(projectId))
+    this.dispatch(actions.deleteProject(projectId))
   }
 
   load(){

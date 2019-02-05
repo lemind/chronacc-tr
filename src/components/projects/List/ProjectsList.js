@@ -23,7 +23,12 @@ export default class ProjectsList extends React.Component {
     return <div>
       <span>{ project._id }</span>
       <span> | </span>
-      <span>{ project.name }</span>
+      <span>
+        <input
+          value={ project.name }
+          onChange={ e => this.updateProject(project, e) }
+        />
+      </span>
       <span> | </span>
       <span>
         <ColorBox
@@ -31,7 +36,22 @@ export default class ProjectsList extends React.Component {
           onColorChange={ this.onColorChange(project) }
         />
       </span>
+      <span> | </span>
+      <span>
+        <button
+          onClick={ () => this.deleteProject(project) }
+        >Delete</button>
+      </span>
     </div>
+  }
+
+  deleteProject(project){
+    this.props.projectsCases.deleteProject(project._id)
+  }
+
+  updateProject(project, e){
+    project.name = e.target.value
+    this.props.projectsCases.updateProject(project)
   }
 
   render() {

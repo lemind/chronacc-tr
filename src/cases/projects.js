@@ -24,6 +24,11 @@ export class ProjectsCases extends Cases {
     projectsGateway.updateProject(project)
   }
 
+  deleteProject(projectId){
+    const { projectsGateway } = this.gateways
+    projectsGateway.deleteProject(projectId)
+  }
+
 }
 
 export default caseFactory(ProjectsCases, 'ProjectsCases')

@@ -44,6 +44,23 @@ export const reducer = (state = initialState, action) => {
         ...state,
         loading: false
       }
+    case 'DELETE_PROJECT':
+      return {
+        ...state,
+        loading: true,
+        list: state.list.filter(item => item._id !== action.projectId)
+      }
+    case 'DELETE_TASK_SUCCEEDED':
+      return {
+        ...state,
+        loading: false
+      }
+    case 'ADD_PROJECT':
+      return {
+        ...state,
+        list: [...state.list, action.project],
+        loading: true
+      }
     default:
       return state
   }

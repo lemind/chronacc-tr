@@ -23,4 +23,13 @@ export const actions = {
       payload: payload
     }
   },
+  deleteProjectSucceeded: () => {
+    return {
+      type: 'DELETE_PROJECT_SUCCEEDED'
+    }
+  },
+  deleteProject: (projectId) => ({
+    type: 'DELETE_PROJECT',
+    projectId
+  })
 }

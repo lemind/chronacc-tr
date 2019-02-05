@@ -39,3 +39,19 @@ projectsEpics.updateProjectEpic = action$ =>
           ))
       })
   }
+
+projectsEpics.deleteProjectEpic = action$ =>
+  {
+    return action$.ofType('DELETE_PROJECT')
+      .mergeMap(action => {
+        return API.deleteProject(action)
+          .map(res => {
+            return actions.deleteProjectSucceeded()
+          })
+          .catch(error => of(
+            actions.requestFailed({
+              status: '' + error,
+            })
+          ))
+      })
+  }
