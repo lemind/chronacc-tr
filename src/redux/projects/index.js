@@ -22,7 +22,7 @@ export class ProjectsGateway extends Gateway {
   }
 
   addProject(newProject){
-    // this.dispatch(actions.addProject(newProject))
+    this.dispatch(actions.addProject(newProject))
   }
 
   deleteProject(projectId){

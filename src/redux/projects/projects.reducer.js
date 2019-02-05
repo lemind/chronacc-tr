@@ -61,6 +61,19 @@ export const reducer = (state = initialState, action) => {
         list: [...state.list, action.project],
         loading: true
       }
+    case 'ADD_PROJECT_SUCCEEDED':
+      newList = state.list.map((item, index) => {
+        if (item._id !== 0) { // 0 - temp id
+          return item
+        }
+
+        return Object.assign(item, {...action.payload})
+      })
+      return {
+        ...state,
+        loading: false,
+        list: newList
+      }
     default:
       return state
   }

@@ -16,5 +16,6 @@ export const rootEpic = combineEpics(
   tasksEpics.deleteTaskEpic,
   projectsEpics.fetchProjectsEpic,
   projectsEpics.updateProjectEpic,
-  projectsEpics.deleteProjectEpic
+  projectsEpics.deleteProjectEpic,
+  projectsEpics.addProjectEpic
 )

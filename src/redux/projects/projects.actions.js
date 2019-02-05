@@ -31,5 +31,15 @@ export const actions = {
   deleteProject: (projectId) => ({
     type: 'DELETE_PROJECT',
     projectId
-  })
+  }),
+  addProject: (project) => ({
+    type: 'ADD_PROJECT',
+    project
+  }),
+  addProjectSucceeded: (payload) => {
+    return {
+      type: 'ADD_PROJECT_SUCCEEDED',
+      payload: payload
+    }
+  },
 }
