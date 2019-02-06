@@ -1,9 +1,9 @@
 import React from 'react'
 
-import { Timer } from 'components/Timer/Timer'
-import { Tasks } from 'components/Tasks/Tasks'
+import Timer from 'components/home/Timer/Timer'
+import Tasks from 'components/home/Tasks/Tasks'
 
-export class Starter extends React.Component {
+export default class Starter extends React.Component {
   render() {
     return (
       <div>
@@ -13,6 +13,6 @@ export class Starter extends React.Component {
         <Tasks /> 
       </div>
     )
-  };
+  }
 }
 

@@ -8,7 +8,7 @@ import TasksCases from 'cases/tasks'
 const TIME_FORMAT = 'HH:mm:ss'
 
 @withCases(TasksCases)
-export class Tasks extends React.Component {
+export default class Tasks extends React.Component {
   renderTask(task){
     const disabled = task.isActive()
 

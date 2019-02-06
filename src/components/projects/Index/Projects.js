@@ -3,7 +3,7 @@ import React from 'react'
 import ProjectsList from 'components/projects/List/ProjectsList'
 import NewProjectForm from 'components/projects/New/NewProjectForm'
 
-export class Projects extends React.Component {
+export default class Projects extends React.Component {
   render() {
     return (
       <div>
