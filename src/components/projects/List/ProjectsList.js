@@ -4,6 +4,7 @@ import withCases from 'helpers/withCases'
 
 import ProjectsCases from 'cases/projects'
 import ColorBox from 'components/common/elements/ColorBox/ColorBox'
+import ConfirmModal from 'components/common/elements/ConfirmModal/ConfirmModal'
 
 @withCases(ProjectsCases)
 export default class ProjectsList extends React.Component {
@@ -38,9 +39,11 @@ export default class ProjectsList extends React.Component {
       </span>
       <span> | </span>
       <span>
-        <button
-          onClick={ () => this.deleteProject(project) }
-        >Delete</button>
+        <ConfirmModal
+          onConfirm={ () => this.deleteProject(project) }
+        >
+          <button>Delete</button>
+        </ConfirmModal>
       </span>
     </div>
   }
