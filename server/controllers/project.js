@@ -1,5 +1,7 @@
+const async = require("async")
 
 const Project = require('./../models/Project')
+const Task = require('./../models/Task')
 
 module.exports = {
   getProjects: (req, res, next) => {
@@ -32,14 +34,29 @@ module.exports = {
       }
     )
   },
-  deleteProject: (req, res, next) => {
+  deleteProject: async (req, res, next) => {
     const id = req.params.projectId
 
-    Project.findOneAndDelete({ _id: id },
-      (err) => {
-        if (err) return res.json({ success: false, error: err });
-        return res.json({ success: true });
+    async.parallel({
+      delete: function(callback) {
+        Project.findOneAndDelete({ _id: id },
+          (err, res) => {
+            callback(err, res);
+          }
+        )
+      },
+      ordersUpdate: function(callback) {
+        Task.update(
+          { project: id },
+          { project: null },
+          (err, res) => {
+            callback(err, res);
+          }
+        )
       }
-    )
+    }, function(err, results) {
+      if (err) return res.json({ success: false, error: err });
+      return res.json({ success: true, results });
+    });
   }
 }

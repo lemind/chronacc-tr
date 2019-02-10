@@ -41,6 +41,7 @@ export default class ProjectsList extends React.Component {
       <span>
         <ConfirmModal
           onConfirm={ () => this.deleteProject(project) }
+          message='Projects for all related tasks will be vanished forever. Are you sure?'
         >
           <button>Delete</button>
         </ConfirmModal>
