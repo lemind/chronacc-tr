@@ -3,10 +3,13 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { of } from 'rxjs/observable/of';
 
-import { actions } from './projects.actions';
+import { debounceUntilChanged } from 'helpers/rxjs'
+import { actions } from './projects.actions'
 import { API } from 'api/index';
 
 export const projectsEpics = {};
+
+const DEBOUNCE_TIME = 250
 
 projectsEpics.fetchProjectsEpic = action$ =>
   {
@@ -27,6 +30,7 @@ projectsEpics.fetchProjectsEpic = action$ =>
 projectsEpics.updateProjectEpic = action$ =>
   {
     return action$.ofType('UPDATE_PROJECT')
+      .pipe(debounceUntilChanged(DEBOUNCE_TIME, 'project', '_id'))
       .mergeMap(action => {
         return API.updateProject(action)
           .map(res => {
