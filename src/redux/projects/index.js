@@ -18,15 +18,15 @@ export class ProjectsGateway extends Gateway {
   }
 
   updateProject(project){
-    // this.dispatch(actions.updateProject(project))
+    this.dispatch(actions.updateProject(project))
   }
 
   addProject(newProject){
-    // this.dispatch(actions.addProject(newProject))
+    this.dispatch(actions.addProject(newProject))
   }
 
   deleteProject(projectId){
-    // this.dispatch(actions.deleteProject(projectId))
+    this.dispatch(actions.deleteProject(projectId))
   }
 
   load(){

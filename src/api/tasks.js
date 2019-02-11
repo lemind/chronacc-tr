@@ -1,5 +1,5 @@
 import { ajax } from 'rxjs/observable/dom/ajax';
-import { API_HOST } from '../config';
+import { API_HOST, HEADERS } from '../config';
 
 export const tasksAPI = {
   fetchTasks: () => {
@@ -9,20 +9,20 @@ export const tasksAPI = {
     return ajax.post(
       `${API_HOST}/task`,
       action.task,
-      { 'Content-Type': 'application/json' }
+      HEADERS
     );
   },
   updateTask: (action) => {
     return ajax.put(
       `${API_HOST}/task`,
       action.task,
-      { 'Content-Type': 'application/json' }
+      HEADERS
     );
   },
   deleteTask: (action) => {
     return ajax.delete(
       `${API_HOST}/task/${ action.taskId }`,
-      { 'Content-Type': 'application/json' }
+      HEADERS
     );
   },
 

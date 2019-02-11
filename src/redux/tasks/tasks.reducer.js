@@ -31,6 +31,7 @@ export const reducer = (state = initialState, action) => {
     case 'DELETE_TASK':
       return {
         ...state,
+        loading: true,
         list: state.list.filter(item => item.id !== action.taskId)
       }
     case 'FETCH_TASKS':

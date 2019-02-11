@@ -8,19 +8,29 @@ import TasksCases from 'cases/tasks'
 const TIME_FORMAT = 'HH:mm:ss'
 
 @withCases(TasksCases)
-export class Tasks extends React.Component {
+export default class Tasks extends React.Component {
   renderTask(task){
     const disabled = task.isActive()
 
+    const projectNameStyle = {
+      background: `#${ task.project ? task.project.color : 'FFF' }`,
+      color: '#FFF',
+      padding: '5px'
+    }
+
     return <div>
       <span>{ task.isActive() && '_____ ' }</span>
-      <span>{ task.id }</span>
+      <span>{ task.dayStart() }</span>
+      <span> | </span>
+      <span>{  task.id && '...' + task.id.substr(task.id.length - 5) }</span>
+      <span> | </span>
+      <span
+        style={ projectNameStyle }
+      >{ task.project && task.project.name }</span>
       <span> | </span>
       <span>{ task.description }</span>
       <span> | </span>
       <span>{ this.formattedTime(task.getSummTime()) }</span>
-      <span> | </span>
-      <span>{ task.dayStart() }</span>
       <span> | </span>
       <span>
         <button
@@ -57,6 +67,10 @@ export class Tasks extends React.Component {
     this.props.tasksCases.load()
   }
 
+  componentWillUnmount(){
+    this.props.tasksCases.unsubscribe && this.props.tasksCases.unsubscribe()
+  }
+
   render() {
     let tasks = this.props.tasks ? this.props.tasks.list : []
     tasks = Array.from(tasks)
@@ -74,5 +88,5 @@ export class Tasks extends React.Component {
         ) }
       </div>
     )
-  };
+  }
 }

@@ -15,7 +15,7 @@ const SECOND = 1000
 const TIME_FORMAT = 'HH:mm:ss'
 
 @withCases(TasksCases, ProjectsCases)
-export class Timer extends React.Component {
+export default class Timer extends React.Component {
   constructor(props) {
     super(props);
 
@@ -86,6 +86,10 @@ export class Timer extends React.Component {
     })
   }
 
+  isTimerActive(){
+    return this.state.timer
+  }
+
   updateTimeCounter(startTime){
     const diff = moment().diff(moment(startTime))
     const time = startTime
@@ -112,6 +116,10 @@ export class Timer extends React.Component {
     this.props.projectsCases.load()
   }
 
+  componentWillUnmount(){
+    this.isTimerActive() && this.timerStop()
+  }
+
   componentDidUpdate(prevProps, prevState) {
     const activeTask = this.props.tasksCases.getActiveTask()
 
@@ -127,8 +135,10 @@ export class Timer extends React.Component {
   handleChangeProject(activeTask, optionProject){
     const project = {
       isNew: optionProject.__isNew__,
-      _id: optionProject.value
+      _id: optionProject.value,
+      name: optionProject.label
     }
+
     this.props.tasksCases.bindProject(activeTask, project)
   }
 
@@ -141,7 +151,6 @@ export class Timer extends React.Component {
 
   handleChange(selectedOption){
     this.setState({ selectedOption });
-    console.log(`Option selected:`, selectedOption);
   }
 
   getOptionsFromProject(project){
@@ -175,6 +184,7 @@ export class Timer extends React.Component {
             value={ activeTask.project && this.getOptionsFromProject(activeTask.project) }
             onChange={ (optionProject) => this.handleChangeProject(activeTask, optionProject) }
             options={ options }
+            isDisabled={ !activeTask.id }
           />
         </div>
         <br />
