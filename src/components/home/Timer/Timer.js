@@ -15,7 +15,7 @@ const SECOND = 1000
 const TIME_FORMAT = 'HH:mm:ss'
 
 @withCases(TasksCases, ProjectsCases)
-export class Timer extends React.Component {
+export default class Timer extends React.Component {
   constructor(props) {
     super(props);
 
@@ -151,7 +151,6 @@ export class Timer extends React.Component {
 
   handleChange(selectedOption){
     this.setState({ selectedOption });
-    console.log(`Option selected:`, selectedOption);
   }
 
   getOptionsFromProject(project){

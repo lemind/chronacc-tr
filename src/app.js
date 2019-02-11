@@ -13,7 +13,6 @@ import { store, persistor } from 'src/redux/store'
 
 import styles from './app.less'
 
-import { Starter } from './components/Starter/Starter'
 import Root from './components/routing/Root'
 
 const renderApp = () => (

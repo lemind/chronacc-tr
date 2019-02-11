@@ -8,9 +8,15 @@ import TasksCases from 'cases/tasks'
 const TIME_FORMAT = 'HH:mm:ss'
 
 @withCases(TasksCases)
-export class Tasks extends React.Component {
+export default class Tasks extends React.Component {
   renderTask(task){
     const disabled = task.isActive()
+
+    const projectNameStyle = {
+      background: `#${ task.project ? task.project.color : 'FFF' }`,
+      color: '#FFF',
+      padding: '5px'
+    }
 
     return <div>
       <span>{ task.isActive() && '_____ ' }</span>
@@ -18,7 +24,9 @@ export class Tasks extends React.Component {
       <span> | </span>
       <span>{  task.id && '...' + task.id.substr(task.id.length - 5) }</span>
       <span> | </span>
-      <span>{ task.project && task.project.name }</span>
+      <span
+        style={ projectNameStyle }
+      >{ task.project && task.project.name }</span>
       <span> | </span>
       <span>{ task.description }</span>
       <span> | </span>

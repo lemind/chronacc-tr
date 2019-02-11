@@ -1,12 +1,15 @@
 import React from 'react'
 
-export class Projects extends React.Component {
+import ProjectsList from 'components/projects/List/ProjectsList'
+import NewProjectForm from 'components/projects/New/NewProjectForm'
+
+export default class Projects extends React.Component {
   render() {
     return (
       <div>
-        Projects
+        <NewProjectForm />
+        <ProjectsList />
       </div>
     )
   }
 }
-
