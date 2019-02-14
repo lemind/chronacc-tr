@@ -1,15 +1,11 @@
 import React from 'react'
 import moment from 'moment'
-
 import CreatableSelect from 'react-select/lib/Creatable'
-import Select from 'react-select'
 
-import Task from 'models/Task'
+import withCases from 'helpers/withCases'
 import TasksCases from 'cases/tasks'
 import ProjectsCases from 'cases/projects'
-import withCases from 'helpers/withCases'
 
-import { tasksActions } from 'src/redux/tasks'
 
 const SECOND = 1000
 const TIME_FORMAT = 'HH:mm:ss'
@@ -49,8 +45,8 @@ export default class Timer extends React.Component {
   timerStart(){
     const { tasksCases } = this.props
 
-    const startTime = this.props.tasksCases.getActiveTaskTime()
-    const activeTask = this.props.tasksCases.getActiveTask()
+    const startTime = tasksCases.getActiveTaskTime()
+    const activeTask = tasksCases.getActiveTask()
 
     if (!activeTask || this.state.timer) return
 
@@ -147,10 +143,6 @@ export default class Timer extends React.Component {
     return projects.list.map(project => {
       return this.getOptionsFromProject(project)
     })
-  }
-
-  handleChange(selectedOption){
-    this.setState({ selectedOption });
   }
 
   getOptionsFromProject(project){

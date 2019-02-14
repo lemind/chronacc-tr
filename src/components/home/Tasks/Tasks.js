@@ -2,13 +2,41 @@ import React from 'react'
 import moment from 'moment'
 
 import withCases from 'helpers/withCases'
-
+import Modal from 'components/common/elements/Modal/Modal'
 import TasksCases from 'cases/tasks'
+import EditTaskForm from '../EditTaskForm/EditTaskForm';
 
 const TIME_FORMAT = 'HH:mm:ss'
 
 @withCases(TasksCases)
 export default class Tasks extends React.Component {
+  constructor() {
+    super()
+
+    this.state = {
+      isEditModalOpen: false,
+      currentEditableTask: null
+    }
+  }
+
+  openEditTaskModal(task) {
+    this.setState({
+      isEditModalOpen: true,
+      currentEditableTask: task
+    })
+  }
+
+  closeEditTaskModal() {
+    this.setState({
+      isEditModalOpen: false,
+      currentEditableTask: null
+    })
+  }
+
+  onCloseEditTaskModal() {
+    this.closeEditTaskModal()
+  }
+
   renderTask(task){
     const disabled = task.isActive()
 
@@ -37,6 +65,13 @@ export default class Tasks extends React.Component {
           onClick={ () => this.continueTask(task) }
           disabled={ disabled }
         >Continue</button>
+      </span>
+      <span> | </span>
+      <span>
+        <button
+          onClick={ () => this.openEditTaskModal(task) }
+          disabled={ disabled }
+        >Edit</button>
       </span>
       <span> | </span>
       <span>
@@ -86,6 +121,16 @@ export default class Tasks extends React.Component {
             { this.renderTask(task) }
           </div>
         ) }
+
+        <Modal
+          onClose={ () => this.onCloseEditTaskModal() }
+          closeModal={ () => this.closeEditTaskModal() }
+          isOpen={ this.state.isEditModalOpen }
+        >
+          <EditTaskForm
+            task={ this.state.currentEditableTask }
+          />
+        </Modal>
       </div>
     )
   }

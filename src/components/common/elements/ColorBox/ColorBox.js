@@ -9,16 +9,16 @@ export default class ColorBox extends React.Component {
     super()
 
     this.state = {
-      modalIsOpen: false
+      isModalOpen: false
     }
   }
 
   openModal() {
-    this.setState({ modalIsOpen: true })
+    this.setState({ isModalOpen: true })
   }
 
   closeModal() {
-    this.setState({ modalIsOpen: false })
+    this.setState({ isModalOpen: false })
   }
 
   onCloseModal() {
@@ -57,7 +57,7 @@ export default class ColorBox extends React.Component {
         <Modal
           onClose={ () => this.onCloseModal() }
           closeModal={ () => this.closeModal() }
-          isOpen={ this.state.modalIsOpen }
+          isOpen={ this.state.isModalOpen }
         >
           <ColorSelector
             color={ model.color }
