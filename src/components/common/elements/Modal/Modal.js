@@ -14,9 +14,7 @@ const REACT_MODAL_STYLES = {
     transform    : 'translate(-50%, -50%)',
     maxWidth     : '1377px',
     width        : 'auto',
-    maxHeight    : '90%',
-    minWidth     : '600px',
-    minHeight    : '400px'
+    maxHeight    : '90%'
   }
 }
 

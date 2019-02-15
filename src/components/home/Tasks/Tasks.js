@@ -4,7 +4,8 @@ import moment from 'moment'
 import withCases from 'helpers/withCases'
 import Modal from 'components/common/elements/Modal/Modal'
 import TasksCases from 'cases/tasks'
-import EditTaskForm from '../EditTaskForm/EditTaskForm';
+import EditTaskForm from 'components/home/EditTaskForm/EditTaskForm'
+import ConfirmModal from 'components/common/elements/ConfirmModal/ConfirmModal'
 
 const TIME_FORMAT = 'HH:mm:ss'
 
@@ -75,10 +76,13 @@ export default class Tasks extends React.Component {
       </span>
       <span> | </span>
       <span>
-        <button
-          onClick={ () => this.deleteTask(task) }
-          disabled={ disabled }
-        >Delete</button>
+        <ConfirmModal
+          onConfirm={ () => this.deleteTask(task) }
+        >
+          <button
+            disabled={ disabled }
+          >Delete</button>
+        </ConfirmModal>
       </span>
       <span>{ task.isActive() && ' _____' }</span>
     </div>
