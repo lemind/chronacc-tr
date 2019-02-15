@@ -2,9 +2,7 @@ import { actions } from './projects.actions'
 import { reducer } from './projects.reducer'
 import { projectsEpics } from './projects.epics'
 import { gatewayFactory } from 'helpers/gateway'
-import Project from 'models/Project'
 import Gateway from 'src/redux/Gateway'
-
 
 export {
   actions as projectsActions,

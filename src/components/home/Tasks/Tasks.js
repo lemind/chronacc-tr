@@ -47,11 +47,12 @@ export default class Tasks extends React.Component {
       padding: '5px'
     }
 
+    const DIGITS_SHOW_FROM_ID = 5
     return <div>
       <span>{ task.isActive() && '_____ ' }</span>
       <span>{ task.dayStart() }</span>
       <span> | </span>
-      <span>{  task.id && '...' + task.id.substr(task.id.length - 5) }</span>
+      <span>{  task.id && '...' + task.id.substr(task.id.length - DIGITS_SHOW_FROM_ID) }</span>
       <span> | </span>
       <span
         style={ projectNameStyle }

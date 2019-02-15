@@ -4,6 +4,7 @@ import CreatableSelect from 'react-select/lib/Creatable'
 import withCases from 'helpers/withCases'
 import TasksCases from 'cases/tasks'
 import ProjectsCases from 'cases/projects'
+import { makeOptionsFromItem } from 'helpers/select'
 
 @withCases(TasksCases, ProjectsCases)
 export default class EditTaskForm extends React.Component {
@@ -22,18 +23,8 @@ export default class EditTaskForm extends React.Component {
     this.props.tasksCases.bindProject(task, project)
   }
 
-  getProjectsOptions(projects){
-    if (!projects || projects.list.length < 0) return []
-    return projects.list.map(project => {
-      return this.getOptionsFromProject(project)
-    })
-  }
-
-  getOptionsFromProject(project){
-    return {
-      value: project._id,
-      label: project.name
-    }
+  getProjectsLikeOptions(){
+    return this.props.projectsCases.getListLikeOptions()
   }
 
   updateTask(e){
@@ -47,7 +38,7 @@ export default class EditTaskForm extends React.Component {
 
     if (!task) return null
 
-    const options = this.getProjectsOptions(this.props.projects)
+    const options = this.getProjectsLikeOptions()
 
     return (
       <div>
@@ -58,7 +49,7 @@ export default class EditTaskForm extends React.Component {
         <CreatableSelect
           isClearable
           name='project'
-          value={ task.project && this.getOptionsFromProject(task.project) }
+          value={ task.project && makeOptionsFromItem(task.project) }
           onChange={ (optionProject) => this.handleChangeProject(task, optionProject) }
           options={ options }
         />
