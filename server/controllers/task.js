@@ -18,11 +18,14 @@ module.exports = {
       })
   },
   addTask: (req, res, next) => {
-    const { description, periods, tags, beginTime } = req.body
+    const { description, periods, tags, beginTime, project } = req.body
 
-    new Task({ description, beginTime, periods, tags })
-      .save((err, task) => {
+    new Task({ description, beginTime, periods, tags, project })
+      .save( async (err, task) => {
         if (err) return res.json({ success: false, error: err });
+
+        await Task.populate(task, { path: 'project' })
+
         return res.json({ result: task, success: true });
       })
   },

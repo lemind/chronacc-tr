@@ -1,15 +1,11 @@
 import React from 'react'
 import moment from 'moment'
-
 import CreatableSelect from 'react-select/lib/Creatable'
-import Select from 'react-select'
 
-import Task from 'models/Task'
+import withCases from 'helpers/withCases'
 import TasksCases from 'cases/tasks'
 import ProjectsCases from 'cases/projects'
-import withCases from 'helpers/withCases'
-
-import { tasksActions } from 'src/redux/tasks'
+import { makeOptionsFromItem } from 'helpers/select'
 
 const SECOND = 1000
 const TIME_FORMAT = 'HH:mm:ss'
@@ -49,8 +45,8 @@ export default class Timer extends React.Component {
   timerStart(){
     const { tasksCases } = this.props
 
-    const startTime = this.props.tasksCases.getActiveTaskTime()
-    const activeTask = this.props.tasksCases.getActiveTask()
+    const startTime = tasksCases.getActiveTaskTime()
+    const activeTask = tasksCases.getActiveTask()
 
     if (!activeTask || this.state.timer) return
 
@@ -142,22 +138,8 @@ export default class Timer extends React.Component {
     this.props.tasksCases.bindProject(activeTask, project)
   }
 
-  getProjectsOptions(projects){
-    if (!projects || projects.list.length < 0) return []
-    return projects.list.map(project => {
-      return this.getOptionsFromProject(project)
-    })
-  }
-
-  handleChange(selectedOption){
-    this.setState({ selectedOption });
-  }
-
-  getOptionsFromProject(project){
-    return {
-      value: project._id,
-      label: project.name
-    }
+  getProjectsLikeOptions(){
+    return this.props.projectsCases.getListLikeOptions()
   }
 
   render() {
@@ -166,7 +148,7 @@ export default class Timer extends React.Component {
 
     if (!activeTask) return;
 
-    const options = this.getProjectsOptions(this.props.projects)
+    const options = this.getProjectsLikeOptions()
 
     return (
       <div>
@@ -181,7 +163,7 @@ export default class Timer extends React.Component {
           <CreatableSelect
             isClearable
             name='project'
-            value={ activeTask.project && this.getOptionsFromProject(activeTask.project) }
+            value={ activeTask.project && makeOptionsFromItem(activeTask.project) }
             onChange={ (optionProject) => this.handleChangeProject(activeTask, optionProject) }
             options={ options }
             isDisabled={ !activeTask.id }
