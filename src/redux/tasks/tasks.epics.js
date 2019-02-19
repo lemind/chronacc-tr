@@ -15,7 +15,7 @@ tasksEpics.fetchTasksEpic = action$ =>
   {
     return action$.ofType('FETCH_TASKS')
       .mergeMap(action => {
-        return API.fetchTasks()
+        return API.fetchTasks(action)
           .map(response => {
             return actions.fetchTasksSucceeded(response.result)
           })

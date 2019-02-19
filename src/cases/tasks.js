@@ -15,7 +15,10 @@ export class TasksCases extends Cases {
   }
 
   setObservables(){
-    return [{store: 'tasks', variables: ['list']}] 
+    return [{
+      store: 'tasks',
+      variables: ['list', 'hasMore', 'loading']
+    }]
   }
 
   load(){
@@ -25,13 +28,17 @@ export class TasksCases extends Cases {
     this.states$ = tasksGateway.getState$()
 
     const subscribtion = this.states$.subscribe(data => {
-      const serverList = data.tasks.serverList
+      const { list, ...serverData } = data.tasks.serverData
+
       const clientList = []
-      if (serverList.length > 0) {
-        serverList.forEach(item => {
+      if (list && list.length > 0) {
+        list.forEach(item => {
           clientList.push(new Task(item))
         })
-        tasksGateway.serverTasksPrepared(clientList)
+        tasksGateway.serverTasksPrepared({
+          list: clientList,
+          ...serverData
+        })
       }
     })
 

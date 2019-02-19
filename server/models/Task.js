@@ -19,6 +19,8 @@ let TaskSchema = new mongoose.Schema(
         ref: 'Tag'
       }
     ]
+  },{
+    timestamps: true
   }
 );
 

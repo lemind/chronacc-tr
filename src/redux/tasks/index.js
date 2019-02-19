@@ -30,7 +30,13 @@ export class TasksGateway extends Gateway {
   }
 
   load(){
-    this.dispatch(actions.fetchTasks())
+    const last = this.state.tasks.list[this.state.tasks.list.length - 1]
+    const lastId = last && last._id
+    const params = {}
+    if (lastId) {
+      params.lastId = lastId
+    }
+    this.dispatch(actions.fetchTasks({ ...params }))
   }
 
   serverTasksPrepared(tasks){
