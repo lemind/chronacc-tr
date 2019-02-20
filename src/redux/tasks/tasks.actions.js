@@ -8,15 +8,20 @@ const serverDataTransform = (serverData) => {
 
 const tasksTransform = (serverTasks) => {
   const clientTasks = []
-  serverTasks.forEach(task => {
+  const { list, ...other } = serverTasks
+  serverTasks.list.forEach(task => {
     clientTasks.push(serverDataTransform(task))
   })
-  return clientTasks
+  return { list: clientTasks, ...other }
 }
 
 export const actions = {
-  fetchTasks: () => ({
-    type: 'FETCH_TASKS'
+  fetchTasks: (params) => ({
+    type: 'FETCH_TASKS',
+    params
+  }),
+  clearTasks: () => ({
+    type: 'CLEAR_TASKS'
   }),
   fetchTasksSucceeded: (payload) => {
     const clientTasks = tasksTransform(payload)

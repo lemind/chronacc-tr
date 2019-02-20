@@ -8,13 +8,30 @@ const createProject = async (name) => {
   return newProject
 }
 
+const NUMBER_ITEMS_PER_LOAD = 20
+
 module.exports = {
   getTasks: (req, res, next) => {
-    Task.find({})
+
+    let condition = {}
+    if (req.query.lastId) {
+      condition = { '_id': { $lt: req.query.lastId }}
+    }
+
+    Task.find(condition)
+      .limit(NUMBER_ITEMS_PER_LOAD)
+      .sort( '-_id' )
       .populate({ path: 'project' })
       .exec((err, tasks) => {
         if (err) return res.json({ success: false, error: err });
-        return res.json({ result: tasks, success: true });
+
+        return res.json({
+          result: {
+            list: tasks,
+            hasMore: tasks.length === NUMBER_ITEMS_PER_LOAD
+          },
+          success: true
+        });
       })
   },
   addTask: (req, res, next) => {

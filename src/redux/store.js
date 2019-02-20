@@ -43,7 +43,8 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const store = createStore(
-  persistedReducer,
+  // persistedReducer,
+  rootReducer,
   middleware
 )
-export const persistor = persistStore(store)
+// export const persistor = persistStore(store)

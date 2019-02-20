@@ -28,6 +28,8 @@ export class ProjectsGateway extends Gateway {
   }
 
   load(){
+    if(this.state.projects.list.length > 0) return
+
     this.dispatch(actions.fetchProjects())
   }
 

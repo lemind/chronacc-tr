@@ -1,9 +1,13 @@
-import { ajax } from 'rxjs/observable/dom/ajax';
-import { API_HOST, HEADERS } from '../config';
+import { ajax } from 'rxjs/observable/dom/ajax'
+import { API_HOST, HEADERS } from '../config'
+import queryString from 'query-string'
 
 export const tasksAPI = {
-  fetchTasks: () => {
-    return ajax.getJSON(`${API_HOST}/tasks`);
+  fetchTasks: (action) => {
+    const { params } = action
+
+    const paramsStr = queryString.stringify(params)
+    return ajax.getJSON(`${API_HOST}/tasks?${paramsStr}`)
   },
   addTask: (action) => {
     return ajax.post(

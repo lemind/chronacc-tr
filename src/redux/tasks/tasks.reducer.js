@@ -1,9 +1,10 @@
 
 export const initialState = {
   list: [],
-  serverList: [],
+  serverData: {},
   loading: false,
   error: null,
+  hasMore: true
 };
 
 export const reducer = (state = initialState, action) => {
@@ -12,7 +13,7 @@ export const reducer = (state = initialState, action) => {
     case 'ADD_TASK':
       return {
         ...state,
-        list: [...state.list, action.task],
+        list: [action.task, ...state.list],
         loading: true
       }
     case 'UPDATE_TASK':
@@ -42,14 +43,20 @@ export const reducer = (state = initialState, action) => {
     case 'FETCH_TASKS_SUCCEEDED':
       return {
         ...state,
-        serverList: action.payload,
-        loading: false
+        serverData: action.payload
+      }
+    case 'CLEAR_TASKS':
+      return {
+        ...state,
+        list: []
       }
     case 'SERVER_TASKS_PREPARED':
       return {
         ...state,
-        serverList: [],
-        list: action.payload
+        loading: false,
+        serverData: {},
+        list: [...state.list, ...action.payload.list],
+        hasMore: action.payload.hasMore
       }
     case 'ADD_TASK_SUCCEEDED':
       newList = state.list.map((item, index) => {

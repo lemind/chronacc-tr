@@ -6,6 +6,7 @@ import Modal from 'components/common/elements/Modal/Modal'
 import TasksCases from 'cases/tasks'
 import EditTaskForm from 'components/home/EditTaskForm/EditTaskForm'
 import ConfirmModal from 'components/common/elements/ConfirmModal/ConfirmModal'
+import ScrollLoad from '../../common/elements/ScrollLoad/ScrollLoad';
 
 const TIME_FORMAT = 'HH:mm:ss'
 
@@ -104,28 +105,43 @@ export default class Tasks extends React.Component {
   }
 
   componentWillMount(){
-    this.props.tasksCases.load()
+    this.props.tasksCases.load(true)
   }
 
   componentWillUnmount(){
     this.props.tasksCases.unsubscribe && this.props.tasksCases.unsubscribe()
   }
 
+  loadMore(){
+    if (!this.props.tasks) return
+
+    if (!this.props.tasks.loading
+      && this.props.tasks.list.length > 0) {
+      this.props.tasksCases.load()
+    }
+  }
+
   render() {
     let tasks = this.props.tasks ? this.props.tasks.list : []
     tasks = Array.from(tasks)
-    tasks.reverse()
+
+    const hasMore = this.props.tasks ? this.props.tasks.hasMore : true
 
     return (
       <div>
         <br />
         <h5>Tasks</h5>
-        { tasks.map((task, index) =>
-          <div key={ task.id }>
-            <br />
-            { this.renderTask(task) }
-          </div>
-        ) }
+        <ScrollLoad
+          loadMore={ () => this.loadMore() }
+          hasMore={ hasMore }
+        >
+          { tasks.map((task, index) =>
+            <div key={ task.id }>
+              <br />
+              { this.renderTask(task) }
+            </div>
+          ) }
+        </ScrollLoad>
 
         <Modal
           onClose={ () => this.onCloseEditTaskModal() }

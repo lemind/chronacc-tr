@@ -2,7 +2,7 @@
 export const initialState = {
   list: [],
   loading: false,
-  error: null,
+  error: null
 };
 
 export const reducer = (state = initialState, action) => {
