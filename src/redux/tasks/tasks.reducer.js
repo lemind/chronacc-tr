@@ -13,7 +13,7 @@ export const reducer = (state = initialState, action) => {
     case 'ADD_TASK':
       return {
         ...state,
-        list: [...state.list, action.task],
+        list: [action.task, ...state.list],
         loading: true
       }
     case 'UPDATE_TASK':
@@ -44,6 +44,11 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         serverData: action.payload
+      }
+    case 'CLEAR_TASKS':
+      return {
+        ...state,
+        list: []
       }
     case 'SERVER_TASKS_PREPARED':
       return {

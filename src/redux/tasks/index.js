@@ -29,7 +29,8 @@ export class TasksGateway extends Gateway {
     this.dispatch(actions.deleteTask(taskId))
   }
 
-  load(){
+  load(init){
+    init && this.dispatch(actions.clearTasks())
     const last = this.state.tasks.list[this.state.tasks.list.length - 1]
     const lastId = last && last._id
     const params = {}

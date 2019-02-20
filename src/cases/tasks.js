@@ -21,9 +21,9 @@ export class TasksCases extends Cases {
     }]
   }
 
-  load(){
+  load(init){
     const { tasksGateway } = this.gateways
-    tasksGateway.load()
+    tasksGateway.load(init)
 
     this.states$ = tasksGateway.getState$()
 

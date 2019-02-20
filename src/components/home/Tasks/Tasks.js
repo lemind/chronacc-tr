@@ -105,7 +105,7 @@ export default class Tasks extends React.Component {
   }
 
   componentWillMount(){
-    this.props.tasksCases.load()
+    this.props.tasksCases.load(true)
   }
 
   componentWillUnmount(){
@@ -130,7 +130,7 @@ export default class Tasks extends React.Component {
     return (
       <div>
         <br />
-        <h5>Tasks { hasMore ? 'has more' :'no more ones' }</h5>
+        <h5>Tasks</h5>
         <ScrollLoad
           loadMore={ () => this.loadMore() }
           hasMore={ hasMore }

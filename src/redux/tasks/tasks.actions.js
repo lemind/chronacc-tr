@@ -20,6 +20,9 @@ export const actions = {
     type: 'FETCH_TASKS',
     params
   }),
+  clearTasks: () => ({
+    type: 'CLEAR_TASKS'
+  }),
   fetchTasksSucceeded: (payload) => {
     const clientTasks = tasksTransform(payload)
     return {
