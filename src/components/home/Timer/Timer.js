@@ -120,7 +120,7 @@ export default class Timer extends React.Component {
     const activeTask = this.props.tasksCases.getActiveTask()
 
     if (activeTask && activeTask._id !== this.state.activeTaskId) {
-      if (prevState.activeTaskId) {
+      if (prevState.activeTaskId != null) {
         this.timerStop()
       }
 

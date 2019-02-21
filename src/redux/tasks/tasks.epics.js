@@ -46,7 +46,7 @@ tasksEpics.addTaskEpic = action$ =>
 tasksEpics.updateTaskEpic = action$ =>
   {
     return action$.ofType('UPDATE_TASK')
-      .pipe(debounceUntilChanged(DEBOUNCE_TIME, 'task', '_id'))
+      //.pipe(debounceUntilChanged(DEBOUNCE_TIME, 'task', '_id'))
       .mergeMap(action => {
         return API.updateTask(action)
           .map(res => {

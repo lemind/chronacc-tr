@@ -30,7 +30,7 @@ projectsEpics.fetchProjectsEpic = action$ =>
 projectsEpics.updateProjectEpic = action$ =>
   {
     return action$.ofType('UPDATE_PROJECT')
-      .pipe(debounceUntilChanged(DEBOUNCE_TIME, 'project', '_id'))
+      //.pipe(debounceUntilChanged(DEBOUNCE_TIME, 'project', '_id'))
       .mergeMap(action => {
         return API.updateProject(action)
           .map(res => {
