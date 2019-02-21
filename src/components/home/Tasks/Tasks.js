@@ -101,7 +101,7 @@ export default class Tasks extends React.Component {
   }
 
   deleteTask(task){
-    this.props.tasksCases.deleteTask(task.id)
+    this.props.tasksCases.deleteTask(task._id)
   }
 
   componentWillMount(){
