@@ -4,7 +4,7 @@ import { format, dateTime, valueOf } from 'helpers/dateTime'
 
 export default class Task {
   constructor(initial) {
-    this.id = 0
+    this._id = 0
     this.beginTime = null // current period
     this._isActive = false
     this.description = ''
