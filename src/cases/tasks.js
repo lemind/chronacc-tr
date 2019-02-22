@@ -21,6 +21,22 @@ export class TasksCases extends Cases {
     }]
   }
 
+  transformServerData(data){
+    const { list, ...serverData } = data.tasks.serverData
+
+    const clientList = []
+    if (list && list.length > 0) {
+      list.forEach(item => {
+        clientList.push(new Task(item))
+      })
+      return {
+        list: clientList,
+        ...serverData
+      }
+    }
+    return null
+  }
+
   load(init){
     const { tasksGateway } = this.gateways
     tasksGateway.load(init)
@@ -28,18 +44,9 @@ export class TasksCases extends Cases {
     this.states$ = tasksGateway.getState$()
 
     const subscribtion = this.states$.subscribe(data => {
-      const { list, ...serverData } = data.tasks.serverData
+      const transformedData = this.transformServerData(data)
 
-      const clientList = []
-      if (list && list.length > 0) {
-        list.forEach(item => {
-          clientList.push(new Task(item))
-        })
-        tasksGateway.serverTasksPrepared({
-          list: clientList,
-          ...serverData
-        })
-      }
+      transformedData && tasksGateway.serverTasksPrepared(transformedData)
     })
 
     this.subscribtions.push(subscribtion)
