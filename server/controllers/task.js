@@ -47,7 +47,7 @@ module.exports = {
       })
   },
   updateTask: async (req, res, next) => {
-    const { id, description, periods, tags, beginTime } = req.body
+    const { _id, description, periods, tags, beginTime } = req.body
 
     let { project } = req.body
     if (project && project.isNew){
@@ -58,7 +58,7 @@ module.exports = {
       }
     }
 
-    Task.findOneAndUpdate( { _id: id },
+    Task.findOneAndUpdate( { _id: _id },
       {
         description, periods, tags, beginTime,
         project: project && project._id

@@ -56,7 +56,7 @@ export default class Timer extends React.Component {
 
     this.setState({
       timer,
-      activeTaskId: activeTask.id
+      activeTaskId: activeTask._id
     })
   }
 
@@ -119,8 +119,8 @@ export default class Timer extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     const activeTask = this.props.tasksCases.getActiveTask()
 
-    if (activeTask && activeTask.id !== this.state.activeTaskId) {
-      if (prevState.activeTaskId) {
+    if (activeTask && activeTask._id !== this.state.activeTaskId) {
+      if (prevState.activeTaskId != null) {
         this.timerStop()
       }
 
@@ -158,7 +158,7 @@ export default class Timer extends React.Component {
           <input
             value={ activeTask.description || '' }
             onChange={ e => this.updateTask(e) }
-            disabled={ !activeTask.id }
+            disabled={ !activeTask._id }
           />
           <CreatableSelect
             isClearable
@@ -166,7 +166,7 @@ export default class Timer extends React.Component {
             value={ activeTask.project && makeOptionsFromItem(activeTask.project) }
             onChange={ (optionProject) => this.handleChangeProject(activeTask, optionProject) }
             options={ options }
-            isDisabled={ !activeTask.id }
+            isDisabled={ !activeTask._id }
           />
         </div>
         <br />

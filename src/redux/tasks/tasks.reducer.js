@@ -18,7 +18,7 @@ export const reducer = (state = initialState, action) => {
       }
     case 'UPDATE_TASK':
       newList = state.list.map((item, index) => {
-        if (item.id !== action.task.id) {
+        if (item._id !== action.task._id) {
           return item
         }
 
@@ -33,7 +33,7 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
-        list: state.list.filter(item => item.id !== action.taskId)
+        list: state.list.filter(item => item._id !== action.taskId)
       }
     case 'FETCH_TASKS':
       return {
@@ -60,7 +60,7 @@ export const reducer = (state = initialState, action) => {
       }
     case 'ADD_TASK_SUCCEEDED':
       newList = state.list.map((item, index) => {
-        if (item.id !== 0) { // 0 - temp id
+        if (item._id !== 0) { // 0 - temp id
           return item
         }
 
@@ -73,7 +73,7 @@ export const reducer = (state = initialState, action) => {
       }
     case 'UPDATE_TASK_SUCCEEDED':
       newList = state.list.map((item, index) => {
-        if (item.id !== action.payload.id) {
+        if (item._id !== action.payload._id) {
           return item
         }
 

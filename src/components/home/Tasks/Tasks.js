@@ -53,7 +53,7 @@ export default class Tasks extends React.Component {
       <span>{ task.isActive() && '_____ ' }</span>
       <span>{ task.dayStart() }</span>
       <span> | </span>
-      <span>{  task.id && '...' + task.id.substr(task.id.length - DIGITS_SHOW_FROM_ID) }</span>
+      <span>{  task._id && '...' + task._id.substr(task._id.length - DIGITS_SHOW_FROM_ID) }</span>
       <span> | </span>
       <span
         style={ projectNameStyle }
@@ -101,7 +101,7 @@ export default class Tasks extends React.Component {
   }
 
   deleteTask(task){
-    this.props.tasksCases.deleteTask(task.id)
+    this.props.tasksCases.deleteTask(task._id)
   }
 
   componentWillMount(){
@@ -136,7 +136,7 @@ export default class Tasks extends React.Component {
           hasMore={ hasMore }
         >
           { tasks.map((task, index) =>
-            <div key={ task.id }>
+            <div key={ task._id }>
               <br />
               { this.renderTask(task) }
             </div>

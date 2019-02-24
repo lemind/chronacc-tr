@@ -3,6 +3,9 @@ import withGateways from 'helpers/withGateways'
 import { caseFactory } from 'helpers/case'
 import Cases from './index'
 import TasksGateway from 'src/redux/tasks'
+import { isObjectEmpty } from 'helpers/objects'
+
+import 'rxjs/add/operator/map';
 
 @withGateways(TasksGateway)
 export class TasksCases extends Cases {
@@ -21,6 +24,22 @@ export class TasksCases extends Cases {
     }]
   }
 
+  transformServerData(data){
+    const { list, ...serverData } = data.tasks.serverData
+
+    const clientList = []
+    if (list && list.length > 0) {
+      list.forEach(item => {
+        clientList.push(new Task(item))
+      })
+    }
+
+    return {
+      list: clientList,
+      ...serverData
+    }
+  }
+
   load(init){
     const { tasksGateway } = this.gateways
     tasksGateway.load(init)
@@ -28,18 +47,13 @@ export class TasksCases extends Cases {
     this.states$ = tasksGateway.getState$()
 
     const subscribtion = this.states$.subscribe(data => {
-      const { list, ...serverData } = data.tasks.serverData
+      if (!isObjectEmpty(data.tasks.serverData)) {
+        const transformedData = this.transformServerData(data)
 
-      const clientList = []
-      if (list && list.length > 0) {
-        list.forEach(item => {
-          clientList.push(new Task(item))
-        })
-        tasksGateway.serverTasksPrepared({
-          list: clientList,
-          ...serverData
-        })
+        tasksGateway.serverTasksPrepared(transformedData)
       }
+
+      return data
     })
 
     this.subscribtions.push(subscribtion)
@@ -110,7 +124,7 @@ export class TasksCases extends Cases {
 
   getTaskById(id){
     const tasks = this.state.tasks.list
-    return tasks.find(task => task.id === id)
+    return tasks.find(task => task._id === id)
   }
 
   getTasks(){
