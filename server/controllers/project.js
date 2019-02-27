@@ -7,7 +7,13 @@ const dbHelper = require('./../helpers/db')
 module.exports = {
   getProjects: (req, res, next) => {
     if (!dbHelper.isDbReady()) {
-      res.json({ success: false, error: 'db connection error' });
+      res.json({
+        success: false,
+        error: {
+          id: 1,
+          message: 'db connection error'
+        }
+      });
     }
 
     Project.find({}, (err, projects) => {

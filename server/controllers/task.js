@@ -14,7 +14,13 @@ const NUMBER_ITEMS_PER_LOAD = 20
 module.exports = {
   getTasks: (req, res, next) => {
     if (!dbHelper.isDbReady()) {
-      res.json({ success: false, error: 'db connection error' });
+      res.json({
+        success: false,
+        error: {
+          id: 1,
+          message: 'db connection error'
+        }
+      });
     }
 
     let condition = {}
