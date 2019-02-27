@@ -2,9 +2,14 @@ const async = require("async")
 
 const Project = require('./../models/Project')
 const Task = require('./../models/Task')
+const dbHelper = require('./../helpers/db')
 
 module.exports = {
   getProjects: (req, res, next) => {
+    if (!dbHelper.isDbReady()) {
+      res.json({ success: false, error: 'db connection error' });
+    }
+
     Project.find({}, (err, projects) => {
       if (err) return res.json({ success: false, error: err });
       return res.json({ result: projects, success: true });

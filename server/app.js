@@ -16,8 +16,12 @@ try {
     //useMongoClient: true
   })
 } catch (error) {
-
+  console.log('Connecting mongoose error', err);
 }
+
+mongoose.connection.on('error', function(err){
+  console.log('Mongoose error', err);
+});
 
 routes(router)
 
@@ -32,6 +36,6 @@ var port = process.env.PORT || 3001;
 
 app.get('/', (req, res) => res.send('Hello World with Express'));
 
-app.listen(port, function () {
-    console.log("Running chronacc on port " + port);
+app.listen(port, "0.0.0.0", function () {
+  console.log("Running chronacc on port " + port);
 });

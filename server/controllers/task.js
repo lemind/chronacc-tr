@@ -1,6 +1,7 @@
 
 const Task = require('./../models/Task')
 const Project = require('./../models/Project')
+const dbHelper = require('./../helpers/db')
 
 const createProject = async (name) => {
   const project = new Project({ name })
@@ -12,6 +13,9 @@ const NUMBER_ITEMS_PER_LOAD = 20
 
 module.exports = {
   getTasks: (req, res, next) => {
+    if (!dbHelper.isDbReady()) {
+      res.json({ success: false, error: 'db connection error' });
+    }
 
     let condition = {}
     if (req.query.lastId) {
