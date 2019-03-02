@@ -3,6 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+// ToDo: check it
 const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
@@ -70,9 +71,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'src/index.html',
       hash: true
-    }),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
     })
   ],
   optimization: {

@@ -1,0 +1,15 @@
+setup:
+  addons:
+    - plan: heroku-mongolab
+      as: DATABASE
+build:
+  docker:
+    web: client/Dockerfile
+    api: server/Dockerfile
+  config:
+    NODE_ENV: production
+    FOO: bar
+release:
+  image: api
+  command:
+    - ./deployment-tasks.sh

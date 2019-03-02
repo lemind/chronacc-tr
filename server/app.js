@@ -3,6 +3,7 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const helmet = require('helmet')
 const mongoose = require('mongoose');
+const path = require('path');
 
 const routes = require('./routes/')
 
@@ -22,6 +23,12 @@ try {
 mongoose.connection.on('error', function(err){
   console.log('Mongoose error', err);
 });
+
+
+app.get('*', (_req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
+});
+
 
 routes(router)
 

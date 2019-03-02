@@ -12,8 +12,11 @@ services:
             - server
         networks:
             - webappnetwork
+        command: npm start
     server:
         image: webapp-server
+        environment:
+            - NODE_ENV = development
         restart: always
         ports:
             - "3001:3001"
@@ -24,6 +27,7 @@ services:
             - mongodb
         networks:
             - webappnetwork
+        command: npm start
     mongodb:
         image: mongo
         restart: always

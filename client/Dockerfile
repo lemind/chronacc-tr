@@ -10,4 +10,6 @@ COPY . /client/
 
 EXPOSE 8090
 
-CMD ["npm", "start"]
+RUN npm run build
+
+CMD ["npm", "run", "start:prod"]
