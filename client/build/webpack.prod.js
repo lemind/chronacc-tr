@@ -7,7 +7,7 @@ module.exports = merge(common, {
   optimization: {
     minimizer: [new TerserPlugin({
       terserOptions: {
-        mangle: false
+        keep_fnames: true
       },
     })],
   }

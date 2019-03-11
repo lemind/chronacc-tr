@@ -128,7 +128,6 @@ export class TasksCases extends Cases {
   }
 
   getTasks(){
-    console.log('object', this.gateways);
     return this.gateways.tasksGateway.state.tasks.list
   }
 
