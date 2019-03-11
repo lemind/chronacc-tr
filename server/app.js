@@ -25,23 +25,22 @@ mongoose.connection.on('error', function(err){
 });
 
 
-app.get('*', (_req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/index.html'));
-});
-
+if (process.env.NODE_ENV === 'production') {
+  app.use('/', express.static(path.join(__dirname, './../client/dist')));
+  app.get('/', (_req, res) => {
+    res.sendFile(path.join(__dirname, './../client/dist/index.html'));
+  });
+}
 
 routes(router)
 
 app.use(cors())
 app.use(bodyParser.json())
 app.use(helmet())
-// app.use('/static',express.static(path.join(__dirname,'static')))
 
 app.use('/api', router)
 
 var port = process.env.PORT || 3001;
-
-app.get('/', (req, res) => res.send('Hello World with Express'));
 
 app.listen(port, "0.0.0.0", function () {
   console.log("Running chronacc on port " + port);

@@ -1,11 +1,11 @@
 FROM node:latest
 
-ARG NODE_ENV=production
+ARG NODE_ENV=development
 ENV NODE_ENV=${NODE_ENV}
 
-RUN echo "over there ${NODE_ENV}"
+RUN echo " ${NODE_ENV} over there"
 
-RUN if [ "$NODE_ENV" == "development" ] ; \
+RUN if [ "$NODE_ENV" = "development" ] ; \
   then npm install -g nodemon ; \
   else echo prod over there ; \
   fi

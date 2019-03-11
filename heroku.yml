@@ -4,12 +4,10 @@ setup:
       as: DATABASE
 build:
   docker:
-    web: client/Dockerfile
-    api: server/Dockerfile
+    web: Dockerfile
   config:
     NODE_ENV: production
-    FOO: bar
 release:
-  image: api
+  image: web
   command:
     - ./deployment-tasks.sh

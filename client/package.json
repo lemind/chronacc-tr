@@ -44,9 +44,7 @@
     "react-router-dom": "^4.2.2",
     "react-select": "^2.3.0",
     "redux-persist": "^5.10.0",
-    "rxjs": "5.5.10"
-  },
-  "devDependencies": {
+    "rxjs": "5.5.10",
     "babel-core": "^6.26.3",
     "babel-jest": "^22.4.3",
     "babel-loader": "^7.1.4",
@@ -83,7 +81,9 @@
     "terser-webpack-plugin": "^1.2.3",
     "webpack": "~4.29.6",
     "webpack-cli": "~3.2.3",
-    "webpack-dev-server": "~3.2.1",
     "webpack-merge": "~4.2.1"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "~3.2.1"
   }
 }
