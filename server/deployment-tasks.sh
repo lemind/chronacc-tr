@@ -1,3 +1,1 @@
-echo "deploy tasks"
-
-dir
+echo "deployment tasks"
