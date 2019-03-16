@@ -125,7 +125,8 @@ export default class Tasks extends React.Component {
     let tasks = this.props.tasks ? this.props.tasks.list : []
     tasks = Array.from(tasks)
 
-    const hasMore = this.props.tasks ? this.props.tasks.hasMore : true
+    const hasMore = this.props.tasks ? this.props.tasks.hasMore : false
+    const { loading } = this.props.tasks
 
     return (
       <div>
@@ -134,6 +135,7 @@ export default class Tasks extends React.Component {
         <ScrollLoad
           loadMore={ () => this.loadMore() }
           hasMore={ hasMore }
+          loading={ loading }
         >
           { tasks.map((task, index) =>
             <div key={ task._id }>

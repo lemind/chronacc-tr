@@ -17,6 +17,12 @@ tasksEpics.fetchTasksEpic = action$ =>
       .mergeMap(action => {
         return API.fetchTasks(action)
           .map(response => {
+            if (!response.success) {
+              return actions.requestFailed({
+                ...response.error,
+              })
+            }
+
             return actions.fetchTasksSucceeded(response.result)
           })
           .catch(error => of(

@@ -17,6 +17,12 @@ projectsEpics.fetchProjectsEpic = action$ =>
       .mergeMap(action => {
         return API.fetchProjects()
           .map(response => {
+            if (!response.success) {
+              return actions.requestFailed({
+                ...response.error,
+              })
+            }
+
             return actions.fetchProjectsSucceeded(response.result)
           })
           .catch(error => of(

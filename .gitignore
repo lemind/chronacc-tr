@@ -7,3 +7,5 @@ package-lock.json
 
 *.env
 coverage
+
+data-node

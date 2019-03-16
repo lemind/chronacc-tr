@@ -12,7 +12,9 @@ module.exports = merge(common, {
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     historyApiFallback: true,
-    port: 8090,
+    host: '0.0.0.0',
+    port: process.env.PORT || 8090,
+    disableHostCheck: true,
     stats: 'minimal'
   },
   plugins: [
