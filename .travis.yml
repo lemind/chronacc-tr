@@ -1,0 +1,21 @@
+language: node_js
+sudo: required
+services:
+- docker
+cache:
+  directories:
+  - node_modules
+node_js:
+- 10
+before_script:
+- echo "Branch... $TRAVIS_BRANCH"
+- echo "HEROKU_APP_NAME... $HEROKU_APP_NAME"
+- docker build -t registry.heroku.com/chronacc-tr/web .
+script:
+- bash build.sh
+after_success:
+- if [ "$TRAVIS_BRANCH" == "master" ]; then
+  docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" registry.heroku.com;
+  docker push registry.heroku.com/$HEROKU_APP_NAME/web;
+  heroku container:release web --app $HEROKU_APP_NAME;
+  fi

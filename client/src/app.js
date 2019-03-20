@@ -18,4 +18,4 @@ const renderApp = () => (
   )
 );
 
-renderApp();
+renderApp()
