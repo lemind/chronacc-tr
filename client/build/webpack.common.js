@@ -7,7 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
-  entry: ['babel-polyfill', './src/app.js'],
+  entry: ['@babel/polyfill', './src/app.js'],
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/',
@@ -77,9 +77,9 @@ module.exports = {
     splitChunks: {
       cacheGroups: {
         commons: {
-          chunks: 'initial',
+          chunks: 'all',
           test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
+          name: 'vendors'
         },
       },
     }
