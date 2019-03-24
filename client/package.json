@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --config build/webpack.dev.js",
     "start:prod": "node ./src/server.js",
-    "build": "webpack --config build/webpack.prod.js",
+    "build": "npm run clean:dist && webpack --config build/webpack.prod.js",
     "clean": "npm cache verify && npm run rimraf -- node_modules dist",
     "clean:dist": "npm run rimraf -- dist",
     "rimraf": "rimraf",
@@ -85,6 +85,7 @@
     "enzyme-to-json": "~3.3.3",
     "jest": "~22.4.3",
     "redux-devtools-extension": "~2.13.2",
+    "webpack-bundle-analyzer": "~3.1.0",
     "webpack-dev-server": "~3.2.1"
   }
 }

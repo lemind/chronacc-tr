@@ -1,5 +1,5 @@
-import _ from 'lodash'
+import values from 'lodash/values'
 
 export function isObjectEmpty(object) {
-  return !_.values(object).some(x => x !== undefined)
+  return !values(object).some(x => x !== undefined)
 }
