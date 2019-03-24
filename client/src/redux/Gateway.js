@@ -1,7 +1,6 @@
 import { store } from 'src/redux/store'
 
-import Rx from 'rxjs'
-const { Observable } = Rx;
+import { Observable } from 'rxjs'
 
 export default class Gateway {
   constructor(){

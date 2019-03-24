@@ -2,17 +2,18 @@ const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 // ToDo: check it
 const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
-  entry: ['babel-polyfill', './src/app.js'],
+  entry: ['@babel/polyfill', './src/app.js'],
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/',
-    filename: '[name].bundle.js',
-    chunkFilename: '[name].bundle.js'
+    filename: '[name].[chunkhash].js',
+    chunkFilename: '[name].[chunkhash].js'
   },
   module: {
     rules: [
@@ -71,15 +72,23 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'src/index.html',
       hash: true
-    })
+    }),
+    // new BundleAnalyzerPlugin(),
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
   ],
   optimization: {
     splitChunks: {
       cacheGroups: {
         commons: {
           chunks: 'initial',
-          test: /[\\/]node_modules[\\/]/,
+          minChunks: 2
+        },
+        vendors: {
+          chunks: "initial",
+          test: /node_modules/,
           name: 'vendors',
+          maxSize: 300000,
+          minSize: 200000
         },
       },
     }
