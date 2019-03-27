@@ -12,7 +12,7 @@ export class ProjectsCases extends Cases {
   }
 
   setObservables(){
-    return [{store: 'projects', variables: ['list']}]
+    return [{store: 'projects', variables: ['list', 'error']}]
   }
 
   load(){

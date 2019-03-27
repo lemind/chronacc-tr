@@ -18,9 +18,12 @@ module.exports = {
         success: false,
         error: {
           id: 1,
-          message: 'db connection error'
+          message: 'db connection error',
+          type: 'common',
+          hint: 'Try to refresh the page or write to the support'
         }
       });
+      return;
     }
 
     let condition = {}
