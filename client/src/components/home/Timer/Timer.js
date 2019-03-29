@@ -9,6 +9,7 @@ import { makeOptionsFromItem } from 'helpers/select'
 
 const SECOND = 1000
 const TIME_FORMAT = 'HH:mm:ss'
+const DEFAULT_COLOR = 'c22326'
 
 @withCases(TasksCases, ProjectsCases)
 export default class Timer extends React.Component {
@@ -133,6 +134,10 @@ export default class Timer extends React.Component {
       isNew: optionProject.__isNew__,
       _id: optionProject.value,
       name: optionProject.label
+    }
+
+    if (optionProject.__isNew__) {
+      project.color = DEFAULT_COLOR
     }
 
     this.props.tasksCases.bindProject(activeTask, project)

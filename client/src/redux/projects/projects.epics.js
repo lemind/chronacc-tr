@@ -16,14 +16,14 @@ projectsEpics.fetchProjectsEpic = action$ =>
     return action$.ofType('FETCH_PROJECTS')
       .mergeMap(action => {
         return API.fetchProjects()
-          .map(response => {
-            if (!response.success) {
+          .map(res => {
+            if (!res.success) {
               return actions.requestFailed({
-                ...response.error,
+                ...res.error,
               })
             }
 
-            return actions.fetchProjectsSucceeded(response.result)
+            return actions.fetchProjectsSucceeded(res.result)
           })
           .catch(error => of(
             actions.requestFailed({
@@ -44,19 +44,20 @@ projectsEpics.updateProjectEpic = action$ =>
       .mergeMap(action => {
         return API.updateProject(action)
           .map(res => {
+            const response = res.response
             if (!response.success) {
               return actions.requestFailed({
                 ...response.error,
               })
             }
 
-            return actions.updateProjectSucceeded(res.response.result)
+            return actions.updateProjectSucceeded(response.result)
           })
           .catch(error => of(
             actions.requestFailed({
               id: JSON.stringify(error),
               message: JSON.stringify({
-                url: error.request.url,
+                url: error,
                 message: error.message
               }),
             })
@@ -70,6 +71,7 @@ projectsEpics.deleteProjectEpic = action$ =>
       .mergeMap(action => {
         return API.deleteProject(action)
           .map(res => {
+            const response = res.response
             if (!response.success) {
               return actions.requestFailed({
                 ...response.error,
@@ -96,13 +98,14 @@ projectsEpics.addProjectEpic = action$ =>
       .mergeMap(action => {
         return API.addProject(action)
           .map(res => {
+            const response = res.response
             if (!response.success) {
               return actions.requestFailed({
                 ...response.error,
               })
             }
 
-            return actions.addProjectSucceeded(res.response.result)
+            return actions.addProjectSucceeded(response.result)
           })
           .catch(error => of(
             actions.requestFailed({

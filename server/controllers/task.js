@@ -4,8 +4,8 @@ const Project = require('./../models/Project')
 const dbHelper = require('./../helpers/db')
 const errorsHelper = require('./../helpers/errors')
 
-const createProject = async (name) => {
-  const project = new Project({ name })
+const createProject = async (name, color) => {
+  const project = new Project({ name, color })
   const newProject = await project.save()
   return newProject
 }
@@ -80,7 +80,7 @@ module.exports = {
     let { project } = req.body
     if (project && project.isNew){
       try {
-        project = await createProject(project.name)
+        project = await createProject(project.name, project.color)
       } catch(err){
         const errorParams = {
           id: 21,

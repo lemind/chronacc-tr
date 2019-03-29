@@ -43,13 +43,14 @@ tasksEpics.addTaskEpic = action$ =>
       .mergeMap(action => {
         return API.addTask(action)
           .map(res => {
+            const response = res.response
             if (!response.success) {
               return actions.requestFailed({
                 ...response.error,
               })
             }
 
-            return actions.addTaskSucceeded(res.response.result)
+            return actions.addTaskSucceeded(response.result)
           })
           .catch(error => of(
             actions.requestFailed({
@@ -70,13 +71,14 @@ tasksEpics.updateTaskEpic = action$ =>
       .mergeMap(action => {
         return API.updateTask(action)
           .map(res => {
+            const response = res.response
             if (!response.success) {
               return actions.requestFailed({
                 ...response.error,
               })
             }
 
-            return actions.updateTaskSucceeded(res.response.result)
+            return actions.updateTaskSucceeded(response.result)
           })
           .catch(error => of(
             actions.requestFailed({
@@ -96,9 +98,9 @@ tasksEpics.deleteTaskEpic = action$ =>
       .mergeMap(action => {
         return API.deleteTask(action)
           .map(res => {
-            if (!response.success) {
+            if (!res.success) {
               return actions.requestFailed({
-                ...response.error,
+                ...res.error,
               })
             }
 
