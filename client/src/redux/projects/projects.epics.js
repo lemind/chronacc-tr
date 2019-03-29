@@ -27,7 +27,11 @@ projectsEpics.fetchProjectsEpic = action$ =>
           })
           .catch(error => of(
             actions.requestFailed({
-              status: '' + error,
+              id: JSON.stringify(error),
+              message: JSON.stringify({
+                url: error.request.url,
+                message: error.message
+              }),
             })
           ))
       })
@@ -40,11 +44,21 @@ projectsEpics.updateProjectEpic = action$ =>
       .mergeMap(action => {
         return API.updateProject(action)
           .map(res => {
+            if (!response.success) {
+              return actions.requestFailed({
+                ...response.error,
+              })
+            }
+
             return actions.updateProjectSucceeded(res.response.result)
           })
           .catch(error => of(
             actions.requestFailed({
-              status: '' + error,
+              id: JSON.stringify(error),
+              message: JSON.stringify({
+                url: error.request.url,
+                message: error.message
+              }),
             })
           ))
       })
@@ -56,11 +70,21 @@ projectsEpics.deleteProjectEpic = action$ =>
       .mergeMap(action => {
         return API.deleteProject(action)
           .map(res => {
+            if (!response.success) {
+              return actions.requestFailed({
+                ...response.error,
+              })
+            }
+
             return actions.deleteProjectSucceeded()
           })
           .catch(error => of(
             actions.requestFailed({
-              status: '' + error,
+              id: JSON.stringify(error),
+              message: JSON.stringify({
+                url: error.request.url,
+                message: error.message
+              }),
             })
           ))
       })
@@ -72,11 +96,21 @@ projectsEpics.addProjectEpic = action$ =>
       .mergeMap(action => {
         return API.addProject(action)
           .map(res => {
+            if (!response.success) {
+              return actions.requestFailed({
+                ...response.error,
+              })
+            }
+
             return actions.addProjectSucceeded(res.response.result)
           })
           .catch(error => of(
             actions.requestFailed({
-              status: '' + error,
+              id: JSON.stringify(error),
+              message: JSON.stringify({
+                url: error.request.url,
+                message: error.message
+              }),
             })
           ))
       })

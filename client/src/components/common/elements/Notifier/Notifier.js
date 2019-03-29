@@ -34,6 +34,10 @@ export default class Notifier extends React.Component {
 
     const errorStyle = {
       color: '#d61313',
+      position: 'relative',
+      zIndex: '10',
+      maxWidth: '300px',
+      wordWrap: 'break-word',
     }
 
     return (
