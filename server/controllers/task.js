@@ -2,6 +2,7 @@
 const Task = require('./../models/Task')
 const Project = require('./../models/Project')
 const dbHelper = require('./../helpers/db')
+const errorsHelper = require('./../helpers/errors')
 
 const createProject = async (name) => {
   const project = new Project({ name })
@@ -14,15 +15,12 @@ const NUMBER_ITEMS_PER_LOAD = 20
 module.exports = {
   getTasks: (req, res, next) => {
     if (!dbHelper.isDbReady()) {
-      res.json({
-        success: false,
-        error: {
-          id: 1,
-          message: 'db connection error',
-          type: 'common',
-          hint: 'Try to refresh the page or write to the support'
-        }
-      });
+      const errorParams = {
+        id: 1,
+        message: 'DB connection error'
+      };
+      const error = errorsHelper.handleError(errorParams, err);
+      res.json({ success: false, error });
       return;
     }
 
@@ -36,7 +34,16 @@ module.exports = {
       .sort( '-_id' )
       .populate({ path: 'project' })
       .exec((err, tasks) => {
-        if (err) return res.json({ success: false, error: err });
+
+        if (err) {
+          const errorParams = {
+            id: 10,
+            message: 'Getting task error'
+          };
+          const error = errorsHelper.handleError(errorParams, err);
+          res.json({ success: false, error });
+          return
+        }
 
         return res.json({
           result: {
@@ -52,7 +59,15 @@ module.exports = {
 
     new Task({ description, beginTime, periods, tags, project })
       .save( async (err, task) => {
-        if (err) return res.json({ success: false, error: err });
+        if (err) {
+          const errorParams = {
+            id: 11,
+            message: 'Adding task error'
+          };
+          const error = errorsHelper.handleError(errorParams, err);
+          res.json({ success: false, error });
+          return
+        }
 
         await Task.populate(task, { path: 'project' })
 
@@ -67,7 +82,13 @@ module.exports = {
       try {
         project = await createProject(project.name)
       } catch(err){
-        return res.json({ success: false, error: err });
+        const errorParams = {
+          id: 21,
+          message: 'Creating project error'
+        };
+        const error = errorsHelper.handleError(errorParams, err);
+        res.json({ success: false, error });
+        return;
       }
     }
 
@@ -78,7 +99,15 @@ module.exports = {
       },
       { new: true },
       async (err, task) => {
-        if (err) return res.json({ success: false, error: err });
+        if (err) {
+          const errorParams = {
+            id: 12,
+            message: 'Updating task error'
+          };
+          const error = errorsHelper.handleError(errorParams, err);
+          res.json({ success: false, error });
+          return
+        }
 
         await Task.populate(task, { path: 'project' })
 
@@ -91,7 +120,15 @@ module.exports = {
 
     Task.findOneAndDelete({ _id: id },
       (err) => {
-        if (err) return res.json({ success: false, error: err });
+        if (err) {
+          const errorParams = {
+            id: 13,
+            message: 'Deleting task error'
+          };
+          const error = errorsHelper.handleError(errorParams, err);
+          res.json({ success: false, error });
+          return
+        }
         return res.json({ success: true });
       }
     )

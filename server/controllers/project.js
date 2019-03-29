@@ -3,21 +3,31 @@ const async = require("async")
 const Project = require('./../models/Project')
 const Task = require('./../models/Task')
 const dbHelper = require('./../helpers/db')
+const errorsHelper = require('./../helpers/errors')
 
 module.exports = {
   getProjects: (req, res, next) => {
     if (!dbHelper.isDbReady()) {
-      res.json({
-        success: false,
-        error: {
-          id: 1,
-          message: 'db connection error'
-        }
-      });
+      const errorParams = {
+        id: 1,
+        message: 'DB connection error'
+      };
+      const error = errorsHelper.handleError(errorParams, err);
+      res.json({ success: false, error });
+      return;
     }
 
     Project.find({}, (err, projects) => {
-      if (err) return res.json({ success: false, error: err });
+      if (err) {
+        const errorParams = {
+          id: 20,
+          message: 'Getting projects error'
+        };
+        const error = errorsHelper.handleError(errorParams, err);
+        res.json({ success: false, error });
+        return
+      }
+
       return res.json({ result: projects, success: true });
     })
   },
@@ -25,7 +35,15 @@ module.exports = {
     const { name, color } = req.body
 
     new Project({ name, color }).save((err, project) => {
-      if (err) return res.json({ success: false, error: err });
+      if (err) {
+        const errorParams = {
+          id: 21,
+          message: 'Creating project error'
+        };
+        const error = errorsHelper.handleError(errorParams, err);
+        res.json({ success: false, error });
+        return;
+      }
       return res.json({ result: project, success: true });
     })
 
@@ -40,7 +58,15 @@ module.exports = {
       },
       { new: true },
       (err, project) => {
-        if (err) return res.json({ success: false, error: err });
+        if (err) {
+          const errorParams = {
+            id: 22,
+            message: 'Updating project error'
+          };
+          const error = errorsHelper.handleError(errorParams, err);
+          res.json({ success: false, error });
+          return;
+        }
         return res.json({ result: project, success: true });
       }
     )
@@ -66,7 +92,15 @@ module.exports = {
         )
       }
     }, function(err, results) {
-      if (err) return res.json({ success: false, error: err });
+      if (err) {
+        const errorParams = {
+          id: 23,
+          message: 'Deleting project error'
+        };
+        const error = errorsHelper.handleError(errorParams, err);
+        res.json({ success: false, error });
+        return;
+      }
       return res.json({ success: true, results });
     });
   }
