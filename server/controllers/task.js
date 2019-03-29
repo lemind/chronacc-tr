@@ -12,6 +12,18 @@ const createProject = async (name, color) => {
 
 const NUMBER_ITEMS_PER_LOAD = 20
 
+// errors
+// 1 - db connection
+// common
+// entities
+// 1* - tasks
+// 2* - projects
+// actions
+// *0 - fetch
+// *1 - add
+// *2 - edit
+// *3 - delete
+
 module.exports = {
   getTasks: (req, res, next) => {
     if (!dbHelper.isDbReady()) {
