@@ -6,7 +6,7 @@ import Modal from 'components/common/elements/Modal/Modal'
 import TasksCases from 'cases/tasks'
 import EditTaskForm from 'components/home/EditTaskForm/EditTaskForm'
 import ConfirmModal from 'components/common/elements/ConfirmModal/ConfirmModal'
-import ScrollLoad from '../../common/elements/ScrollLoad/ScrollLoad';
+import ScrollLoad from 'components/common/elements/ScrollLoad/ScrollLoad';
 
 const TIME_FORMAT = 'HH:mm:ss'
 

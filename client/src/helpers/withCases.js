@@ -37,7 +37,7 @@ export default function withCases(...cases) {
             })
 
             this.setState({
-              observables: newObservables
+              observables: { ...this.state.observables, ...newObservables }
             })
           })
 

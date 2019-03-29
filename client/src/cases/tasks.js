@@ -20,7 +20,7 @@ export class TasksCases extends Cases {
   setObservables(){
     return [{
       store: 'tasks',
-      variables: ['list', 'hasMore', 'loading']
+      variables: ['list', 'hasMore', 'loading', 'error']
     }]
   }
 

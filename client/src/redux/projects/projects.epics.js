@@ -16,18 +16,22 @@ projectsEpics.fetchProjectsEpic = action$ =>
     return action$.ofType('FETCH_PROJECTS')
       .mergeMap(action => {
         return API.fetchProjects()
-          .map(response => {
-            if (!response.success) {
+          .map(res => {
+            if (!res.success) {
               return actions.requestFailed({
-                ...response.error,
+                ...res.error,
               })
             }
 
-            return actions.fetchProjectsSucceeded(response.result)
+            return actions.fetchProjectsSucceeded(res.result)
           })
           .catch(error => of(
             actions.requestFailed({
-              status: '' + error,
+              id: JSON.stringify(error),
+              message: JSON.stringify({
+                url: error.request.url,
+                message: error.message
+              }),
             })
           ))
       })
@@ -40,11 +44,22 @@ projectsEpics.updateProjectEpic = action$ =>
       .mergeMap(action => {
         return API.updateProject(action)
           .map(res => {
-            return actions.updateProjectSucceeded(res.response.result)
+            const response = res.response
+            if (!response.success) {
+              return actions.requestFailed({
+                ...response.error,
+              })
+            }
+
+            return actions.updateProjectSucceeded(response.result)
           })
           .catch(error => of(
             actions.requestFailed({
-              status: '' + error,
+              id: JSON.stringify(error),
+              message: JSON.stringify({
+                url: error,
+                message: error.message
+              }),
             })
           ))
       })
@@ -56,11 +71,22 @@ projectsEpics.deleteProjectEpic = action$ =>
       .mergeMap(action => {
         return API.deleteProject(action)
           .map(res => {
+            const response = res.response
+            if (!response.success) {
+              return actions.requestFailed({
+                ...response.error,
+              })
+            }
+
             return actions.deleteProjectSucceeded()
           })
           .catch(error => of(
             actions.requestFailed({
-              status: '' + error,
+              id: JSON.stringify(error),
+              message: JSON.stringify({
+                url: error.request.url,
+                message: error.message
+              }),
             })
           ))
       })
@@ -72,11 +98,22 @@ projectsEpics.addProjectEpic = action$ =>
       .mergeMap(action => {
         return API.addProject(action)
           .map(res => {
-            return actions.addProjectSucceeded(res.response.result)
+            const response = res.response
+            if (!response.success) {
+              return actions.requestFailed({
+                ...response.error,
+              })
+            }
+
+            return actions.addProjectSucceeded(response.result)
           })
           .catch(error => of(
             actions.requestFailed({
-              status: '' + error,
+              id: JSON.stringify(error),
+              message: JSON.stringify({
+                url: error.request.url,
+                message: error.message
+              }),
             })
           ))
       })
