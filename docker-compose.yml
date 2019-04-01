@@ -27,7 +27,9 @@ services:
             - mongodb
         networks:
             - webappnetwork
-        command: npm start
+        command: >
+            bash -c "/server/deployment-tasks.sh
+            && npm start"
     mongodb:
         image: mongo
         restart: always

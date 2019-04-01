@@ -10,6 +10,11 @@ RUN if [ "$NODE_ENV" = "development" ] ; \
   else echo prod over there ; \
   fi
 
+RUN if [ "$NODE_ENV" = "development" ] ; \
+  then npm install -g migrate-mongo ; \
+  else echo prod over there ; \
+  fi
+
 WORKDIR /server
 
 COPY package*.json /server/
