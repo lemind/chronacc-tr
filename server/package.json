@@ -11,11 +11,12 @@
   "author": "Dmitrii Lemin (leminds@gmail.com)",
   "license": "ISC",
   "dependencies": {
-    "async": "^2.6.1",
-    "body-parser": "^1.18.3",
-    "cors": "^2.8.5",
-    "express": "^4.16.4",
-    "helmet": "^3.15.1",
-    "mongoose": "^5.4.3"
+    "async": "~2.6.1",
+    "body-parser": "~1.18.3",
+    "cors": "~2.8.5",
+    "express": "~4.16.4",
+    "helmet": "~3.15.1",
+    "migrate-mongo": "~5.0.1",
+    "mongoose": "~5.4.3"
   }
 }

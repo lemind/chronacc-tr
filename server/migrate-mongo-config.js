@@ -1,12 +1,13 @@
 // In this file you can configure migrate-mongo
 
+//ToDo: find out why do not see env variables over there.
 const config = {
   mongodb: {
     // TODO Change (or review) the url to your MongoDB:
-    url: "mongodb://mongodb:27017",
+    url: process.env.MONGODB_URI || "mongodb://mongodb:27017",
 
     // TODO Change this to your database name:
-    databaseName: "chronacc",
+    databaseName: process.env.MONGODB_URI_DATABASE_NAME || "chronacc",
 
     options: {
       useNewUrlParser: true // removes a deprecation warning when connecting
@@ -16,7 +17,7 @@ const config = {
   },
 
   // The migrations dir, can be an relative or absolute path. Only edit this when really necessary.
-  migrationsDir: "migrations",
+  migrationsDir: "db/migrations",
 
   // The mongodb collection where the applied changes are stored. Only edit this when really necessary.
   changelogCollectionName: "changelog"

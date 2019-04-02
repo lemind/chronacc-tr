@@ -29,4 +29,8 @@ RUN npm install
 
 EXPOSE 80
 
+RUN npm -g install migrate-mongo
+
+# RUN ./deployment-tasks.sh
+
 CMD ["npm", "run", "start:prod"]

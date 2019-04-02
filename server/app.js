@@ -12,6 +12,17 @@ const app = express();
 const router = express.Router()
 const url = process.env.MONGODB_URI || "mongodb://mongodb:27017/chronacc"
 
+const migrate = require('./db/migrate');
+
+if (process.env.NODE_ENV === 'production') {
+  const env = {
+    'process.env.MONGODB_URI': `"${process.env.MONGODB_URI}"`,
+    'process.env.MONGODB_URI_DATABASE_NAME': `"${process.env.MONGODB_URI_DATABASE_NAME}"`
+  };
+
+  migrate.migrate(env);
+}
+
 try {
   mongoose.connect(url, {
     //useMongoClient: true
