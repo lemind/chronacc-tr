@@ -1,6 +1,6 @@
 
-const Task = require('./../models/Task')
-const Project = require('./../models/Project')
+const Task = require('./../db/models/Task')
+const Project = require('./../db/models/Project')
 const dbHelper = require('./../helpers/db')
 const errorsHelper = require('./../helpers/errors')
 
