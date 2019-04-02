@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+// draft
 let UserSchema = new mongoose.Schema(
   {
     name: String,
