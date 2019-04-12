@@ -1,15 +1,40 @@
 # Chronacc-tr
 
+Chronacc is time tracking system. It is a pat project, whith helps me to try new tools and approaches. 
+
+### Plan first to do:
+
+[checkbox:unchecked] Clean data transformation
+[checkbox:unchecked] Check client structure
+[checkbox:unchecked] Check server structure
+[checkbox:unchecked] Add tags
+
+## How to start it
+
+#### Mongo image
 ```
-npm install
+docker pull mongo
 ```
 
-first start
+### Generate docker images
+
+#### Server image
 ```
-npm run build
+cd server
+docker build -t webapp-server .
 ```
 
-next start
+#### Client image
 ```
-npm start
+cd client
+docker build -t webapp-client .
 ```
+
+#### Start
+```
+docker-compose up
+```
+
+##### Open in browser
+http://localhost:8090/
+
