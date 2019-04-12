@@ -4,10 +4,10 @@ Chronacc is time tracking system. It is a pat project, whith helps me to try new
 
 ### Plan first to do:
 
-[checkbox:unchecked] Clean data transformation
-[checkbox:unchecked] Check client structure
-[checkbox:unchecked] Check server structure
-[checkbox:unchecked] Add tags
+- [ ] Clean data transformation
+- [ ] Check client structure
+- [ ] Check server structure
+- [ ] Add tags
 
 ## How to start it
 
