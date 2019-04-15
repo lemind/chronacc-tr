@@ -1,6 +1,6 @@
 # Chronacc-tr
 
-Chronacc is time tracking system. It is a pat project, whith helps me to try new tools and approaches. 
+Chronacc is time tracking system. It is a pat project, which helps me to try new tools and approaches. 
 
 ### Plan first to do:
 
