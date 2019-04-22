@@ -6,6 +6,15 @@ const firstLowerCase = (s) => {
   return toLower(s[0]) + s.substr(1);
 }
 
+/**
+ * Provides Cases to component.
+ *
+ * @param {Case} - one Case or multiple
+ *
+ * @return {React.Component} - Wrapped component with access to Case
+ *
+ * example: @withCases(ProjectCases), access - this.props.projectCases
+ */
 export default function withCases(...cases) {
   return (ComposedComponent) => {
     return class WithCases extends Component {
