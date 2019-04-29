@@ -20,7 +20,8 @@ export default class Timer extends React.Component {
       taskInProgress: false,
       time: null,
       timer: null,
-      activeTaskId: null
+      activeTaskId: null,
+      days: null
     }
   }
 
@@ -88,13 +89,18 @@ export default class Timer extends React.Component {
   }
 
   updateTimeCounter(startTime){
+    // ToDo: to wrap moment
     const diff = moment().diff(moment(startTime))
+
+    const days = moment().diff(moment(startTime), 'days')
+
     const time = startTime
       ? moment(diff).utc().format(TIME_FORMAT)
       : ''
 
     this.setState({
-      time
+      time,
+      days
     })
   }
 
@@ -148,16 +154,20 @@ export default class Timer extends React.Component {
   }
 
   render() {
-    const time = this.state.time
+    const { days, time } = this.state
     const activeTask = this.props.tasksCases.getActiveTask() || {}
 
     if (!activeTask) return;
 
     const options = this.getProjectsLikeOptions()
 
+    const daysString = !!days
+      ? `${moment.duration(days, "day").humanize()} `
+      : ''
+
     return (
       <div>
-        <div>time: { time }</div>
+        <div>time: {daysString} { time }</div>
         <br />
         <div>
           <input
