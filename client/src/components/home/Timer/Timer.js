@@ -1,11 +1,11 @@
 import React from 'react'
-import moment from 'moment'
 import CreatableSelect from 'react-select/lib/Creatable'
 
 import withCases from 'helpers/withCases'
 import TasksCases from 'cases/tasks'
 import ProjectsCases from 'cases/projects'
 import { makeOptionsFromItem } from 'helpers/select'
+import { diff, utcFormat, duration } from 'helpers/dateTime'
 
 const SECOND = 1000
 const TIME_FORMAT = 'HH:mm:ss'
@@ -89,13 +89,12 @@ export default class Timer extends React.Component {
   }
 
   updateTimeCounter(startTime){
-    // ToDo: to wrap moment
-    const diff = moment().diff(moment(startTime))
+    const diffMs = diff(startTime)
 
-    const days = moment().diff(moment(startTime), 'days')
+    const days = diff(startTime, 'days')
 
     const time = startTime
-      ? moment(diff).utc().format(TIME_FORMAT)
+      ? utcFormat(diffMs, TIME_FORMAT)
       : ''
 
     this.setState({
@@ -162,7 +161,7 @@ export default class Timer extends React.Component {
     const options = this.getProjectsLikeOptions()
 
     const daysString = !!days
-      ? `${moment.duration(days, "day").humanize()} `
+      ? `${duration(days, "day").humanize()} `
       : ''
 
     return (
