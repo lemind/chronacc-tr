@@ -1,5 +1,3 @@
-import moment from 'moment'
-
 import { format, dateTime, valueOf } from 'helpers/dateTime'
 
 export default class Task {
@@ -33,7 +31,7 @@ export default class Task {
   }
 
   start() {
-    this.beginTime = valueOf() //ToDo: wrap moment
+    this.beginTime = valueOf()
     this._isActive = true
   }
 

@@ -1,7 +1,7 @@
 import React from 'react'
-import moment from 'moment'
 
 import withCases from 'helpers/withCases'
+import { utcFormat } from 'helpers/dateTime'
 import Modal from 'components/common/elements/Modal/Modal'
 import TasksCases from 'cases/tasks'
 import EditTaskForm from 'components/home/EditTaskForm/EditTaskForm'
@@ -93,7 +93,7 @@ export default class Tasks extends React.Component {
   formattedTime(raw){
     if (!raw) return '-'
 
-    return moment(raw).utc().format(TIME_FORMAT)
+    return utcFormat(raw, TIME_FORMAT)
   }
 
   continueTask(task){
