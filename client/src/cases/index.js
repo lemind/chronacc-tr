@@ -6,7 +6,7 @@ export default class Cases {
   constructor(props){
     this.states$
 
-    this.subscribtions = []
+    this.subscriptions = []
   }
 
   load(gateways){
@@ -27,7 +27,7 @@ export default class Cases {
         return data
       })
 
-      this.subscribtions.push(subscription)
+      this.subscriptions.push(subscription)
 
     })
   }
@@ -50,9 +50,9 @@ export default class Cases {
   }
 
   unsubscribe(){
-    this.subscribtions.forEach(subscribtion => {
-      subscribtion.unsubscribe()
+    this.subscriptions.forEach(subscribtion => {
+      subscription.unsubscribe()
     })
-    this.subscribtions = []
+    this.subscriptions = []
   }
 }
