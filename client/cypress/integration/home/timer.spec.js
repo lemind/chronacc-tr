@@ -18,10 +18,22 @@ function multiply (a, b) {
 // -- Start: Our Cypress Tests --
 describe('Unit test our math functions', function() {
   context('math', function() {
-    it('can add numbers', function() {
+    it('app el exist', function() {
       cy.visit('localhost:8090')
-      cy.get('[data-test="button-stop"]')
-      expect(add(1, 2)).to.eq(3)
+
+      cy.get('[data-test="app"]').should('exist');
+    })
+
+    it('button start exist', function() {
+      cy.visit('localhost:8090')
+
+      cy.get('[data-test="button-start"]').should('exist');
+    })
+
+    it('button stop does not exist', function() {
+      cy.visit('localhost:8090')
+
+      cy.get('[data-test="button-stop"]').should('not.exist');
     })
 
     it('can subtract numbers', function() {

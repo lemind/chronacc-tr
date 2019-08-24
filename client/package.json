@@ -14,6 +14,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:watch:coverage": "jest --watch --coverage",
+    "start:ci": "node ./src/server.js",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "echo": "echo \"Error: no test specified\""
