@@ -19,28 +19,29 @@ function multiply (a, b) {
 describe('Unit test our math functions', function() {
   context('math', function() {
     it('app el exist', function() {
-      cy.visit('localhost:8090')
+      cy.visit(Cypress.config('homePage'))
 
       cy.get('[data-test="app"]').should('exist')
     })
 
     it('button start exist', function() {
-      cy.visit('localhost:8090')
+      cy.visit(Cypress.config('homePage'))
 
       cy.get('[data-test="button-start"]').should('exist')
     })
 
     it('button stop does not exist', function() {
-      cy.visit('localhost:8090')
+      cy.visit(Cypress.config('homePage'))
 
       cy.get('[data-test="button-stop"]').should('not.exist')
     })
 
     it('stop button shown after start clicked', function() {
-      cy.visit('localhost:8090')
+      cy.visit(Cypress.config('homePage'))
 
       cy.get('[data-test="button-start"]').click()
       cy.get('[data-test="button-stop"]').should('exist')
+      cy.get('[data-test="button-stop"]').click()
     })
 
     it('can subtract numbers', function() {
