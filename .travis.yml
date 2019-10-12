@@ -11,6 +11,10 @@ cache:
     - npm ci
 node_js:
   - 10
+addons:
+  apt:
+    packages:
+      - libgconf-2-4
 before_script:
   - echo "Branch... $TRAVIS_BRANCH"
   - echo "HEROKU_APP_NAME... $HEROKU_APP_NAME"
