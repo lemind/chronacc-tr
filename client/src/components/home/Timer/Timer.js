@@ -185,8 +185,8 @@ export default class Timer extends React.Component {
         </div>
         <br />
         { !this.state.taskInProgress
-          ? <button onClick={ () => this.start() }>Start</button>
-          : <button onClick={ () => this.stop() }>Stop</button>
+          ? <button onClick={ () => this.start() } data-test="button-start">Start</button>
+          : <button onClick={ () => this.stop() } data-test="button-stop">Stop</button>
         }
       </div>
     )

@@ -19,8 +19,9 @@ app.use(bodyParser.json())
 app.use(helmet())
 
 
-var port = process.env.PORT || 8091;
+const port = process.env.PORT || 8090;
+const address = process.env.ADDRESS || "0.0.0.0";
 
-app.listen(port, "0.0.0.0", function () {
+app.listen(port, address, function () {
   console.log("Running chronacc on port " + port);
 });
