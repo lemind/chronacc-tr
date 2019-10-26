@@ -51,7 +51,7 @@ export default class Cases {
 
   unsubscribe(){
     this.subscriptions.forEach(subscribtion => {
-      subscription.unsubscribe()
+      subscribtion.unsubscribe()
     })
     this.subscriptions = []
   }
