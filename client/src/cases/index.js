@@ -21,7 +21,7 @@ export default class Cases {
         if (!isObjectEmpty(data.tasks.serverData)) {
           const transformedData = this.transformServerData(data)
 
-          gateway.serverTasksPrepared(transformedData)
+          gateway.serverDataPrepared(transformedData)
         }
 
         return data

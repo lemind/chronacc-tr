@@ -40,7 +40,7 @@ export class TasksGateway extends Gateway {
     this.dispatch(actions.fetchTasks({ ...params }))
   }
 
-  serverTasksPrepared(tasks){
+  serverDataPrepared(tasks){
     this.dispatch(actions.serverTasksPrepared(tasks))
   }
 }
