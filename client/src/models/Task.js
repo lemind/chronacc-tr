@@ -1,7 +1,7 @@
 import { format, dateTime, valueOf } from 'helpers/dateTime'
 
 export default class Task {
-  constructor(initial) {
+  constructor(initial){
     this._id = 0
     this.beginTime = null // current period
     this._isActive = false
@@ -30,12 +30,12 @@ export default class Task {
     return targetDay === today
   }
 
-  start() {
+  start(){
     this.beginTime = valueOf()
     this._isActive = true
   }
 
-  stop() {
+  stop(){
     this._isActive = false
     this.periods.push({
       beginTime: this.beginTime,

@@ -1,6 +1,6 @@
 
 export default class Project {
-  constructor(initial) {
+  constructor(initial){
     this.name = ''
     this.color = ''
 
