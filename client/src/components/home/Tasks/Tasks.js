@@ -105,7 +105,7 @@ export default class Tasks extends React.Component {
   }
 
   componentWillMount(){
-    this.props.tasksCases.load(true)
+    this.props.tasksCases.load({reset: true})
   }
 
   componentWillUnmount(){

@@ -12,13 +12,14 @@ export default class Cases {
   load(gateways){
     gateways.forEach(gatewayObject => {
       const { gateway, params } = gatewayObject
+      const { init, name } = params;
 
-      gateway.load(params.init)
+      gateway.load(init)
 
       this.states$ = gateway.getState$()
 
       const subscription = this.states$.subscribe(data => {
-        if (!isObjectEmpty(data.tasks.serverData)) {
+        if (!isObjectEmpty(data[name].serverData)) {
           const transformedData = this.transformServerData(data)
 
           gateway.serverDataPrepared(transformedData)
@@ -28,7 +29,6 @@ export default class Cases {
       })
 
       this.subscriptions.push(subscription)
-
     })
   }
 

@@ -2,7 +2,6 @@ import { actions } from './tasks.actions'
 import { reducer } from './tasks.reducer'
 import { tasksEpics } from './tasks.epics'
 import { gatewayFactory } from 'helpers/gateway'
-import Task from 'models/Task'
 import Gateway from 'src/redux/Gateway'
 
 
@@ -13,10 +12,6 @@ export {
 }
 
 export class TasksGateway extends Gateway {
-  constructor(...params){
-    super(...params)
-  }
-
   updateTask(task){
     this.dispatch(actions.updateTask(task))
   }
@@ -30,13 +25,17 @@ export class TasksGateway extends Gateway {
   }
 
   load(init){
-    init && this.dispatch(actions.clearTasks())
-    const last = this.state.tasks.list[this.state.tasks.list.length - 1]
-    const lastId = last && last._id
-    const params = {}
-    if (lastId) {
-      params.lastId = lastId
+    if (init) {
+      init.reset && this.dispatch(actions.clearTasks())
     }
+
+    const params = {}
+
+    const tasksList = this.state.tasks.list
+    if (tasksList.length > 0) {
+      params.lastId = tasksList[tasksList.length - 1]._id
+    }
+
     this.dispatch(actions.fetchTasks({ ...params }))
   }
 
