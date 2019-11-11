@@ -32,7 +32,9 @@ export default class Cases {
     })
   }
 
-  transformServerData(){}
+  transformServerData(data){
+    return data
+  }
 
   /**
    * Overridable

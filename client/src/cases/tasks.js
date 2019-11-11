@@ -46,12 +46,13 @@ export class TasksCases extends Cases {
 
   startTask(task){
     const { tasksGateway } = this.gateways
-    let newTask = task ? task : new Task()
-    let createTask = false
+    let newTask
+    const oldTask = task
+    let isTaskCreated = false
 
     if (!task) {
       newTask = new Task()
-      createTask = true
+      isTaskCreated = true
     } else {
       if (!task.hasStartedToday()) {
         const initTask = {
@@ -60,7 +61,7 @@ export class TasksCases extends Cases {
         }
 
         newTask = new Task(initTask)
-        createTask = true
+        isTaskCreated = true
       }
     }
 
@@ -69,10 +70,10 @@ export class TasksCases extends Cases {
 
     newTask.start();
 
-    if (!createTask) {
-      tasksGateway.updateTask(newTask)
-    } else {
+    if (isTaskCreated) {
       tasksGateway.addTask(newTask)
+    } else {
+      tasksGateway.updateTask(oldTask)
     }
   }
 
