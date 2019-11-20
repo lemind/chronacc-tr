@@ -7,10 +7,6 @@ import { makeOptionsFromItem } from 'helpers/select'
 
 @withGateways(ProjectsGateway)
 export class ProjectsCases extends Cases {
-  constructor(props){
-    super(props);
-  }
-
   setObservables(){
     return [{store: 'projects', variables: ['list', 'error']}]
   }

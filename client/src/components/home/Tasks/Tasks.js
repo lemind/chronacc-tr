@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import withCases from 'helpers/withCases'
 import { utcFormat } from 'helpers/dateTime'
@@ -10,15 +10,36 @@ import ScrollLoad from 'components/common/elements/ScrollLoad/ScrollLoad';
 
 const TIME_FORMAT = 'HH:mm:ss'
 
+function Counter() {
+  useEffect(() => {
+    // this.props.tasksCases.load({reset: true})
+    console.log('11')
+
+    return () => {
+      console.log('2')
+    }
+  })
+
+  return (
+    <div>
+      testfy
+    </div>
+  );
+}
+
 @withCases(TasksCases)
 export default class Tasks extends React.Component {
-  constructor() {
-    super()
+  state = {
+    isEditModalOpen: false,
+    currentEditableTask: null
+  }
 
-    this.state = {
-      isEditModalOpen: false,
-      currentEditableTask: null
-    }
+  componentWillMount(){
+    this.props.tasksCases.load({reset: true})
+  }
+
+  componentWillUnmount(){
+    this.props.tasksCases.unsubscribe && this.props.tasksCases.unsubscribe()
   }
 
   openEditTaskModal(task) {
@@ -104,14 +125,6 @@ export default class Tasks extends React.Component {
     this.props.tasksCases.deleteTask(task._id)
   }
 
-  componentWillMount(){
-    this.props.tasksCases.load({reset: true})
-  }
-
-  componentWillUnmount(){
-    this.props.tasksCases.unsubscribe && this.props.tasksCases.unsubscribe()
-  }
-
   loadMore(){
     if (!this.props.tasks) return
 
@@ -130,6 +143,7 @@ export default class Tasks extends React.Component {
 
     return (
       <div>
+        <Counter />
         <br />
         <h5>Tasks</h5>
         <ScrollLoad
