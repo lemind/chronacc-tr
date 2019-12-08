@@ -10,10 +10,6 @@
     "clean": "npm cache verify && npm run rimraf -- node_modules dist",
     "clean:dist": "npm run rimraf -- dist",
     "rimraf": "rimraf",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "test:watch:coverage": "jest --watch --coverage",
     "start:ci": "node ./src/server.js",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
@@ -30,9 +26,10 @@
   },
   "homepage": "https://github.com/lemind/chronacc-tr#readme",
   "dependencies": {
-    "@babel/cli": "^7.2.3",
+    "@babel/cli": "~7.2.3",
     "@babel/core": "~7.4.0",
-    "@babel/plugin-proposal-decorators": "^7.4.0",
+    "@babel/plugin-proposal-class-properties": "~7.7.0",
+    "@babel/plugin-proposal-decorators": "~7.4.0",
     "@babel/plugin-proposal-object-rest-spread": "~7.4.0",
     "@babel/plugin-syntax-dynamic-import": "~7.2.0",
     "@babel/plugin-transform-react-jsx": "~7.3.0",
@@ -42,7 +39,6 @@
     "@babel/preset-env": "~7.4.2",
     "@babel/preset-react": "~7.0.0",
     "babel-core": "7.0.0-bridge.0",
-    "babel-jest": "~22.4.3",
     "babel-loader": "~7.1.5",
     "body-parser": "~1.18.3",
     "cors": "~2.8.5",
@@ -85,10 +81,6 @@
     "webpack-merge": "~4.2.1"
   },
   "devDependencies": {
-    "enzyme": "~3.3.0",
-    "enzyme-adapter-react-16": "~1.1.1",
-    "enzyme-to-json": "~3.3.3",
-    "jest": "~22.4.3",
     "redux-devtools-extension": "~2.13.2",
     "webpack-bundle-analyzer": "~3.1.0",
     "webpack-dev-server": "~3.2.1"

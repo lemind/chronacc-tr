@@ -24,7 +24,7 @@ export default class Gateway {
     return []
   }
 
-  getState$() {
+  getState$(){
     return Observable.from(store)
   }
 }

@@ -1,15 +1,15 @@
 # Chronacc-tr
 
-Chronacc is time tracking system. It is a pet project, which helps me to try new tools and approaches.
+Chronacc is time a tracking system. It is a pet project, which helps me to try new tools and approaches.
 
 Live version here - https://chronacc-tr.herokuapp.com/
 
 ### Plan first to do:
 
-- [ ] Clean data transformation
 - [ ] Check client structure
 - [ ] Check server structure
 - [ ] Add tags
+- [ ] Add styles
 
 ## How to start it
 

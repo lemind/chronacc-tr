@@ -7,10 +7,6 @@ import { makeOptionsFromItem } from 'helpers/select'
 
 @withGateways(ProjectsGateway)
 export class ProjectsCases extends Cases {
-  constructor(props){
-    super(props);
-  }
-
   setObservables(){
     return [{store: 'projects', variables: ['list', 'error']}]
   }
@@ -37,9 +33,9 @@ export class ProjectsCases extends Cases {
 
   getListLikeOptions(){
     const { projectsGateway } = this.gateways
-    const list = projectsGateway.state.projects.list
+    const { list } = projectsGateway.state.projects
 
-    if (list.length < 1) return []
+    if (list.length === 0) return []
     return list.map(project => {
       return makeOptionsFromItem(project)
     })

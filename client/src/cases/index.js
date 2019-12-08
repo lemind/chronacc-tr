@@ -12,27 +12,29 @@ export default class Cases {
   load(gateways){
     gateways.forEach(gatewayObject => {
       const { gateway, params } = gatewayObject
+      const { init, name } = params;
 
-      gateway.load(params.init)
+      gateway.load(init)
 
       this.states$ = gateway.getState$()
 
       const subscription = this.states$.subscribe(data => {
-        if (!isObjectEmpty(data.tasks.serverData)) {
+        if (!isObjectEmpty(data[name].serverData)) {
           const transformedData = this.transformServerData(data)
 
-          gateway.serverTasksPrepared(transformedData)
+          gateway.serverDataPrepared(transformedData)
         }
 
         return data
       })
 
       this.subscriptions.push(subscription)
-
     })
   }
 
-  transformServerData(){}
+  transformServerData(data){
+    return data
+  }
 
   /**
    * Overridable
@@ -51,7 +53,7 @@ export default class Cases {
 
   unsubscribe(){
     this.subscriptions.forEach(subscribtion => {
-      subscription.unsubscribe()
+      subscribtion.unsubscribe()
     })
     this.subscriptions = []
   }

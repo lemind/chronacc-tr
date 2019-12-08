@@ -11,7 +11,7 @@ export default class ScrollLoad extends React.Component {
           pageStart={ 0 }
           loadMore={ loadMore }
           hasMore={ hasMore }
-          loader={loading && < div key={ 0 } >Loading ...</div>}
+          loader={loading && <div key={ 0 } >Loading ...</div>}
         >
           { children }
         </InfiniteScroll>

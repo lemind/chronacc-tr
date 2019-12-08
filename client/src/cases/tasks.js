@@ -34,7 +34,7 @@ export class TasksCases extends Cases {
   load(init){
     const { tasksGateway } = this.gateways
 
-    super.load([{ gateway: tasksGateway, params: { init } }])
+    super.load([{ gateway: tasksGateway, params: { init, name: 'tasks' } }])
   }
 
   unsubscribe(){
@@ -46,12 +46,13 @@ export class TasksCases extends Cases {
 
   startTask(task){
     const { tasksGateway } = this.gateways
-    let newTask = task ? task : new Task()
-    let createTask = false
+    let newTask
+    const oldTask = task
+    let isTaskCreated = false
 
     if (!task) {
       newTask = new Task()
-      createTask = true
+      isTaskCreated = true
     } else {
       if (!task.hasStartedToday()) {
         const initTask = {
@@ -60,19 +61,19 @@ export class TasksCases extends Cases {
         }
 
         newTask = new Task(initTask)
-        createTask = true
+        isTaskCreated = true
       }
     }
 
     const activeTask = this.getActiveTask()
     activeTask && this.stopActiveTask()
 
-    newTask.start();
-
-    if (!createTask) {
-      tasksGateway.updateTask(newTask)
-    } else {
+    if (isTaskCreated) {
+      newTask.start()
       tasksGateway.addTask(newTask)
+    } else {
+      oldTask.start()
+      tasksGateway.updateTask(oldTask)
     }
   }
 
