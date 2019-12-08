@@ -68,11 +68,11 @@ export class TasksCases extends Cases {
     const activeTask = this.getActiveTask()
     activeTask && this.stopActiveTask()
 
-    newTask.start();
-
     if (isTaskCreated) {
+      newTask.start()
       tasksGateway.addTask(newTask)
     } else {
+      oldTask.start()
       tasksGateway.updateTask(oldTask)
     }
   }

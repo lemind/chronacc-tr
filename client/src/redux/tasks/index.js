@@ -12,6 +12,14 @@ export {
 }
 
 export class TasksGateway extends Gateway {
+  get myName(){
+    return 'tasks'
+  }
+
+  get myState(){
+    return this.state[this.myName]
+  }
+
   updateTask(task){
     this.dispatch(actions.updateTask(task))
   }
@@ -25,6 +33,8 @@ export class TasksGateway extends Gateway {
   }
 
   load(init){
+    if (this.myState.loading) return
+
     if (init) {
       init.reset && this.dispatch(actions.clearTasks())
     }

@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactModal from 'react-modal'
 
+import { isFunction } from 'helpers/misc'
+
 const REACT_MODAL_STYLES = {
   overlay: {
     backgroundColor: 'rgba(0,0,0,0.4)'
@@ -24,8 +26,8 @@ export default class Modal extends React.Component {
   }
 
   closeModal(e){
-    const { closeModal } = this.props;
-    closeModal && closeModal()
+    const { onClose } = this.props;
+    isFunction(onClose) && onClose()
   }
 
   render() {
@@ -35,6 +37,7 @@ export default class Modal extends React.Component {
       <ReactModal
         style={ REACT_MODAL_STYLES }
         onRequestClose={ onClose }
+        isOpen={ true }
         { ...rest }
       >
         <div>
