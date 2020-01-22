@@ -4,12 +4,15 @@ import 'rxjs/add/operator/catch';
 import { of } from 'rxjs/observable/of';
 
 import { debounceUntilChanged } from 'helpers/rxjs'
+import { requestFailed } from 'helpers/redux/requests'
 import { actions } from './projects.actions'
 import { API } from 'api/index';
 
 export const projectsEpics = {};
 
 const DEBOUNCE_TIME = 250
+
+const requestFailedProjects = requestFailed(actions);
 
 projectsEpics.fetchProjectsEpic = action$ =>
   {
@@ -25,15 +28,7 @@ projectsEpics.fetchProjectsEpic = action$ =>
 
             return actions.fetchProjectsSucceeded(res.result)
           })
-          .catch(error => of(
-            actions.requestFailed({
-              id: JSON.stringify(error),
-              message: JSON.stringify({
-                url: error.request.url,
-                message: error.message
-              }),
-            })
-          ))
+          .catch(error => requestFailedProjects(error))
       })
   }
 
@@ -53,15 +48,7 @@ projectsEpics.updateProjectEpic = action$ =>
 
             return actions.updateProjectSucceeded(response.result)
           })
-          .catch(error => of(
-            actions.requestFailed({
-              id: JSON.stringify(error),
-              message: JSON.stringify({
-                url: error,
-                message: error.message
-              }),
-            })
-          ))
+          .catch(error => requestFailedProjects(error))
       })
   }
 
@@ -80,15 +67,7 @@ projectsEpics.deleteProjectEpic = action$ =>
 
             return actions.deleteProjectSucceeded()
           })
-          .catch(error => of(
-            actions.requestFailed({
-              id: JSON.stringify(error),
-              message: JSON.stringify({
-                url: error.request.url,
-                message: error.message
-              }),
-            })
-          ))
+          .catch(error => requestFailedProjects(error))
       })
   }
 
@@ -107,14 +86,6 @@ projectsEpics.addProjectEpic = action$ =>
 
             return actions.addProjectSucceeded(response.result)
           })
-          .catch(error => of(
-            actions.requestFailed({
-              id: JSON.stringify(error),
-              message: JSON.stringify({
-                url: error.request.url,
-                message: error.message
-              }),
-            })
-          ))
+          .catch(error => requestFailedProjects(error))
       })
   }

@@ -13,6 +13,11 @@ Live version here - https://chronacc-tr.herokuapp.com/
 
 ## How to start it
 
+#### What the software need to have
+```
+docker docker-compose
+```
+
 #### Mongo image
 ```
 docker pull mongo
