@@ -1,16 +1,18 @@
 const express = require('express');
-const cors = require('cors')
-const bodyParser = require('body-parser')
-const helmet = require('helmet')
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const helmet = require('helmet');
 const mongoose = require('mongoose');
 const path = require('path');
-
-const routes = require('./routes/')
+const dotenv = require('dotenv');
+const routes = require('./routes/');
 
 const app = express();
+dotenv.config();
 
 const router = express.Router()
-const url = process.env.MONGODB_URI || "mongodb://mongodb:27017/chronacc"
+
+const mongoUri = process.env.MONGODB_URI
 
 const migrate = require('./db/migrate');
 
@@ -24,7 +26,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 try {
-  mongoose.connect(url, {
+  mongoose.connect(mongoUri, {
     //useMongoClient: true
   })
 } catch (error) {
