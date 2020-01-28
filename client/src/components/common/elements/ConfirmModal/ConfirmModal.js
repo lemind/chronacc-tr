@@ -12,19 +12,19 @@ export default class ConfirmModal extends React.Component {
     }
   }
 
-  openModal() {
+  openModal = () => {
     this.setState({ modalIsOpen: true })
   }
 
-  closeModal() {
+  closeModal = () => {
     this.setState({ modalIsOpen: false })
   }
 
-  onCloseModal() {
+  onCloseModal = () => {
     this.closeModal()
   }
 
-  confirm() {
+  confirm = () => {
     const { onConfirm } = this.props
     isFunction(onConfirm) && onConfirm()
     this.closeModal()
@@ -36,16 +36,16 @@ export default class ConfirmModal extends React.Component {
     return (
       <span>
         <span
-          onClick={ () => this.openModal() }
+          onClick={ this.openModal }
         >{ children }</span>
         <Modal
-          onClose={ () => this.onCloseModal() }
-          closeModal={ () => this.closeModal() }
+          onClose={ this.onCloseModal }
+          closeModal={ this.closeModal }
           isOpen={ this.state.modalIsOpen }
         >
           <div>{ confirmMessage }</div>
-          <button onClick={ () => this.confirm() }>Ok</button>
-          <button onClick={ () => this.closeModal() }>Cancel</button>
+          <button onClick={ this.confirm }>Ok</button>
+          <button onClick={ this.closeModal }>Cancel</button>
         </Modal>
       </span>
     )

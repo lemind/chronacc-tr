@@ -35,5 +35,4 @@ export default function Tasks(props){
       </Modal>}
     </div>
   )
-  //}
 }

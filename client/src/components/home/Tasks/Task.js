@@ -3,35 +3,34 @@ import React, { useEffect } from 'react'
 import withCases from 'helpers/withCases'
 import { utcFormat } from 'helpers/dateTime'
 import { isFunction } from 'helpers/misc'
-import Modal from 'components/common/elements/Modal/Modal'
 import TasksCases from 'cases/tasks'
-import EditTaskForm from 'components/home/EditTaskForm/EditTaskForm'
 import ConfirmModal from 'components/common/elements/ConfirmModal/ConfirmModal'
-import ScrollLoad from 'components/common/elements/ScrollLoad/ScrollLoad'
 
 const TIME_FORMAT = 'HH:mm:ss' //ToDo: move to date helpers
 
 @withCases(TasksCases)
 export default class Task extends React.Component {
-  openEditTaskModal(task) {
-    const { onEdit } = this.props
+  openEditTaskModal = () => {
+    const { props: { task, onEdit } } = this
     if (isFunction(onEdit)) {
       onEdit(task)
     }
   }
 
-  formattedTime(raw){
+  formattedTime(raw) {
     if (!raw) return '-'
 
     return utcFormat(raw, TIME_FORMAT)
   }
 
-  continueTask(task){
-    this.props.tasksCases.startTask(task)
+  continueTask = () => {
+    const { props: { task, tasksCases } } = this
+    tasksCases.startTask(task)
   }
 
-  deleteTask(task){
-    this.props.tasksCases.deleteTask(task._id)
+  deleteTask = () => {
+    const { props: { task, tasksCases } } = this
+    tasksCases.deleteTask(task._id)
   }
 
   render() {
@@ -61,21 +60,21 @@ export default class Task extends React.Component {
       <span> | </span>
       <span>
         <button
-          onClick={ () => this.continueTask(task) }
+          onClick={ this.continueTask }
           disabled={ disabled }
         >Continue</button>
       </span>
       <span> | </span>
       <span>
         <button
-          onClick={ () => this.openEditTaskModal(task) }
+          onClick={ this.openEditTaskModal }
           disabled={ disabled }
         >Edit</button>
       </span>
       <span> | </span>
       <span>
         <ConfirmModal
-          onConfirm={ () => this.deleteTask(task) }
+          onConfirm={ this.deleteTask }
         >
           <button
             disabled={ disabled }
