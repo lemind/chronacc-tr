@@ -45,13 +45,13 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-routes(router)
+routes(router);
 
-app.use(cors())
-app.use(bodyParser.json())
-app.use(helmet())
+app.use(cors());
+app.use(bodyParser.json());
+app.use(helmet());
 
-app.use('/api', router)
+app.use('/api', router);
 
 var port = process.env.PORT || 3001;
 
