@@ -3,9 +3,7 @@ import { isObjectEmpty } from 'helpers/objects'
 
 
 export default class Cases {
-  constructor(props){
-    this.states$
-
+  constructor(){
     this.subscriptions = []
   }
 
