@@ -5,6 +5,7 @@ import withCases from 'helpers/withCases'
 import ProjectsCases from 'cases/projects'
 import ColorBox from 'components/common/elements/ColorBox/ColorBox'
 import ConfirmModal from 'components/common/elements/ConfirmModal/ConfirmModal'
+import { getShortId } from 'helpers/misc';
 
 @withCases(ProjectsCases)
 export default class ProjectsList extends React.Component {
@@ -20,9 +21,14 @@ export default class ProjectsList extends React.Component {
     }
   }
 
+  getShortProjectId(project) {
+    if (!project || !project._id) return
+    return getShortId(project._id)
+  }
+
   renderProject(project){
     return <div>
-      <span>{ project._id }</span>
+      <span>{ this.getShortProjectId(project._id) }</span>
       <span> | </span>
       <span>
         <input

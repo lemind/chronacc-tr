@@ -13,7 +13,7 @@ Live version here - https://chronacc-tr.herokuapp.com/
 
 ## How to start it
 
-#### What the software need to have
+#### What the software need to install before
 ```
 docker docker-compose
 ```
