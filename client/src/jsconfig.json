@@ -9,7 +9,8 @@
       "helpers/*": ["src/helpers/*"],
       "cases/*": ["src/cases*"],
       "api/*": ["src/api/*"],
-    }
+    },
+    "experimentalDecorators": true,
   },
   "exclude": ["node_modules", "dist"]
 }
