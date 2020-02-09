@@ -6,7 +6,6 @@ import ProjectsCases from 'cases/projects'
 
 @withCases(TasksCases, ProjectsCases)
 export default class Notifier extends React.Component {
-
   getErrorsArray(){
     return [
       this.props.tasks && this.props.tasks.error,
@@ -40,8 +39,14 @@ export default class Notifier extends React.Component {
       wordWrap: 'break-word',
     }
 
+    const notifierStyle = {
+      position: 'absolute',
+      top: 0,
+      right: '5px',
+    }
+
     return (
-      <div>
+      <div style={ notifierStyle }>
         { errors.map((error) =>
           <div
             key={ error.id }
