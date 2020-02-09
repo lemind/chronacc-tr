@@ -6,8 +6,8 @@ import EditTaskForm from 'components/home/EditTaskForm/EditTaskForm'
 import Task from './Task'
 import ScrollLoadTasks from './ScrollLoad'
 
-export default function Tasks(props){
-  const [currentEditableTask, setCurrentEditableTask] = useState(null);
+export default function Tasks(props) {
+  const [currentEditableTask, setCurrentEditableTask] = useState(null)
   const { tasks } = props
 
   return (

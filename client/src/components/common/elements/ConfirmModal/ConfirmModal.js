@@ -1,53 +1,39 @@
-import React from 'react'
+import React, { useState } from 'react'
 import isFunction from 'lodash/isFunction'
+
 import Modal from 'components/common/elements/Modal/Modal'
 
+const ARE_YOU_SURE_MESSAGE = 'Are you sure?'
 
-export default class ConfirmModal extends React.Component {
-  constructor() {
-    super()
+export default function ConfirmModal(props) {
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const { message, children } = props
+  const confirmMessage = message || ARE_YOU_SURE_MESSAGE
 
-    this.state = {
-      modalIsOpen: false
-    }
+  const onCloseModal = () => {
+    setModalIsOpen(false)
   }
 
-  openModal = () => {
-    this.setState({ modalIsOpen: true })
-  }
-
-  closeModal = () => {
-    this.setState({ modalIsOpen: false })
-  }
-
-  onCloseModal = () => {
-    this.closeModal()
-  }
-
-  confirm = () => {
-    const { onConfirm } = this.props
+  const confirm = () => {
+    const { onConfirm } = props
     isFunction(onConfirm) && onConfirm()
-    this.closeModal()
+    setModalIsOpen(false)
   }
 
-  render() {
-    const { message, children } = this.props
-    const confirmMessage = message || 'Are you sure?'
-    return (
-      <span>
-        <span
-          onClick={ this.openModal }
-        >{ children }</span>
-        <Modal
-          onClose={ this.onCloseModal }
-          closeModal={ this.closeModal }
-          isOpen={ this.state.modalIsOpen }
-        >
-          <div>{ confirmMessage }</div>
-          <button onClick={ this.confirm }>Ok</button>
-          <button onClick={ this.closeModal }>Cancel</button>
-        </Modal>
-      </span>
-    )
-  }
+  return (
+    <span>
+      <span
+        onClick={ () => setModalIsOpen(true) }
+      >{ children }</span>
+      <Modal
+        onClose={ onCloseModal }
+        closeModal={ () => setModalIsOpen(false) }
+        isOpen={ modalIsOpen }
+      >
+        <div>{ confirmMessage }</div>
+        <button onClick={ () => confirm() }>Ok</button>
+        <button onClick={ () => setModalIsOpen(false) }>Cancel</button>
+      </Modal>
+    </span>
+  )
 }
