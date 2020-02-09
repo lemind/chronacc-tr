@@ -28,7 +28,7 @@ export default class ProjectsList extends React.Component {
 
   renderProject(project){
     return <div>
-      <span>{ this.getShortProjectId(project._id) }</span>
+      <span>{ this.getShortProjectId(project) }</span>
       <span> | </span>
       <span>
         <input

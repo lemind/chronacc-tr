@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import isFunction from 'lodash/isFunction'
+import { isFunction } from 'helpers/misc'
 
 import Modal from 'components/common/elements/Modal/Modal'
 
