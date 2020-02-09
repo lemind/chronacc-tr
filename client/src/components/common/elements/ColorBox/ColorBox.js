@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import isFunction from 'lodash/isFunction'
 
 import Modal from 'components/common/elements/Modal/Modal'
