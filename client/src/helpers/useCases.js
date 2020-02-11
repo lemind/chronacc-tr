@@ -44,7 +44,7 @@ const unsubscribe = ({subscribtions, setSubscribtions}) => {
   setSubscribtions([])
 }
 
-export default function useCasesDraft(...cases) {
+export default function useCases(...cases) {
   const [observables, setObservables] = useState({})
   const [subscribtions, setSubscribtions] = useState([])
   const [initedCases, setInitedCases] = useState({})
