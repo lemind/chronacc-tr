@@ -1,17 +1,18 @@
 import React from 'react'
 import CreatableSelect from 'react-select/lib/Creatable'
 
-import withCases from 'helpers/withCases'
+import useCases from 'helpers/useCases'
 import TasksCases from 'cases/tasks'
 import ProjectsCases from 'cases/projects'
-import { makeOptionsFromItem } from 'helpers/select'
+import { makeOptionFromItem } from 'helpers/select'
 
-@withCases(TasksCases, ProjectsCases)
-export default class EditTaskForm extends React.Component {
+export default function EditTaskForm(props) {
+  const { tasksCases } = useCases(TasksCases)
+  const { projectsCases } = useCases(ProjectsCases)
 
-  handleChangeProject(task, optionProject){
+  const handleChangeProject = (task, optionProject) => {
     if (!optionProject) {
-      this.props.tasksCases.bindProject(task, null)
+      tasksCases.bindProject(task, null)
       return
     }
     const project = {
@@ -20,40 +21,36 @@ export default class EditTaskForm extends React.Component {
       name: optionProject.label
     }
 
-    this.props.tasksCases.bindProject(task, project)
+    tasksCases.bindProject(task, project)
   }
 
-  getProjectsLikeOptions(){
-    return this.props.projectsCases.getListLikeOptions()
-  }
-
-  updateTask(e){
-    const { task } = this.props
+  const updateTask = (e) => {
+    const { task } = props
     task.description = e.target.value
-    this.props.tasksCases.updateTask(task)
+    tasksCases.updateTask(task)
   }
 
-  render() {
-    const { task } = this.props
+  const { task } = props
 
-    if (!task) return null
+  if (!task) return null
+  if (!projectsCases || !tasksCases) return null
 
-    const options = this.getProjectsLikeOptions()
+  const projectOptions = projectsCases.getListLikeOptions()
 
-    return (
-      <div>
-        <input
-          value={ task.description || '' }
-          onChange={ e => this.updateTask(e) }
-        />
-        <CreatableSelect
-          isClearable
-          name='project'
-          value={ task.project && makeOptionsFromItem(task.project) }
-          onChange={ (optionProject) => this.handleChangeProject(task, optionProject) }
-          options={ options }
-        />
-      </div>
-    )
-  }
+  return (
+    <div>
+      <input
+        value={ task.description || '' }
+        onChange={ e => updateTask(e) }
+      />
+      <CreatableSelect
+        isClearable
+        name='project'
+        value={ task.project && makeOptionFromItem(task.project) }
+        onChange={ (projectOption) => handleChangeProject(task, projectOption) }
+        options={ projectOptions }
+      />
+    </div>
+  )
+
 }

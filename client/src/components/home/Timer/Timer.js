@@ -4,7 +4,7 @@ import CreatableSelect from 'react-select/lib/Creatable'
 import withCases from 'helpers/withCases'
 import TasksCases from 'cases/tasks'
 import ProjectsCases from 'cases/projects'
-import { makeOptionsFromItem } from 'helpers/select'
+import { makeOptionFromItem } from 'helpers/select'
 import { diff, utcFormat, duration } from 'helpers/dateTime'
 
 const SECOND = 1000
@@ -177,7 +177,7 @@ export default class Timer extends React.Component {
           <CreatableSelect
             isClearable
             name='project'
-            value={ activeTask.project && makeOptionsFromItem(activeTask.project) }
+            value={ activeTask.project && makeOptionFromItem(activeTask.project) }
             onChange={ (optionProject) => this.handleChangeProject(activeTask, optionProject) }
             options={ options }
             isDisabled={ !activeTask._id }

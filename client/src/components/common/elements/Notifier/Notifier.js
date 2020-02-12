@@ -26,7 +26,8 @@ const getStyles = () => {
 }
 
 export default function Notifier() {
-  const { tasks, projects } = useCases(TasksCases, ProjectsCases)
+  const { tasks } = useCases(TasksCases)
+  const { projects } = useCases(ProjectsCases)
 
   const { errorStyle, notifierStyle } = getStyles()
 
