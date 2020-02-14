@@ -5,10 +5,9 @@ import withCases from 'helpers/withCases'
 import TasksCases from 'cases/tasks'
 import ProjectsCases from 'cases/projects'
 import { makeOptionFromItem } from 'helpers/select'
-import { diff, utcFormat, duration } from 'helpers/dateTime'
+import { diff, utcFormat, duration, TIME_FORMAT } from 'helpers/dateTime'
 
 const SECOND = 1000
-const TIME_FORMAT = 'HH:mm:ss'
 const DEFAULT_COLOR = 'c22326'
 
 @withCases(TasksCases, ProjectsCases)

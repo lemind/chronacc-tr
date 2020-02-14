@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react'
 
 import withCases from 'helpers/withCases'
-import { utcFormat } from 'helpers/dateTime'
+import { utcFormat, TIME_FORMAT } from 'helpers/dateTime'
 import { isFunction } from 'helpers/misc'
 import TasksCases from 'cases/tasks'
 import ConfirmModal from 'components/common/elements/ConfirmModal/ConfirmModal'
 import { getShortId } from 'helpers/misc';
-
-const TIME_FORMAT = 'HH:mm:ss' //ToDo: move to date helpers
 
 @withCases(TasksCases)
 export default class Task extends React.Component {
