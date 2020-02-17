@@ -63,6 +63,12 @@ export function TimerDraft() {
     setTaskInProgress(false)
   }
 
+  const start = () => {
+    tasksCases.startTask()
+
+    timerStart()
+  }
+
   const updateTimeCounter = (startTime) => {
     const diffMs = diff(startTime)
     const days = diff(startTime, 'days')
