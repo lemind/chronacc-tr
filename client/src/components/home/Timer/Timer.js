@@ -11,7 +11,7 @@ import { diff, utcFormat, duration, TIME_FORMAT } from 'helpers/dateTime'
 const SECOND = 1000
 const DEFAULT_COLOR = 'c22326'
 
-export function TimerDraft() {
+export default function TimerDraft() {
   const { tasksCases, tasks } = useCases(TasksCases)
   const { projectsCases, projects } = useCases(ProjectsCases)
 
@@ -25,7 +25,7 @@ export function TimerDraft() {
   const showStartButton = () => setTaskInProgress(false)
   const showStopButton = () => setTaskInProgress(true)
 
-  const timerStart = () => {
+  const startTimer = () => {
     if (!tasksCases || !projectsCases) return
     const activeTask = tasksCases.getActiveTask()
 
@@ -38,7 +38,7 @@ export function TimerDraft() {
     if (!activeTask || timer) return
 
     if (activeTaskId != null) {
-      timerStop()
+      stopTimer()
     }
 
     const timer = setInterval(() => updateTimeCounter(startTime), SECOND)
@@ -49,7 +49,7 @@ export function TimerDraft() {
     setActiveTaskId(activeTask._id)
   }
 
-  const timerStop = () => {
+  const stopTimer = () => {
     if (!timer) return
 
     clearInterval(timer)
@@ -61,7 +61,7 @@ export function TimerDraft() {
   const stop = () => {
     tasksCases.stopActiveTask()
 
-    timerStop()
+    stopTimer()
 
     showStartButton()
 
@@ -109,7 +109,7 @@ export function TimerDraft() {
   }
 
   useEffect(() => {
-    timerStart()
+    startTimer()
 
     if (projects && projects.list.length === 0) {
       projectsCases.load()
@@ -117,14 +117,15 @@ export function TimerDraft() {
   }, [tasks])
 
   useEffect(() => {
-    timerStart()
+    startTimer()
 
     return () => {
       tasksCases && tasksCases.unsubscribe()
       projectsCases && projectsCases.unsubscribe()
-      timerStop()
+      stopTimer()
     }
   }, [activeTaskId])
+
 
   if (!tasksCases || !projectsCases) return null
   const activeTask = tasksCases.getActiveTask() || {}
@@ -165,7 +166,7 @@ export function TimerDraft() {
 }
 
 @withCases(TasksCases, ProjectsCases)
-export default class Timer extends React.Component {
+export class TimerDeprecated extends React.Component {
   constructor(props) {
     super(props);
 

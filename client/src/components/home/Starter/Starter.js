@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import useCases from 'helpers/useCases'
 
 import TasksCases from 'cases/tasks'
-import Timer, {TimerDraft} from 'components/home/Timer/Timer'
+import Timer from 'components/home/Timer/Timer'
 import Tasks from 'components/home/Tasks/Tasks'
 
 export default function Starter() {
@@ -22,8 +22,7 @@ export default function Starter() {
   return (
     <div>
       <div>
-        {/* <Timer /> */}
-        <TimerDraft />
+        <Timer />
       </div>
       <Tasks tasks={ tasksList } />
     </div>
