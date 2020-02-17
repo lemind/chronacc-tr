@@ -122,12 +122,6 @@ export class TasksCases extends Cases {
     }
   }
 
-  getActiveTaskTime(){
-    const activeTask = this.getActiveTask()
-
-    return activeTask ? activeTask.getStartTime() : null
-  }
-
   bindProject(task, project){
     task.project = project
 

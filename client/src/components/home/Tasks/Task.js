@@ -61,7 +61,7 @@ export default class Task extends React.Component {
       <span> | </span>
       <span>{ task.description }</span>
       <span> | </span>
-      <span>{ this.formattedTime(task.getSummTime()) }</span>
+      <span>{ this.formattedTime(task.summTime) }</span>
       <span> | </span>
       <span>
         <button

@@ -26,8 +26,14 @@ export function TimerDraft() {
   const showStopButton = () => setTaskInProgress(true)
 
   const timerStart = () => {
-    const startTime = tasksCases.getActiveTaskTime()
+    if (!tasksCases || !projectsCases) return
     const activeTask = tasksCases.getActiveTask()
+
+    if (activeTask && activeTask._id === activeTaskId) {
+      return
+    }
+
+    const startTime = activeTask && activeTask.startTime
 
     if (!activeTask || timer) return
 
@@ -103,25 +109,15 @@ export function TimerDraft() {
   }
 
   useEffect(() => {
-    if (!tasksCases || !projectsCases) return
-    const activeTask = tasksCases.getActiveTask()
+    timerStart()
 
     if (projects && projects.list.length === 0) {
       projectsCases.load()
     }
-
-    if (activeTask && activeTask._id !== activeTaskId) {
-      timerStart()
-    }
   }, [tasks])
 
   useEffect(() => {
-    if (!tasksCases || !projectsCases) return
-    const activeTask = tasksCases.getActiveTask()
-
-    if (activeTask && activeTask._id !== activeTaskId) {
-      timerStart()
-    }
+    timerStart()
 
     return () => {
       tasksCases && tasksCases.unsubscribe()
