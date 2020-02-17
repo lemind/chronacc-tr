@@ -11,7 +11,7 @@ import { diff, utcFormat, duration, TIME_FORMAT } from 'helpers/dateTime'
 const SECOND = 1000
 const DEFAULT_COLOR = 'c22326'
 
-export default function TimerDraft() {
+export default function Timer() {
   const { tasksCases, tasks } = useCases(TasksCases)
   const { projectsCases, projects } = useCases(ProjectsCases)
 

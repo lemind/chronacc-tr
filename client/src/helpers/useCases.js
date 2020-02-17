@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react'
 import { firstLowerCase } from './strings';
 
-const unsubscribe = ({subscribtions, setSubscribtions}) => {
+const unsubscribe = (subscribtions) => {
   subscribtions.forEach(subscribtion => {
     subscribtion.unsubscribe()
   })
-  setSubscribtions([])
+  subscribtions = []
 }
 
 export default function useCases(casesItem) {
@@ -14,6 +14,8 @@ export default function useCases(casesItem) {
   const [initedCases, setInitedCases] = useState({})
 
   useEffect(() => {
+    let subscribtions = []
+
     const caseName = firstLowerCase(casesItem.customName)
 
     const newCaseItem = casesItem()
@@ -33,13 +35,12 @@ export default function useCases(casesItem) {
       setObservables({ ...newObservables })
     })
 
-    setSubscribtions([...subscribtions, subscribtion])
+    subscribtions = [...subscribtions, subscribtion]
 
     setInitedCases({...{[caseName]: newCaseItem}})
 
     return () => {
-      // can we unsubscribe all by default?
-      unsubscribe({subscribtions, setSubscribtions})
+      unsubscribe(subscribtions)
     }
   }, [])
 
