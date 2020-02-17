@@ -65,8 +65,6 @@ export function TimerDraft() {
 
   const start = () => {
     tasksCases.startTask()
-
-    timerStart()
   }
 
   const updateTimeCounter = (startTime) => {
