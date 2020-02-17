@@ -38,6 +38,7 @@ export default function useCases(casesItem) {
     setInitedCases({...{[caseName]: newCaseItem}})
 
     return () => {
+      // can we unsubscribe all by default?
       unsubscribe({subscribtions, setSubscribtions})
     }
   }, [])
