@@ -110,7 +110,7 @@ export class TasksCases extends Cases {
   getActiveTask(){
     const tasks = this.getTasks()
     const result = tasks.find(task => {
-      if (task.isActive()) {
+      if (task.isActive) {
         return task
       }
     })

@@ -12,7 +12,7 @@ export default class Task {
     Object.assign(this, initial)
   }
 
-  isActive() {
+  get isActive() {
     return !!this.beginTime
   }
 
