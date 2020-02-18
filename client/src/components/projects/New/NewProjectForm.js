@@ -1,66 +1,48 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-import withCases from 'helpers/withCases'
+import useCases from 'helpers/useCases'
 
 import ProjectsCases from 'cases/projects'
 import ColorBox from 'components/common/elements/ColorBox/ColorBox'
 
-@withCases(ProjectsCases)
-export default class NewProjectForm extends React.Component {
-  constructor(props){
-    super(props)
+export default function NewProjectForm() {
+  const { projectsCases } = useCases(ProjectsCases)
 
-    this.state = {
-      tempProject: {
-        _id: 0
-      }
-    }
-  }
+  const [tempProject, setTempProject] = useState({_id: 0})
 
-  onColorChange() {
+  const onColorChange = () => {
     return (newColor) => {
-      this.setState({
-        tempProject: {
-          ...this.state.tempProject,
-          color: newColor
-        }
-      })
+      setTempProject({ ...tempProject, color: newColor })
     }
   }
 
-  createProject(){
-    this.props.projectsCases.addProject(this.state.tempProject)
-    this.setState({
-      tempProject: { _id: 0 }
-    })
+  const createProject = () => {
+    projectsCases.addProject(tempProject)
+    setTempProject({ _id: 0 })
   }
 
-  updateNewProjectName(e){
-    this.setState({
-      tempProject: {
-        ...this.state.tempProject,
-        name: e.target.value
-      }
-    })
+  const updateNewProjectName = (e) => {
+    setTempProject({ ...tempProject, name: e.target.value })
   }
 
-  render() {
-    return (
-      <div>
-        <div>__________________________________</div>
-        <input
-          value={ this.state.tempProject.name || '' }
-          onChange={ e => this.updateNewProjectName(e) }
-        />
-        <ColorBox
-          model={ this.state.tempProject }
-          onColorChange={ this.onColorChange() }
-        />
-        <button
-          onClick={ () => this.createProject() }
-        >Create project</button>
-        <div>__________________________________</div>
-      </div>
-    )
-  }
+  return (
+    <div>
+      <div>________________________________________</div>
+      <br />
+      <input
+        value={ tempProject.name || '' }
+        onChange={ e => updateNewProjectName(e) }
+      />
+      <ColorBox
+        model={ tempProject }
+        onColorChange={ onColorChange() }
+      />
+      <button
+        onClick={ () => createProject() }
+      >Create project</button>
+      <div>________________________________________</div>
+      <br />
+      <br />
+    </div>
+  )
 }
