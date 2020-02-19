@@ -1,32 +1,29 @@
 import React, { useEffect, useState } from 'react'
 
-import withCases from 'helpers/withCases'
+import useCases from 'helpers/useCases'
 import ScrollLoad from 'components/common/elements/ScrollLoad/ScrollLoad'
 import TasksCases from 'cases/tasks'
 
+export default function ScrollLoadTasks(props) {
+  const { tasksCases, tasks } = useCases(TasksCases)
 
-@withCases(TasksCases)
-export default class ScrollLoadTasks extends React.Component {
-  loadMore() {
-    const { props: { tasks } } = this
+  const loadMore = () => {
     if (!tasks) return
-
-    this.props.tasksCases.load()
+    tasksCases.load()
   }
 
-  render() {
-    const { children } = this.props
-    const hasMore = this.props.tasks ? this.props.tasks.hasMore : false
-    const { loading } = this.props.tasks
+  if (!tasks) return null;
 
-    return (
-      <ScrollLoad
-        loadMore={ () => this.loadMore() }
-        hasMore={ hasMore }
-        loading={ loading }
-      >
-        { children }
-      </ScrollLoad>
-    )
-  }
+  const { loading, hasMore } = tasks
+  const { children } = props
+
+  return (
+    <ScrollLoad
+      loadMore={ () => loadMore() }
+      hasMore={ hasMore }
+      loading={ loading }
+    >
+      { children }
+    </ScrollLoad>
+  )
 }

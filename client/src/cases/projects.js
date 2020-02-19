@@ -3,7 +3,7 @@ import withGateways from 'helpers/withGateways'
 import { caseFactory } from 'helpers/case'
 import Cases from './index'
 import ProjectsGateway from 'src/redux/projects'
-import { makeOptionsFromItem } from 'helpers/select'
+import { makeOptionFromItem } from 'helpers/select'
 
 @withGateways(ProjectsGateway)
 export class ProjectsCases extends Cases {
@@ -37,7 +37,7 @@ export class ProjectsCases extends Cases {
 
     if (list.length === 0) return []
     return list.map(project => {
-      return makeOptionsFromItem(project)
+      return makeOptionFromItem(project)
     })
   }
 

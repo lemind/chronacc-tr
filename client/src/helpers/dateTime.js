@@ -1,5 +1,7 @@
 import moment from 'moment'
 
+export const TIME_FORMAT = 'HH:mm:ss'
+
 export function dateTime(param) {
   return moment(param)
 }

@@ -1,7 +1,7 @@
 import { format, dateTime, valueOf } from 'helpers/dateTime'
 
 export default class Task {
-  constructor(initial){
+  constructor(initial) {
     this._id = 0
     this.beginTime = null // current period
     this._isActive = false
@@ -12,17 +12,17 @@ export default class Task {
     Object.assign(this, initial)
   }
 
-  isActive(){
+  get isActive() {
     return !!this.beginTime
   }
 
-  dayStart(){
+  dayStart() {
     if (!this.periods[0] || !this.periods[0].beginTime) return null
     const startTaskTime = dateTime(this.periods[0].beginTime)
     return format(startTaskTime, 'DD/MM')
   }
 
-  hasStartedToday(){
+  hasStartedToday() {
     const startTaskTime = dateTime(this.periods[0].beginTime)
     const targetDay = format(startTaskTime, 'DD')
     const today = format(null, 'DD')
@@ -30,7 +30,7 @@ export default class Task {
     return targetDay === today
   }
 
-  start(){
+  start() {
     this.beginTime = valueOf()
     this._isActive = true
   }
@@ -44,7 +44,7 @@ export default class Task {
     this.beginTime = null
   }
 
-  getSummTime(){
+  get summTime() {
     let summTime = 0
 
     if (this.periods.length) {
@@ -61,8 +61,8 @@ export default class Task {
     return summTime
   }
 
-  getStartTime(){
-    const summTime = this.getSummTime()
+  get startTime() {
+    const summTime = this.summTime
     let startTime = summTime ? summTime : 0
 
     return this.beginTime - startTime

@@ -1,65 +1,46 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useLayoutEffect } from 'react'
 import { firstLowerCase } from './strings';
 
-const initObservables = (params) => {
-  const {
-    cases,
-    observables, setObservables,
-    subscribtions, setSubscribtions,
-    initedCases, setInitedCases
-  } = params
+const unsubscribe = (subscribtions) => {
+  subscribtions.forEach(subscribtion => {
+    subscribtion.unsubscribe()
+  })
+  subscribtions = []
+}
 
-  for (let caseItem of cases) {
-    const caseName = firstLowerCase(caseItem.customName)
+export default function useCases(casesItem) {
+  const [observables, setObservables] = useState({})
+  const [subscribtions, setSubscribtions] = useState([])
+  const [initedCases, setInitedCases] = useState({})
 
-    const newCaseItem = {
-      [caseName]: caseItem()
-    };
+  useEffect(() => {
+    let subscribtions = []
 
-    const _observables = newCaseItem[caseName].setObservables()
-    const state$ = newCaseItem[caseName].getState$()
+    const caseName = firstLowerCase(casesItem.customName)
+
+    const newCaseItem = casesItem()
+
+    const observablesStructure = newCaseItem.setObservables()
+    const state$ = newCaseItem.getState$()
 
     const subscribtion = state$.subscribe((val) => {
       const newObservables = {}
-      _observables.forEach(item => {
+      observablesStructure.forEach(item => {
         newObservables[item.store] = {}
         item.variables.forEach(variable => {
           newObservables[item.store][variable] = val[item.store][variable]
         })
       })
 
-      setObservables({ ...observables, ...newObservables })
+      setObservables({ ...newObservables })
     })
 
-    setInitedCases({...initedCases, ...newCaseItem})
+    subscribtions = [...subscribtions, subscribtion]
 
-    setSubscribtions([...subscribtions, subscribtion])
-  }
-}
-
-const unsubscribe = ({subscribtions, setSubscribtions}) => {
-  subscribtions.forEach(subscribtion => {
-    subscribtion.unsubscribe()
-  })
-  setSubscribtions([])
-}
-
-export default function useCasesDraft(...cases) {
-  const [observables, setObservables] = useState({})
-  const [subscribtions, setSubscribtions] = useState([])
-  const [initedCases, setInitedCases] = useState({})
-  const initParams = {
-    cases,
-    observables, setObservables,
-    subscribtions, setSubscribtions,
-    initedCases, setInitedCases
-  }
-
-  useEffect(() => {
-    initObservables(initParams)
+    setInitedCases({...{[caseName]: newCaseItem}})
 
     return () => {
-      unsubscribe({subscribtions, setSubscribtions})
+      unsubscribe(subscribtions)
     }
   }, [])
 

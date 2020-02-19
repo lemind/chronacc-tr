@@ -11,6 +11,7 @@ export default function ScrollLoad(props) {
         loadMore={ loadMore }
         hasMore={ hasMore }
         loader={loading && <div key={ 0 } >Loading ...</div>}
+        initialLoad={ false }
       >
         { children }
       </InfiniteScroll>

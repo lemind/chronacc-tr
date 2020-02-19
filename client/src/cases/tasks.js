@@ -6,6 +6,7 @@ import TasksGateway from 'src/redux/tasks'
 
 import 'rxjs/add/operator/map';
 
+// ToDo: if all are business here?
 @withGateways(TasksGateway)
 export class TasksCases extends Cases {
   setObservables(){
@@ -109,7 +110,7 @@ export class TasksCases extends Cases {
   getActiveTask(){
     const tasks = this.getTasks()
     const result = tasks.find(task => {
-      if (task.isActive()) {
+      if (task.isActive) {
         return task
       }
     })
@@ -119,12 +120,6 @@ export class TasksCases extends Cases {
     } else {
       return null
     }
-  }
-
-  getActiveTaskTime(){
-    const activeTask = this.getActiveTask()
-
-    return activeTask ? activeTask.getStartTime() : null
   }
 
   bindProject(task, project){
