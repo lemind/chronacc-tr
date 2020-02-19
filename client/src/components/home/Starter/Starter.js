@@ -10,7 +10,11 @@ export default function Starter() {
   const { tasksCases, tasks } = useCases(TasksCases)
 
   useEffect(() => {
-    tasksCases && tasksCases.load && tasksCases.load({reset: true})
+    if (tasksCases) {
+      if (tasks.list.length === 0) {
+        tasksCases.load({reset: true})
+      }
+    }
 
     return () => {
       tasksCases && tasksCases.unsubscribe()

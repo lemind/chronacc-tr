@@ -1,52 +1,61 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-import withCases from 'helpers/withCases'
+import useCases from 'helpers/useCases'
 
 import ProjectsCases from 'cases/projects'
 import ColorBox from 'components/common/elements/ColorBox/ColorBox'
 import ConfirmModal from 'components/common/elements/ConfirmModal/ConfirmModal'
 import { getShortId } from 'helpers/misc';
 
-@withCases(ProjectsCases)
-export default class ProjectsList extends React.Component {
+export default function ProjectsList() {
+  const { projectsCases, projects } = useCases(ProjectsCases)
 
-  componentWillMount(){
-    this.props.projectsCases.load()
-  }
+  useEffect(() => {
+    if (projectsCases) {
+      if (projects.list.length === 0) {
+        projectsCases.load()
+      }
+    }
 
-  onColorChange(project) {
+    return () => {
+      projectsCases && projectsCases.unsubscribe()
+    }
+  }, [projectsCases])
+
+  const onColorChange = (project) => {
     return (newColor) => {
       project.color = newColor
-      this.props.projectsCases.updateProject(project)
+      projectsCases.updateProject(project)
     }
   }
 
-  getShortProjectId(project) {
+  const getShortProjectId = (project) => {
     if (!project || !project._id) return
     return getShortId(project._id)
   }
 
-  renderProject(project){
+  // ToDo: extract
+  const renderProject = (project) => {
     return <div>
-      <span>{ this.getShortProjectId(project) }</span>
+      <span>{ getShortProjectId(project) }</span>
       <span> | </span>
       <span>
         <input
           value={ project.name }
-          onChange={ e => this.updateProject(project, e) }
+          onChange={ e => updateProject(project, e) }
         />
       </span>
       <span> | </span>
       <span>
         <ColorBox
           model={ project }
-          onColorChange={ this.onColorChange(project) }
+          onColorChange={ onColorChange(project) }
         />
       </span>
       <span> | </span>
       <span>
         <ConfirmModal
-          onConfirm={ () => this.deleteProject(project) }
+          onConfirm={ () => deleteProject(project) }
           message='Projects for all related tasks will be vanished forever. Are you sure?'
         >
           <button>Delete</button>
@@ -55,28 +64,28 @@ export default class ProjectsList extends React.Component {
     </div>
   }
 
-  deleteProject(project){
-    this.props.projectsCases.deleteProject(project._id)
+  const deleteProject = (project) => {
+    projectsCases.deleteProject(project._id)
   }
 
-  updateProject(project, e){
+  const updateProject = (project, e) => {
     project.name = e.target.value
-    this.props.projectsCases.updateProject(project)
+    projectsCases.updateProject(project)
   }
 
-  render() {
-    let projects = this.props.projects ? this.props.projects.list : []
 
-    return (
-      <div>
-        <h5>Projects list</h5>
-        { projects.map((project, index) =>
-          <div key={ project._id }>
-            <br />
-            { this.renderProject(project) }
-          </div>
-        ) }
-      </div>
-    )
-  }
+  if (!projects) return null
+  let projectsList = projects ? projects.list : []
+
+  return (
+    <div>
+      <h5>Projects list</h5>
+      { projectsList.map((project, index) =>
+        <div key={ project._id }>
+          <br />
+          { renderProject(project) }
+        </div>
+      ) }
+    </div>
+  )
 }
