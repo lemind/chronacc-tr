@@ -16,7 +16,7 @@ services:
     server:
         image: webapp-server
         environment:
-            - NODE_ENV = development
+            - NODE_ENV=development
         restart: always
         ports:
             - "3001:3001"
