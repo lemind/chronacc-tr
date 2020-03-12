@@ -18,8 +18,8 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js/,
-        use: ['babel-loader'],
+        test: /\.(ts|js|jsx|tsx)?$/,
+        use: ['babel-loader','ts-loader'],
         exclude: path.resolve(__dirname, '../node_modules')
       },
       {
