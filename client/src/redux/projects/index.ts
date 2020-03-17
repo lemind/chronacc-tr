@@ -2,7 +2,8 @@ import { actions } from './projects.actions'
 import { reducer } from './projects.reducer'
 import { projectsEpics } from './projects.epics'
 import { gatewayFactory } from 'helpers/gateway'
-import Gateway from 'src/redux/Gateway'
+import Gateway from '../Gateway'
+import Project from 'models/Project'
 
 export {
   actions as projectsActions,
@@ -11,23 +12,19 @@ export {
 }
 
 export class ProjectsGateway extends Gateway {
-  constructor(...params){
-    super(...params)
-  }
-
-  updateProject(project){
+  updateProject(project: Project): void {
     this.dispatch(actions.updateProject(project))
   }
 
-  addProject(newProject){
+  addProject(newProject: Project): void {
     this.dispatch(actions.addProject(newProject))
   }
 
-  deleteProject(projectId){
+  deleteProject(projectId: any): void {
     this.dispatch(actions.deleteProject(projectId))
   }
 
-  load(){
+  load(): void {
     this.dispatch(actions.fetchProjects())
   }
 
