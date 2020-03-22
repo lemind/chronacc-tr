@@ -5,8 +5,8 @@ export interface IProject {
 }
 
 export default class Project implements IProject {
-  name?: string = ''
-  color?: string = ''
+  name: string = ''
+  color: string = ''
   constructor(initial? :IProject){
     Object.assign(this, initial)
   }

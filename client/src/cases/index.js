@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs'
+import { from as observableFrom } from 'rxjs';
 import { isObjectEmpty } from 'helpers/objects'
 
 
@@ -45,8 +45,8 @@ export default class Cases {
 
   getState$() {
     return this.store
-      ? Observable.from(this.store)
-      : Observable.from([])
+      ? observableFrom(this.store)
+      : observableFrom([])
   }
 
   unsubscribe(){

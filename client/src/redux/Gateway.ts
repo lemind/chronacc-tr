@@ -1,6 +1,6 @@
 import { store } from 'src/redux/store'
 
-// import { Observable } from 'rxjs'
+import { from as observableFrom } from 'rxjs';
 
 export interface IGateway {
   state: any
@@ -40,6 +40,6 @@ export default class Gateway implements IGateway {
   }
 
   getState$() {
-    // return Observable.from(store)
+    return observableFrom(<any>store)
   }
 }
