@@ -47,4 +47,7 @@ export const store = createStore(
   rootReducer,
   middleware
 )
+
+// export type AppDispatch = typeof store.dispatch
+
 // export const persistor = persistStore(store)

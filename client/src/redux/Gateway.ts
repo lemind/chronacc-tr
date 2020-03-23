@@ -2,41 +2,36 @@ import { store } from 'src/redux/store'
 
 import { from as observableFrom } from 'rxjs';
 
+// ToDo: move to store.ts
+type AppStore = typeof store
+type AppDispatch = typeof store.dispatch
+
 export interface IGateway {
   state: any
-  dispatch: any
-  observables: any[]
-  subscriber: any
-  store: any
+  dispatch: AppDispatch
+  unsubscribeFromStore: Function
+  store: AppStore
 }
 
 export default class Gateway implements IGateway {
   state: any
-  dispatch: any
-  observables: any[]
-  subscriber: any
-  store: any
+  dispatch: AppDispatch
+  unsubscribeFromStore: Function
+  store: AppStore
 
   constructor() {
     this.state = store.getState()
     this.dispatch = store.dispatch
-    this.observables = []
-    this.subscriber = {}
 
-    this.subscriber = store.subscribe(() => {
+    this.unsubscribeFromStore = store.subscribe(() => {
       this.state = store.getState()
     })
-    console.log('___', this.subscriber);
 
     this.store = store
   }
 
   unsubscribe() {
-    this.subscriber.unsubscribe && this.subscriber.unsubscribe()
-  }
-
-  setObservables() {
-    return []
+    this.unsubscribeFromStore()
   }
 
   getState$() {
