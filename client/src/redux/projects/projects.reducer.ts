@@ -1,11 +1,19 @@
 
+import { IProject } from 'models/Project'
+
+export interface IProjectsState {
+  list: Array<IProject>,
+  loading: Boolean,
+  error: any
+}
+
 export const initialState = {
   list: [],
   loading: false,
   error: null
 };
 
-export const reducer = (state = initialState, action) => {
+export const reducer = (state: IProjectsState = initialState, action) => {
   let newList
 
   switch (action.type) {

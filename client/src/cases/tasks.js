@@ -4,8 +4,6 @@ import { caseFactory } from 'helpers/case'
 import Cases from './index'
 import TasksGateway from 'src/redux/tasks'
 
-import 'rxjs/add/operator/map';
-
 // ToDo: if all are business here?
 @withGateways(TasksGateway)
 export class TasksCases extends Cases {

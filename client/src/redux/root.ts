@@ -9,6 +9,8 @@ export const rootReducer = combineReducers({
   projects: projectsReducer
 })
 
+export type RootState = ReturnType<typeof rootReducer>
+
 export const rootEpic = combineEpics(
   tasksEpics.fetchTasksEpic,
   tasksEpics.addTaskEpic,

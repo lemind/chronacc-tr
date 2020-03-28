@@ -1,4 +1,4 @@
-import { ajax } from 'rxjs/observable/dom/ajax'
+import { ajax } from 'rxjs/ajax'
 import { API_HOST, HEADERS } from '../config'
 
 export const projectsAPI = {
