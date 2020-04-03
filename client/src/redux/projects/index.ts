@@ -5,6 +5,8 @@ import { gatewayFactory } from 'helpers/gateway'
 import Gateway from '../Gateway'
 import Project from 'models/Project'
 
+import { IMongoId } from 'models/index'
+
 export {
   actions as projectsActions,
   reducer as projectsReducer,
@@ -13,19 +15,19 @@ export {
 
 export class ProjectsGateway extends Gateway {
   updateProject(project: Project): void {
-    this.dispatch(actions.updateProject(project))
+    this.dispatch(actions.updateProject.request(project))
   }
 
   addProject(newProject: Project): void {
-    this.dispatch(actions.addProject(newProject))
+    this.dispatch(actions.createProject.request(newProject))
   }
 
-  deleteProject(projectId: any): void {
-    this.dispatch(actions.deleteProject(projectId))
+  deleteProject(projectId: IMongoId): void {
+    this.dispatch(actions.deleteProject.request(projectId))
   }
 
   load(): void {
-    this.dispatch(actions.fetchProjects())
+    this.dispatch(actions.fetchProjects.request(''))
   }
 
 }

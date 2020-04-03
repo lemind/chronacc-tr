@@ -1,5 +1,7 @@
-
 import { IProject } from 'models/Project'
+import { getType } from 'typesafe-actions';
+
+import { actions } from './projects.actions'
 
 export interface IProjectsState {
   list: Array<IProject>,
@@ -12,6 +14,24 @@ export const initialState = {
   loading: false,
   error: null
 };
+
+const {
+  fetchProjects,
+  updateProject,
+  createProject,
+  deleteProject,
+} = actions
+
+const fetchProjectsActionType = getType(fetchProjects.request)
+const updateProjectActionType = getType(updateProject.request)
+const createProjectActionType = getType(createProject.request)
+const deleteProjectActionType = getType(deleteProject.request)
+
+// update old actions
+// request
+// success
+// failure
+
 
 export const reducer = (state: IProjectsState = initialState, action) => {
   let newList
@@ -32,15 +52,16 @@ export const reducer = (state: IProjectsState = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error: action.error
+        error: action.payload
       }
     case 'UPDATE_PROJECT':
+      console.log('reducer', action);
       newList = state.list.map((item, index) => {
-        if (item._id !== action.project._id) {
+        if (item._id !== action.payload._id) {
           return item
         }
 
-        return Object.assign(item, {...action.project})
+        return Object.assign(item, {...action.payload})
       })
       return {
         ...state,
@@ -63,20 +84,21 @@ export const reducer = (state: IProjectsState = initialState, action) => {
         ...state,
         loading: false
       }
-    case 'ADD_PROJECT':
+    case 'CREATE_PROJECT':
       return {
         ...state,
-        list: [...state.list, action.project],
+        list: [...state.list, action.payload],
         loading: true
       }
-    case 'ADD_PROJECT_SUCCEEDED':
+    case 'CREATE_PROJECT_SUCCEEDED':
       newList = state.list.map((item, index) => {
-        if (item._id !== 0) { // 0 - temp id
+        if (item._id !== '0') { // 0 - temp id
           return item
         }
 
         return Object.assign(item, {...action.payload})
       })
+
       return {
         ...state,
         loading: false,

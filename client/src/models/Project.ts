@@ -1,6 +1,7 @@
+import { IMongoId } from "./index"
 
 export interface IProject {
-  _id: any
+  _id: IMongoId
   name?: string
   color?: string
 }
@@ -8,8 +9,8 @@ export interface IProject {
 export default class Project implements IProject {
   name: string = ''
   color: string = ''
-  _id: any
-  constructor(initial? :IProject){
+  _id: IMongoId
+  constructor(initial? :IProject) {
     Object.assign(this, initial)
   }
 }

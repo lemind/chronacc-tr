@@ -1,88 +1,110 @@
-import { ofType } from 'redux-observable'
+import { ofType, Epic } from 'redux-observable'
 import { mergeMap, map, catchError } from 'rxjs/operators'
+import { getType, ActionType } from 'typesafe-actions';
+import { from, of } from "rxjs";
 
 // import { debounceUntilChanged } from 'helpers/rxjs'
 import { requestFailed } from 'helpers/redux/requests'
 import { actions } from './projects.actions'
 import { API } from 'api/index';
 
-export const projectsEpics = {}
+export const projectsEpics: any = {}
 
 const DEBOUNCE_TIME = 250
 
+// ToDo: can we adjust that
 const requestFailedProjects = requestFailed(actions);
 
+const {
+  fetchProjects,
+  updateProject,
+  deleteProject,
+  createProject,
+} = actions
+
+const fetchProjectsActionType = getType(fetchProjects.request)
+const updateProjectActionType = getType(updateProject.request)
+const deleteProjectActionType = getType(deleteProject.request)
+const createProjectActionType = getType(createProject.request)
+
+// update old actions
+// request
+// success
+// failure
+
+type Action = ActionType<typeof actions>;
+
 projectsEpics.fetchProjectsEpic = action$ => action$.pipe(
-  ofType('FETCH_PROJECTS'),
+  ofType(fetchProjectsActionType),
   mergeMap(action => {
     return API.fetchProjects().pipe(
       map(res => {
         if (!res.success) {
-          return actions.requestFailed({
+          return fetchProjects.failure({
             ...res.error,
           })
         }
 
-        return actions.fetchProjectsSucceeded(res.result)
+        return fetchProjects.success(res.result)
       }),
-      catchError(error => requestFailedProjects(error))
+      catchError(error => of(fetchProjects.failure(error)))
     )
   })
 )
 
 projectsEpics.updateProjectEpic = action$ => action$.pipe(
-  ofType('UPDATE_PROJECT'),
+  ofType(updateProjectActionType),
   mergeMap(action => {
     return API.updateProject(action).pipe(
       map(res => {
         const response = res.response
         if (!response.success) {
-          return actions.requestFailed({
+          return updateProject.failure({
             ...response.error,
           })
         }
 
-        return actions.updateProjectSucceeded(response.result)
+        return updateProject.success(response.result)
       }),
-      catchError(error => requestFailedProjects(error))
+      catchError(error => of(updateProject.failure(error)))
     )
   })
 )
 
 projectsEpics.deleteProjectEpic = action$ => action$.pipe(
-  ofType('DELETE_PROJECT'),
+  ofType(deleteProjectActionType),
   mergeMap(action => {
     return API.deleteProject(action).pipe(
       map(res => {
         const response = res.response
         if (!response.success) {
-          return actions.requestFailed({
+          return deleteProject.failure({
             ...response.error,
           })
         }
 
-        return actions.deleteProjectSucceeded()
+        return deleteProject.success('')
       }),
-      catchError(error => requestFailedProjects(error))
+      catchError(error => of(deleteProject.failure(error)))
     )
   })
 )
 
 projectsEpics.addProjectEpic = action$ => action$.pipe(
-  ofType('ADD_PROJECT'),
+  ofType(createProjectActionType),
   mergeMap(action => {
     return API.addProject(action).pipe(
       map(res => {
         const response = res.response
         if (!response.success) {
-          return actions.requestFailed({
+          return createProject.failure({
             ...response.error,
           })
         }
 
-        return actions.addProjectSucceeded(response.result)
+        return createProject.success(response.result)
       }),
-      catchError(error => requestFailedProjects(error))
+      catchError(error => of(createProject.failure(error)))
     )
   })
 )

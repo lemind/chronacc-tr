@@ -8,14 +8,14 @@ export const projectsAPI = {
   addProject: (action) => {
     return ajax.post(
       `${API_HOST}/project`,
-      action.project,
+      action.payload,
       HEADERS
     )
   },
   updateProject: (action) => {
     return ajax.put(
       `${API_HOST}/project`,
-      action.project,
+      action.payload,
       HEADERS
     )
   },

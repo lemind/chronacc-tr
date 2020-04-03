@@ -31,7 +31,7 @@ module.exports = {
         id: 1,
         message: 'DB connection error'
       };
-      const error = errorsHelper.handleError(errorParams, err);
+      const error = errorsHelper.handleError(errorParams);
       res.json({ success: false, error });
       return;
     }
