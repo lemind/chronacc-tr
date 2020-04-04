@@ -1,7 +1,9 @@
 import { IProject } from 'models/Project'
-import { getType } from 'typesafe-actions';
+import { getType, ActionType } from 'typesafe-actions'
 
-import { actions } from './projects.actions'
+import actions, * as actionsT from './projects.actions'
+
+type Action = ActionType<typeof actions>;
 
 export interface IProjectsState {
   list: Array<IProject>,
@@ -36,7 +38,7 @@ const deleteProjectSucceededType = getType(deleteProject.success)
 const createProjectType = getType(createProject.request)
 const createProjectSucceededType = getType(createProject.success)
 
-export const reducer = (state: IProjectsState = initialState, action) => {
+export const reducer = (state: IProjectsState = initialState, action: Action) => {
   let newList
 
   switch (action.type) {

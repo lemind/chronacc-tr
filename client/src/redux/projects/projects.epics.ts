@@ -1,14 +1,14 @@
 import { ofType, Epic } from 'redux-observable'
 import { mergeMap, map, catchError } from 'rxjs/operators'
 import { getType, ActionType } from 'typesafe-actions';
-import { from, of } from "rxjs";
+import { of } from "rxjs";
 
 // import { debounceUntilChanged } from 'helpers/rxjs'
 import { requestFailed } from 'helpers/redux/requests'
-import { actions } from './projects.actions'
+import actions from './projects.actions'
 import { API } from 'api/index';
 
-export const projectsEpics: any = {}
+import { RootState } from 'src/redux/root';
 
 const DEBOUNCE_TIME = 250
 
@@ -29,7 +29,9 @@ const createProjectType = getType(createProject.request)
 
 type Action = ActionType<typeof actions>;
 
-projectsEpics.fetchProjectsEpic = action$ => action$.pipe(
+type EpicType = Epic<Action, Action, RootState>
+
+const fetchProjectsEpic: EpicType = action$ => action$.pipe(
   ofType(fetchProjectsType),
   mergeMap(action => {
     return API.fetchProjects().pipe(
@@ -47,7 +49,7 @@ projectsEpics.fetchProjectsEpic = action$ => action$.pipe(
   })
 )
 
-projectsEpics.updateProjectEpic = action$ => action$.pipe(
+const updateProjectEpic: EpicType = action$ => action$.pipe(
   ofType(updateProjectType),
   mergeMap(action => {
     return API.updateProject(action).pipe(
@@ -66,7 +68,7 @@ projectsEpics.updateProjectEpic = action$ => action$.pipe(
   })
 )
 
-projectsEpics.deleteProjectEpic = action$ => action$.pipe(
+const deleteProjectEpic: EpicType = action$ => action$.pipe(
   ofType(deleteProjectType),
   mergeMap(action => {
     return API.deleteProject(action).pipe(
@@ -87,7 +89,7 @@ projectsEpics.deleteProjectEpic = action$ => action$.pipe(
   })
 )
 
-projectsEpics.createProjectEpic = action$ => action$.pipe(
+const createProjectEpic: EpicType = action$ => action$.pipe(
   ofType(createProjectType),
   mergeMap(action => {
     return API.createProject(action).pipe(
@@ -105,3 +107,10 @@ projectsEpics.createProjectEpic = action$ => action$.pipe(
     )
   })
 )
+
+export default [
+  fetchProjectsEpic,
+  updateProjectEpic,
+  deleteProjectEpic,
+  createProjectEpic,
+];

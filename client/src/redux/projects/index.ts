@@ -1,6 +1,6 @@
-import { actions } from './projects.actions'
+import actions from './projects.actions'
 import { reducer } from './projects.reducer'
-import { projectsEpics } from './projects.epics'
+import projectsEpics from './projects.epics'
 import { gatewayFactory } from 'helpers/gateway'
 import Gateway from '../Gateway'
 import Project from 'models/Project'
