@@ -28,8 +28,7 @@ const deleteProject = createAsyncAction(
   'DELETE_PROJECT',
   'DELETE_PROJECT_SUCCEEDED',
   'REQUEST_FAILED',
-)<IMongoId, any, Error>();
-// ToDo: skip any param?
+)<IMongoId, IMongoId, Error>();
 
 export const actions = {
   fetchProjects,

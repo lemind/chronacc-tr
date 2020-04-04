@@ -22,40 +22,47 @@ const {
   deleteProject,
 } = actions
 
-const fetchProjectsActionType = getType(fetchProjects.request)
-const updateProjectActionType = getType(updateProject.request)
-const createProjectActionType = getType(createProject.request)
-const deleteProjectActionType = getType(deleteProject.request)
+const fetchProjectsType = getType(fetchProjects.request)
+const fetchProjectsSucceededType = getType(fetchProjects.success)
+// ToDo: temp? one failed for all requests
+const requestFailedType = getType(fetchProjects.failure)
 
-// update old actions
-// request
-// success
-// failure
+const updateProjectType = getType(updateProject.request)
+const updateProjectSucceededType = getType(updateProject.success)
 
+const deleteProjectType = getType(deleteProject.request)
+const deleteProjectSucceededType = getType(deleteProject.success)
+
+const createProjectType = getType(createProject.request)
+const createProjectSucceededType = getType(createProject.success)
 
 export const reducer = (state: IProjectsState = initialState, action) => {
   let newList
 
   switch (action.type) {
-    case 'FETCH_PROJECTS':
+    case fetchProjectsType:
       return {
         ...state,
         loading: true
       }
-    case 'FETCH_PROJECTS_SUCCEEDED':
+    case fetchProjectsSucceededType:
       return {
         ...state,
         list: action.payload,
         loading: false
       }
-    case 'REQUEST_FAILED':
+    case requestFailedType:
       return {
         ...state,
         loading: false,
         error: action.payload
       }
-    case 'UPDATE_PROJECT':
-      console.log('reducer', action);
+    case updateProjectType:
+      return {
+        ...state,
+        loading: true
+      }
+    case updateProjectSucceededType:
       newList = state.list.map((item, index) => {
         if (item._id !== action.payload._id) {
           return item
@@ -63,34 +70,30 @@ export const reducer = (state: IProjectsState = initialState, action) => {
 
         return Object.assign(item, {...action.payload})
       })
+
       return {
         ...state,
         list: newList,
-        loading: true
-      }
-    case 'UPDATE_PROJECT_SUCCEEDED':
-      return {
-        ...state,
         loading: false
       }
-    case 'DELETE_PROJECT':
+    case deleteProjectType:
       return {
         ...state,
         loading: true,
-        list: state.list.filter(item => item._id !== action.projectId)
       }
-    case 'DELETE_TASK_SUCCEEDED':
+    case deleteProjectSucceededType:
       return {
         ...state,
-        loading: false
+        loading: false,
+        list: state.list.filter(item => item._id !== action.payload)
       }
-    case 'CREATE_PROJECT':
+    case createProjectType:
       return {
         ...state,
         list: [...state.list, action.payload],
         loading: true
       }
-    case 'CREATE_PROJECT_SUCCEEDED':
+    case createProjectSucceededType:
       newList = state.list.map((item, index) => {
         if (item._id !== '0') { // 0 - temp id
           return item

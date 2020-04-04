@@ -22,20 +22,15 @@ const {
   createProject,
 } = actions
 
-const fetchProjectsActionType = getType(fetchProjects.request)
-const updateProjectActionType = getType(updateProject.request)
-const deleteProjectActionType = getType(deleteProject.request)
-const createProjectActionType = getType(createProject.request)
-
-// update old actions
-// request
-// success
-// failure
+const fetchProjectsType = getType(fetchProjects.request)
+const updateProjectType = getType(updateProject.request)
+const deleteProjectType = getType(deleteProject.request)
+const createProjectType = getType(createProject.request)
 
 type Action = ActionType<typeof actions>;
 
 projectsEpics.fetchProjectsEpic = action$ => action$.pipe(
-  ofType(fetchProjectsActionType),
+  ofType(fetchProjectsType),
   mergeMap(action => {
     return API.fetchProjects().pipe(
       map(res => {
@@ -53,7 +48,7 @@ projectsEpics.fetchProjectsEpic = action$ => action$.pipe(
 )
 
 projectsEpics.updateProjectEpic = action$ => action$.pipe(
-  ofType(updateProjectActionType),
+  ofType(updateProjectType),
   mergeMap(action => {
     return API.updateProject(action).pipe(
       map(res => {
@@ -72,28 +67,30 @@ projectsEpics.updateProjectEpic = action$ => action$.pipe(
 )
 
 projectsEpics.deleteProjectEpic = action$ => action$.pipe(
-  ofType(deleteProjectActionType),
+  ofType(deleteProjectType),
   mergeMap(action => {
     return API.deleteProject(action).pipe(
       map(res => {
-        const response = res.response
+        const { response } = res
+        const { results } = response
         if (!response.success) {
           return deleteProject.failure({
             ...response.error,
           })
         }
 
-        return deleteProject.success('')
+        const { _id } = results.delete
+        return deleteProject.success(_id)
       }),
       catchError(error => of(deleteProject.failure(error)))
     )
   })
 )
 
-projectsEpics.addProjectEpic = action$ => action$.pipe(
-  ofType(createProjectActionType),
+projectsEpics.createProjectEpic = action$ => action$.pipe(
+  ofType(createProjectType),
   mergeMap(action => {
-    return API.addProject(action).pipe(
+    return API.createProject(action).pipe(
       map(res => {
         const response = res.response
         if (!response.success) {

@@ -5,7 +5,7 @@ export const projectsAPI = {
   fetchProjects: () => {
     return ajax.getJSON(`${API_HOST}/projects`);
   },
-  addProject: (action) => {
+  createProject: (action) => {
     return ajax.post(
       `${API_HOST}/project`,
       action.payload,
@@ -21,7 +21,7 @@ export const projectsAPI = {
   },
   deleteProject: (action) => {
     return ajax.delete(
-      `${API_HOST}/project/${ action.projectId }`,
+      `${API_HOST}/project/${ action.payload }`,
       HEADERS
     )
   },

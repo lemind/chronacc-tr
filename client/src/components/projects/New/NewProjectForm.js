@@ -8,7 +8,7 @@ import ColorBox from 'components/common/elements/ColorBox/ColorBox'
 export default function NewProjectForm() {
   const { projectsCases } = useCases(ProjectsCases)
 
-  const [tempProject, setTempProject] = useState({_id: 0})
+  const [tempProject, setTempProject] = useState({_id: '0'})
 
   const onColorChange = () => {
     return (newColor) => {
