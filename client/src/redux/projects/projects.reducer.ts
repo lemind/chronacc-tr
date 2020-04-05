@@ -1,7 +1,7 @@
 import { IProject } from 'models/Project'
 import { getType, ActionType } from 'typesafe-actions'
 
-import actions, * as actionsT from './projects.actions'
+import actions from './projects.actions'
 
 type Action = ActionType<typeof actions>;
 
