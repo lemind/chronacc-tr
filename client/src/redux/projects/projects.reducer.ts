@@ -11,7 +11,7 @@ export interface IProjectsState {
   error: any
 }
 
-export const initialState = {
+export const initialState: IProjectsState = {
   list: [],
   loading: false,
   error: null
@@ -39,7 +39,7 @@ const createProjectType = getType(createProject.request)
 const createProjectSucceededType = getType(createProject.success)
 
 export const reducer = (state: IProjectsState = initialState, action: Action) => {
-  let newList
+  let newList: Array<IProject>
 
   switch (action.type) {
     case fetchProjectsType:

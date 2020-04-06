@@ -27,7 +27,7 @@ const updateProjectType = getType(updateProject.request)
 const deleteProjectType = getType(deleteProject.request)
 const createProjectType = getType(createProject.request)
 
-type Action = ActionType<typeof actions>;
+type Action = ActionType<typeof actions>
 
 type EpicType = Epic<Action, Action, RootState>
 

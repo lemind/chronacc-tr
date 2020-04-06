@@ -1,3 +1,4 @@
+import { ActionType } from 'typesafe-actions';
 import actions from './projects.actions'
 import { reducer } from './projects.reducer'
 import projectsEpics from './projects.epics'
@@ -6,6 +7,8 @@ import Gateway from '../Gateway'
 import Project from 'models/Project'
 
 import { IMongoId } from 'models/index'
+
+export type ProjectActionType = ActionType<typeof actions>
 
 export {
   actions as projectsActions,

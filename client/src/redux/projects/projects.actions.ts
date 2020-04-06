@@ -1,4 +1,4 @@
-import { createAsyncAction, ActionType } from 'typesafe-actions';
+import { createAsyncAction } from 'typesafe-actions';
 
 import { IMongoId } from "models/index"
 import { IProject } from "models/Project"
