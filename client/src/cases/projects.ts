@@ -1,37 +1,36 @@
-import Task from 'models/Task'
 import withGateways from 'helpers/withGateways'
-import { caseFactory } from 'helpers/case'
+import { casesFactory } from 'helpers/case'
 import Cases from './index'
 import ProjectsGateway from 'src/redux/projects'
 import { makeOptionFromItem } from 'helpers/select'
 
 @withGateways(ProjectsGateway)
 export class ProjectsCases extends Cases {
-  setObservables(){
+  setObservables() {
     return [{store: 'projects', variables: ['list', 'error']}]
   }
 
-  load(){
+  load() {
     const { projectsGateway } = this.gateways
     projectsGateway.load()
   }
 
-  updateProject(project){
+  updateProject(project) {
     const { projectsGateway } = this.gateways
     projectsGateway.updateProject(project)
   }
 
-  deleteProject(projectId){
+  deleteProject(projectId) {
     const { projectsGateway } = this.gateways
     projectsGateway.deleteProject(projectId)
   }
 
-  addProject(project){
+  addProject(project) {
     const { projectsGateway } = this.gateways
     projectsGateway.addProject(project)
   }
 
-  getListLikeOptions(){
+  getListLikeOptions() {
     const { projectsGateway } = this.gateways
     const { list } = projectsGateway.state.projects
 
@@ -43,4 +42,5 @@ export class ProjectsCases extends Cases {
 
 }
 
-export default caseFactory(ProjectsCases, 'ProjectsCases')
+// ToDo move gateways to factory?
+export default casesFactory(ProjectsCases, 'ProjectsCases')

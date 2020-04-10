@@ -1,6 +1,6 @@
 import Task from 'models/Task'
 import withGateways from 'helpers/withGateways'
-import { caseFactory } from 'helpers/case'
+import { casesFactory } from 'helpers/case'
 import Cases from './index'
 import TasksGateway from 'src/redux/tasks'
 
@@ -129,4 +129,4 @@ export class TasksCases extends Cases {
 
 }
 
-export default caseFactory(TasksCases, 'TasksCases')
+export default casesFactory(TasksCases, 'TasksCases')

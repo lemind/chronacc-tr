@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react'
+import { Subscription } from 'rxjs';
 import { firstLowerCase } from './strings';
+import { IProject } from 'models/Project';
 
 const unsubscribe = (subscribtions) => {
   subscribtions.forEach(subscribtion => {
@@ -8,13 +10,17 @@ const unsubscribe = (subscribtions) => {
   subscribtions = []
 }
 
-export default function useCases(casesItem) {
+// TToDo
+type СasesData = {
+  [key: string]: any | IProject[],
+}
+
+export default function useCases(casesItem: any): СasesData {
   const [observables, setObservables] = useState({})
-  const [subscribtions, setSubscribtions] = useState([])
   const [initedCases, setInitedCases] = useState({})
 
   useEffect(() => {
-    let subscribtions = []
+    let subscribtions: Subscription[] = []
 
     const caseName = firstLowerCase(casesItem.customName)
 

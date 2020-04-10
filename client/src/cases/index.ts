@@ -1,13 +1,33 @@
-import { from as observableFrom } from 'rxjs';
+import { from as observableFrom, Observable, Subscription } from 'rxjs';
 import { isObjectEmpty } from 'helpers/objects'
 
+export interface ICases {
+  subscriptions: Subscription[]
+  states$: Observable<any> // TToDo
+  store: any //TToDO
+  gateways: any
+  load(gateways: any[]): void // TToDo
+  setObservables(): any[] //TToDo
+}
 
-export default class Cases {
-  constructor(){
+export interface CasesClass {
+  new (): ICases;
+}
+// export type CasesType = typeof Cases
+// compare
+// console.log('-compare-', CasesType === CasesClass)
+
+export default class Cases implements ICases {
+  subscriptions: Subscription[]
+  states$: Observable<any>
+  store: any
+  gateways: any
+
+  constructor() {
     this.subscriptions = []
   }
 
-  load(gateways){
+  load(gateways) {
     gateways.forEach(gatewayObject => {
       const { gateway, params } = gatewayObject
       const { init, name } = params;
@@ -30,7 +50,7 @@ export default class Cases {
     })
   }
 
-  transformServerData(data){
+  transformServerData(data) {
     return data
   }
 
@@ -39,7 +59,7 @@ export default class Cases {
    * Provide subscribe to paricular store's variables
    * example: return [{store: 'projects', variables: ['list', 'error']}]
    */
-  setObservables(){
+  setObservables(): any[] {
     return []
   }
 
@@ -49,7 +69,7 @@ export default class Cases {
       : observableFrom([])
   }
 
-  unsubscribe(){
+  unsubscribe() {
     this.subscriptions.forEach(subscribtion => {
       subscribtion.unsubscribe()
     })

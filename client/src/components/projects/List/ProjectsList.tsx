@@ -35,7 +35,7 @@ export default function ProjectsList() {
   }
 
   // ToDo: extract
-  const renderProject = (project) => {
+  const renderProject = (project): JSX.Element => {
     return <div>
       <span>{ getShortProjectId(project) }</span>
       <span> | </span>
