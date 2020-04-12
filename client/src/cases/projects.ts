@@ -4,7 +4,7 @@ import Cases from './index'
 import ProjectsGateway from 'src/redux/projects'
 import { makeOptionFromItem } from 'helpers/select'
 
-@withGateways(ProjectsGateway)
+// @withGateways(ProjectsGateway)
 export class ProjectsCases extends Cases {
   setObservables() {
     return [{store: 'projects', variables: ['list', 'error']}]
@@ -43,4 +43,4 @@ export class ProjectsCases extends Cases {
 }
 
 // ToDo move gateways to factory?
-export default casesFactory(ProjectsCases, 'ProjectsCases')
+export default casesFactory(ProjectsCases, [ProjectsGateway], 'ProjectsCases')

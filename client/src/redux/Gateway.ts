@@ -13,6 +13,10 @@ export interface IGateway {
   store: AppStore
 }
 
+export interface IGatewayClass {
+  new (): IGateway;
+}
+
 export default class Gateway implements IGateway {
   state: any
   dispatch: AppDispatch

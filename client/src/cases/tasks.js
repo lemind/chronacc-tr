@@ -129,4 +129,4 @@ export class TasksCases extends Cases {
 
 }
 
-export default casesFactory(TasksCases, 'TasksCases')
+export default casesFactory(TasksCases, [], 'TasksCases')

@@ -1,5 +1,7 @@
 import { from as observableFrom, Observable, Subscription } from 'rxjs';
 import { isObjectEmpty } from 'helpers/objects'
+import { IGateway } from 'src/redux/Gateway';
+import { IGatewaySingletone } from 'helpers/gateway';
 
 export interface ICases {
   subscriptions: Subscription[]
@@ -10,21 +12,39 @@ export interface ICases {
   setObservables(): any[] //TToDo
 }
 
-export interface CasesClass {
-  new (): ICases;
+export interface ICasesClass {
+  new (gateways: IGatewaySingletone[]): ICases;
 }
-// export type CasesType = typeof Cases
-// compare
-// console.log('-compare-', CasesType === CasesClass)
+
+import toLower from 'lodash/toLower'
+// ToDo: helper string
+const firstLowerCase = (s) => {
+  return toLower(s[0]) + s.substr(1);
+}
 
 export default class Cases implements ICases {
-  subscriptions: Subscription[]
+  subscriptions: Subscription[] = []
   states$: Observable<any>
   store: any
   gateways: any
 
-  constructor() {
-    this.subscriptions = []
+  constructor(gateways) {
+    this.initGateways(gateways);
+  }
+
+  // ToDo: can we init Gateways via https://github.com/microsoft/TypeScript/issues/4881
+  initGateways(gateways) {
+    this.gateways = {}
+
+    for (let gatewayItem of gateways) {
+      const gatewayName = firstLowerCase(gatewayItem.customName)
+
+      this.gateways[gatewayName] = gatewayItem();
+
+      if (!this.store) {
+        this.store = this.gateways[gatewayName].store
+      }
+    }
   }
 
   load(gateways) {
