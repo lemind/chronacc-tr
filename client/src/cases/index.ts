@@ -2,6 +2,7 @@ import { from as observableFrom, Observable, Subscription } from 'rxjs';
 import { isObjectEmpty } from 'helpers/objects'
 import { IGateway } from 'src/redux/Gateway';
 import { IGatewaySingletone } from 'helpers/gateway';
+import { firstLowerCase } from 'helpers/strings';
 
 export interface ICases {
   subscriptions: Subscription[]
@@ -14,12 +15,6 @@ export interface ICases {
 
 export interface ICasesClass {
   new (gateways: IGatewaySingletone[]): ICases;
-}
-
-import toLower from 'lodash/toLower'
-// ToDo: helper string
-const firstLowerCase = (s) => {
-  return toLower(s[0]) + s.substr(1);
 }
 
 export default class Cases implements ICases {
@@ -37,7 +32,7 @@ export default class Cases implements ICases {
     this.gateways = {}
 
     for (let gatewayItem of gateways) {
-      const gatewayName = firstLowerCase(gatewayItem.customName)
+      const gatewayName = firstLowerCase (gatewayItem.customName)
 
       this.gateways[gatewayName] = gatewayItem();
 

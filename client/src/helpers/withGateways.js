@@ -1,10 +1,6 @@
 import React, {Component} from 'react'
-import toLower from 'lodash/toLower'
+import { firstLowerCase } from 'helpers/strings';
 
-// ToDo: helper string
-const firstLowerCase = (s) => {
-  return toLower(s[0]) + s.substr(1);
-}
 
 /**
  * Provides Gateways.
