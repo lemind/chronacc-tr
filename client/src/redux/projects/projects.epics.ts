@@ -8,7 +8,7 @@ import { requestFailed } from 'helpers/redux/requests'
 import actions from './projects.actions'
 import { API } from 'api/index';
 
-import { RootState } from 'src/redux/root';
+import { TRootState } from 'src/redux/root';
 
 const DEBOUNCE_TIME = 250
 
@@ -29,7 +29,7 @@ const createProjectType = getType(createProject.request)
 
 type Action = ActionType<typeof actions>
 
-type EpicType = Epic<Action, Action, RootState>
+type EpicType = Epic<Action, Action, TRootState>
 
 const fetchProjectsEpic: EpicType = action$ => action$.pipe(
   ofType(fetchProjectsType),

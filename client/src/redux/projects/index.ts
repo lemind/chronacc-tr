@@ -3,7 +3,7 @@ import actions from './projects.actions'
 import { reducer } from './projects.reducer'
 import projectsEpics from './projects.epics'
 import { gatewayFactory } from 'helpers/gateway'
-import Gateway from '../Gateway'
+import Gateway, { IGateway } from '../Gateway'
 import Project from 'models/Project'
 
 import { IMongoId } from 'models/index'
@@ -16,7 +16,16 @@ export {
   projectsEpics,
 }
 
-export class ProjectsGateway extends Gateway {
+export interface IProjectsGateway {
+  updateProject(project: Project): void;
+  addProject(newProject: Project): void;
+  deleteProject(projectId: IMongoId): void;
+  load(): void;
+}
+
+export type IProjectsGatewayGeneral = IProjectsGateway & IGateway;
+
+export class ProjectsGateway extends Gateway implements IProjectsGateway {
   updateProject(project: Project): void {
     this.dispatch(actions.updateProject.request(project))
   }
@@ -35,4 +44,4 @@ export class ProjectsGateway extends Gateway {
 
 }
 
-export default gatewayFactory(ProjectsGateway)
+export default gatewayFactory<IProjectsGatewayGeneral>(ProjectsGateway)

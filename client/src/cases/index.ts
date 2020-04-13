@@ -1,27 +1,30 @@
 import { from as observableFrom, Observable, Subscription } from 'rxjs';
 import { isObjectEmpty } from 'helpers/objects'
-import { IGateway } from 'src/redux/Gateway';
-import { IGatewaySingletone } from 'helpers/gateway';
+import { TCommonGateway, TCommonGatewaySingletone } from 'helpers/gateway';
 import { firstLowerCase } from 'helpers/strings';
 
 export interface ICases {
   subscriptions: Subscription[]
   states$: Observable<any> // TToDo
   store: any //TToDO
-  gateways: any
+  gateways: TGatewaysObject
   load(gateways: any[]): void // TToDo
   setObservables(): any[] //TToDo
 }
 
 export interface ICasesClass {
-  new (gateways: IGatewaySingletone[]): ICases;
+  new (gateways: TCommonGatewaySingletone[]): ICases;
+}
+
+interface TGatewaysObject {
+  [key: string]: TCommonGateway
 }
 
 export default class Cases implements ICases {
   subscriptions: Subscription[] = []
   states$: Observable<any>
   store: any
-  gateways: any
+  gateways: TGatewaysObject
 
   constructor(gateways) {
     this.initGateways(gateways);
@@ -32,7 +35,7 @@ export default class Cases implements ICases {
     this.gateways = {}
 
     for (let gatewayItem of gateways) {
-      const gatewayName = firstLowerCase (gatewayItem.customName)
+      const gatewayName = firstLowerCase(gatewayItem.customName)
 
       this.gateways[gatewayName] = gatewayItem();
 

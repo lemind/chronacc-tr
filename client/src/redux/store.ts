@@ -2,13 +2,21 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { createEpicMiddleware } from 'redux-observable'
 
 import { rootReducer, rootEpic } from 'src/redux/root'
+import type { TRootAction, TRootState } from 'src/redux/root'
 
-const epicMiddleware = createEpicMiddleware()
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
 
-// process.env.NODE_ENV
+const epicMiddleware = createEpicMiddleware<
+  TRootAction,
+  TRootAction,
+  TRootState
+>()
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-
 
 const middleware = composeEnhancers(applyMiddleware(epicMiddleware))
 
@@ -19,4 +27,5 @@ export const store = createStore(
 
 epicMiddleware.run(rootEpic)
 
-// export type AppDispatch = typeof store.dispatch
+export type TAppStore = typeof store
+export type TAppDispatch = typeof store.dispatch
