@@ -3,6 +3,7 @@ import { casesFactory } from 'helpers/case'
 import Cases from './index'
 import ProjectsGateway from 'src/redux/projects'
 import { makeOptionFromItem } from 'helpers/select'
+import { IProjectsState } from 'src/redux/projects/projects.reducer'
 
 // @withGateways(ProjectsGateway)
 export class ProjectsCases extends Cases {
@@ -32,7 +33,7 @@ export class ProjectsCases extends Cases {
 
   getListLikeOptions() {
     const { projectsGateway } = this.gateways
-    const { list } = projectsGateway.state.projects
+    const { list } = <IProjectsState>projectsGateway.state.projects
 
     if (list.length === 0) return []
     return list.map(project => {

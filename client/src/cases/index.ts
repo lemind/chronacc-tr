@@ -1,15 +1,18 @@
 import { from as observableFrom, Observable, Subscription } from 'rxjs';
 import { isObjectEmpty } from 'helpers/objects'
 import { TCommonGateway, TCommonGatewaySingletone } from 'helpers/gateway';
-import { firstLowerCase } from 'helpers/strings';
+import { firstLowerCase } from 'helpers/strings'
+import type { TRootState } from 'src/redux/root'
+import { TAppStore } from 'src/redux/store';
+import { IGateway } from 'src/redux/Gateway';
 
 export interface ICases {
   subscriptions: Subscription[]
-  states$: Observable<any> // TToDo
-  store: any //TToDO
+  states$: Observable<TRootState>
+  store: TAppStore
   gateways: TGatewaysObject
-  load(gateways: any[]): void // TToDo
-  setObservables(): any[] //TToDo
+  load(gateways: TLoadGatewayData[]): void
+  setObservables(): TFollowedStoreSchema[]
 }
 
 export interface ICasesClass {
@@ -20,18 +23,28 @@ interface TGatewaysObject {
   [key: string]: TCommonGateway
 }
 
+interface TFollowedStoreSchema {
+  store: string,
+  variables: string[]
+}
+
+interface TLoadGatewayData {
+  gateway: IGateway,
+  params: {init: any, name: string}
+}
+
 export default class Cases implements ICases {
   subscriptions: Subscription[] = []
-  states$: Observable<any>
-  store: any
+  states$: Observable<TRootState>
+  store: TAppStore
   gateways: TGatewaysObject
 
-  constructor(gateways) {
+  constructor(gateways: TCommonGatewaySingletone[]) {
     this.initGateways(gateways);
   }
 
   // ToDo: can we init Gateways via https://github.com/microsoft/TypeScript/issues/4881
-  initGateways(gateways) {
+  initGateways(gateways: TCommonGatewaySingletone[]) {
     this.gateways = {}
 
     for (let gatewayItem of gateways) {
@@ -45,7 +58,7 @@ export default class Cases implements ICases {
     }
   }
 
-  load(gateways) {
+  load(gateways: TLoadGatewayData[]) {
     gateways.forEach(gatewayObject => {
       const { gateway, params } = gatewayObject
       const { init, name } = params;
@@ -75,15 +88,15 @@ export default class Cases implements ICases {
   /**
    * Overridable
    * Provide subscribe to paricular store's variables
-   * example: return [{store: 'projects', variables: ['list', 'error']}]
+   * example: return [{store: 'projects', variables: ['list', 'error']}]:TFollowedStoreSchema[]
    */
-  setObservables(): any[] {
+  setObservables(): TFollowedStoreSchema[] {
     return []
   }
 
   getState$() {
     return this.store
-      ? observableFrom(this.store)
+      ? observableFrom<any>(this.store)
       : observableFrom([])
   }
 
