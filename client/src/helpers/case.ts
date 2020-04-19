@@ -1,13 +1,13 @@
 import { ICases, ICasesClass } from "src/cases/";
-import { IGatewaySingletone, TCommonGatewaySingletone } from 'helpers/gateway'
+import { IGatewaySingletone, TGatewaySingletoneCommon } from 'helpers/gateway'
 
-interface ICasesSingletone {
+export interface ICasesSingletone {
   customName: string
   (): ICases
 }
 
 export function casesFactory(CasesClass: ICasesClass,
-  gateways: TCommonGatewaySingletone[],
+  gateways: TGatewaySingletoneCommon[],
   name?: string): ICasesSingletone {
   let singleton;
   const factory = () => {

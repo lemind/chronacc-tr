@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react'
 import { Subscription } from 'rxjs';
-import { firstLowerCase } from './strings';
-import { IProject } from 'models/Project';
+import { firstLowerCase } from './strings'
+import { ICasesSingletone } from 'helpers/case'
+import { IProjectsCases } from 'cases/projects'
+
 
 const unsubscribe = (subscribtions) => {
   subscribtions.forEach(subscribtion => {
@@ -10,12 +12,19 @@ const unsubscribe = (subscribtions) => {
   subscribtions = []
 }
 
-// TToDo
-type СasesData = {
-  [key: string]: any | IProject[],
+// TToDo extend with all data
+// parts of store. set by `setObservables`
+type TСasesData = {
+  [key: string]: any,
+}
+// TToDo extend with all actions
+type TСasesActions = {
+  [key: string]: IProjectsCases,
 }
 
-export default function useCases(casesItem: any): СasesData {
+type TСasesCommon = TСasesData & TСasesActions
+
+export default function useCases(casesItem: ICasesSingletone): TСasesCommon {
   const [observables, setObservables] = useState({})
   const [initedCases, setInitedCases] = useState({})
 

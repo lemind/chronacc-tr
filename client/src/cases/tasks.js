@@ -33,7 +33,7 @@ export class TasksCases extends Cases {
   load(init){
     const { tasksGateway } = this.gateways
 
-    super.loadFromGateways([{ gateway: tasksGateway, params: { init, name: 'tasks' } }])
+    this.loadFromGateways([{ gateway: tasksGateway, params: { init, name: 'tasks' } }])
   }
 
   unsubscribe(){

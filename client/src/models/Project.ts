@@ -2,8 +2,8 @@ import { IMongoId } from "./index"
 
 export interface IProject {
   _id: IMongoId
-  name?: string
-  color?: string
+  name: string
+  color: string
 }
 
 export default class Project implements IProject {

@@ -6,6 +6,7 @@ import ProjectsCases from 'cases/projects'
 import ColorBox from 'components/common/elements/ColorBox/ColorBox'
 import ConfirmModal from 'components/common/elements/ConfirmModal/ConfirmModal'
 import { getShortId } from 'helpers/misc';
+import { IProject } from 'models/Project'
 
 export default function ProjectsList() {
   const { projectsCases, projects } = useCases(ProjectsCases)
@@ -22,7 +23,7 @@ export default function ProjectsList() {
     }
   }, [projectsCases])
 
-  const onColorChange = (project) => {
+  const onColorChange = (project: IProject) => {
     return (newColor) => {
       project.color = newColor
       projectsCases.updateProject(project)
@@ -35,7 +36,7 @@ export default function ProjectsList() {
   }
 
   // ToDo: extract
-  const renderProject = (project): JSX.Element => {
+  const renderProject = (project: IProject): JSX.Element => {
     return <div>
       <span>{ getShortProjectId(project) }</span>
       <span> | </span>
@@ -64,11 +65,11 @@ export default function ProjectsList() {
     </div>
   }
 
-  const deleteProject = (project) => {
+  const deleteProject = (project: IProject) => {
     projectsCases.deleteProject(project._id)
   }
 
-  const updateProject = (project, e) => {
+  const updateProject = (project: IProject, e) => {
     project.name = e.target.value
     projectsCases.updateProject(project)
   }

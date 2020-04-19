@@ -1,37 +1,53 @@
 import { casesFactory } from 'helpers/case'
-import Cases from './index'
+import Cases, { ICases } from './index'
 import type { TFollowedStoreSchema } from './index'
 import ProjectsGateway from 'src/redux/projects'
 import { makeOptionFromItem } from 'helpers/select'
 import { IProjectsState } from 'src/redux/projects/projects.reducer'
+import type { IProject } from 'models/Project'
+import { IMongoId } from 'models/index'
+
+type TSelectOptions = {
+  value: string | number,
+  label: string
+}
+
+export interface IProjectsCases {
+  updateProject(project: IProject): void;
+  addProject(newProject: IProject): void;
+  deleteProject(projectId: IMongoId): void;
+  load(): void;
+}
+
+export type IProjectsCasesCommon = IProjectsCases & ICases;
 
 // @withGateways(ProjectsGateway) // obsolete
-export class ProjectsCases extends Cases {
+export class ProjectsCases extends Cases implements IProjectsCases {
   setObservables(): TFollowedStoreSchema[] {
     return [{store: 'projects', variables: ['list', 'error']}]
   }
 
-  load() {
+  load(): void {
     const { projectsGateway } = this.gateways
-    super.loadFromGateways([{ gateway: projectsGateway, params: { name: 'projects' } }])
+    this.loadFromGateways([{ gateway: projectsGateway, params: { name: 'projects' } }])
   }
 
-  updateProject(project) {
+  updateProject(project: IProject): void {
     const { projectsGateway } = this.gateways
     projectsGateway.updateProject(project)
   }
 
-  deleteProject(projectId) {
+  deleteProject(projectId: IMongoId): void {
     const { projectsGateway } = this.gateways
     projectsGateway.deleteProject(projectId)
   }
 
-  addProject(project) {
+  addProject(project: IProject): void {
     const { projectsGateway } = this.gateways
     projectsGateway.addProject(project)
   }
 
-  getListLikeOptions() {
+  getListLikeOptions(): TSelectOptions[] {
     const { projectsGateway } = this.gateways
     const { list } = <IProjectsState>projectsGateway.state.projects
 

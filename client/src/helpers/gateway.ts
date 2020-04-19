@@ -1,14 +1,14 @@
 import { IGateway, IGatewayClass } from "src/redux/Gateway";
-import { IProjectsGatewayGeneral } from "src/redux/projects";
+import { IProjectsGatewayCommon } from "src/redux/projects";
 
 export interface IGatewaySingletone<T> {
   customName: string
   (): T
 }
 
-export type TCommonGateway = IProjectsGatewayGeneral
+export type TGatewayCommon = IProjectsGatewayCommon
 
-export type TCommonGatewaySingletone = IGatewaySingletone<TCommonGateway>
+export type TGatewaySingletoneCommon = IGatewaySingletone<TGatewayCommon>
 
 export function gatewayFactory<T>(GatewayClass: IGatewayClass<T>,
   name?: string): IGatewaySingletone<T> {
