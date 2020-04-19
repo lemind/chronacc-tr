@@ -1,4 +1,4 @@
-import { from as observableFrom, Observable, Subscription } from 'rxjs';
+import { from as observableFrom, Observable, Subscription, ObservableInput } from 'rxjs';
 import { isObjectEmpty } from 'helpers/objects'
 import { TCommonGateway, TCommonGatewaySingletone } from 'helpers/gateway';
 import { firstLowerCase } from 'helpers/strings'
@@ -11,8 +11,10 @@ export interface ICases {
   states$: Observable<TRootState>
   store: TAppStore
   gateways: TGatewaysObject
-  load(gateways: TLoadGatewayData[]): void
-  setObservables(): TFollowedStoreSchema[]
+  loadFromGateways(gateways: TLoadGatewayData[]): void
+  setObservables(): TFollowedStoreSchema[] // abstract
+  getState$(): any
+  unsubscribe(): void
 }
 
 export interface ICasesClass {
@@ -23,14 +25,14 @@ interface TGatewaysObject {
   [key: string]: TCommonGateway
 }
 
-interface TFollowedStoreSchema {
+export interface TFollowedStoreSchema {
   store: string,
   variables: string[]
 }
 
 interface TLoadGatewayData {
   gateway: IGateway,
-  params: {init: any, name: string}
+  params: {init?: any, name: string}
 }
 
 export default class Cases implements ICases {
@@ -58,7 +60,7 @@ export default class Cases implements ICases {
     }
   }
 
-  load(gateways: TLoadGatewayData[]) {
+  loadFromGateways(gateways: TLoadGatewayData[]) {
     gateways.forEach(gatewayObject => {
       const { gateway, params } = gatewayObject
       const { init, name } = params;
@@ -81,7 +83,7 @@ export default class Cases implements ICases {
     })
   }
 
-  transformServerData(data) {
+  transformServerData(data: any): any {
     return data
   }
 
@@ -94,13 +96,15 @@ export default class Cases implements ICases {
     return []
   }
 
-  getState$() {
+  getState$(): any {
+    type TAppStoreObsInp = ObservableInput<any> & TAppStore
+
     return this.store
-      ? observableFrom<any>(this.store)
+      ? observableFrom<TAppStoreObsInp>(<TAppStoreObsInp>this.store)
       : observableFrom([])
   }
 
-  unsubscribe() {
+  unsubscribe(): void {
     this.subscriptions.forEach(subscribtion => {
       subscribtion.unsubscribe()
     })

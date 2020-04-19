@@ -1,19 +1,19 @@
-import withGateways from 'helpers/withGateways'
 import { casesFactory } from 'helpers/case'
 import Cases from './index'
+import type { TFollowedStoreSchema } from './index'
 import ProjectsGateway from 'src/redux/projects'
 import { makeOptionFromItem } from 'helpers/select'
 import { IProjectsState } from 'src/redux/projects/projects.reducer'
 
-// @withGateways(ProjectsGateway)
+// @withGateways(ProjectsGateway) // obsolete
 export class ProjectsCases extends Cases {
-  setObservables() {
+  setObservables(): TFollowedStoreSchema[] {
     return [{store: 'projects', variables: ['list', 'error']}]
   }
 
   load() {
     const { projectsGateway } = this.gateways
-    projectsGateway.load()
+    super.loadFromGateways([{ gateway: projectsGateway, params: { name: 'projects' } }])
   }
 
   updateProject(project) {
@@ -43,5 +43,4 @@ export class ProjectsCases extends Cases {
 
 }
 
-// ToDo move gateways to factory?
 export default casesFactory(ProjectsCases, [ProjectsGateway], 'ProjectsCases')

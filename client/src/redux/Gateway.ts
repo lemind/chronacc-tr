@@ -1,7 +1,7 @@
 import { store } from 'src/redux/store'
 import type { TAppStore, TAppDispatch} from 'src/redux/store'
 
-import { from as observableFrom } from 'rxjs';
+import { from as observableFrom, ObservableInput, ObservedValueOf } from 'rxjs';
 import { TRootState } from './root';
 
 export interface IGateway {
@@ -9,6 +9,8 @@ export interface IGateway {
   dispatch: TAppDispatch
   unsubscribeFromStore: Function
   store: TAppStore
+  // ToDo: tricky
+  // getState$(): Observable<ObservedValueOf<TAppStore>>
   getState$(): any
   load(init: any): void //abstract
   serverDataPrepared(data: any): void //abstract
@@ -43,6 +45,8 @@ export default class Gateway implements IGateway {
   }
 
   getState$() {
-    return observableFrom(<any>store)
+    type TAppStoreObsInp = ObservableInput<any> & TAppStore
+
+    return observableFrom<TAppStoreObsInp>(<TAppStoreObsInp>store)
   }
 }
