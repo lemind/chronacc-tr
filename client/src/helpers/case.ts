@@ -1,5 +1,5 @@
 import { ICases, ICasesClass } from "src/cases/";
-import { IGatewaySingletone, TGatewaySingletoneCommon } from 'helpers/gateway'
+import { TGatewaySingletoneCommon } from 'helpers/gateway'
 
 export interface ICasesSingletone {
   customName: string

@@ -20,7 +20,7 @@ export interface IProjectsGateway {
   updateProject(project: IProject): void
   addProject(newProject: IProject): void
   deleteProject(projectId: IMongoId): void
-  load(): void;
+  load(): void
 }
 
 export type IProjectsGatewayCommon = IProjectsGateway & IGateway

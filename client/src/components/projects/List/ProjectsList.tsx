@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react'
 
 import useCases from 'helpers/useCases'
-
 import ProjectsCases from 'cases/projects'
 import ColorBox from 'components/common/elements/ColorBox/ColorBox'
 import ConfirmModal from 'components/common/elements/ConfirmModal/ConfirmModal'
-import { getShortId } from 'helpers/misc';
+import { getShortId } from 'helpers/misc'
 import { IProject } from 'models/Project'
 
 export default function ProjectsList() {
@@ -30,7 +29,7 @@ export default function ProjectsList() {
     }
   }
 
-  const getShortProjectId = (project) => {
+  const getShortProjectId = (project: IProject) => {
     if (!project || !project._id) return
     return getShortId(project._id)
   }
@@ -65,12 +64,12 @@ export default function ProjectsList() {
     </div>
   }
 
-  const deleteProject = (project: IProject) => {
+  const deleteProject = (project: IProject): void => {
     projectsCases.deleteProject(project._id)
   }
 
-  const updateProject = (project: IProject, e) => {
-    project.name = e.target.value
+  const updateProject = (project: IProject, e: React.FormEvent<HTMLInputElement>): void => {
+    project.name = e.currentTarget.value
     projectsCases.updateProject(project)
   }
 

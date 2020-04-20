@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { ActionType } from 'typesafe-actions';
+import { ActionType } from 'typesafe-actions'
 import { combineEpics } from 'redux-observable'
 
 import { tasksReducer, tasksEpics } from './tasks/index'

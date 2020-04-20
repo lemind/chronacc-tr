@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Subscription } from 'rxjs';
 import { firstLowerCase } from './strings'
 import { ICasesSingletone } from 'helpers/case'
-import { IProjectsCases } from 'cases/projects'
+import { IProjectsCasesCommon } from 'cases/projects'
+import { IProjectsState } from 'src/redux/projects/projects.reducer'
 
 
 const unsubscribe = (subscribtions) => {
@@ -13,13 +14,13 @@ const unsubscribe = (subscribtions) => {
 }
 
 // TToDo extend with all data
-// parts of store. set by `setObservables`
+// TToDo we might do not have all data from e.g. IProjectsState
 type TСasesData = {
-  [key: string]: any,
+  [key: string]: IProjectsState,
 }
 // TToDo extend with all actions
 type TСasesActions = {
-  [key: string]: IProjectsCases,
+  [key: string]: IProjectsCasesCommon,
 }
 
 type TСasesCommon = TСasesData & TСasesActions

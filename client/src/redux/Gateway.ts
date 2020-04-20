@@ -1,15 +1,15 @@
 import { store } from 'src/redux/store'
 import type { TAppStore, TAppDispatch} from 'src/redux/store'
 
-import { from as observableFrom, ObservableInput, ObservedValueOf } from 'rxjs';
-import { TRootState } from './root';
+import { from as observableFrom, ObservableInput } from 'rxjs'
+import { TRootState } from './root'
 
 export interface IGateway {
   state: TRootState
   dispatch: TAppDispatch
   unsubscribeFromStore: Function
   store: TAppStore
-  // ToDo: tricky
+  // ToDo: tricky types
   // getState$(): Observable<ObservedValueOf<TAppStore>>
   getState$(): any
   load(init: any): void //abstract

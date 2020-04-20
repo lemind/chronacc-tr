@@ -1,19 +1,19 @@
 import { ofType, Epic } from 'redux-observable'
 import { mergeMap, map, catchError } from 'rxjs/operators'
-import { getType, ActionType } from 'typesafe-actions';
+import { getType, ActionType } from 'typesafe-actions'
 import { of } from "rxjs";
 
 // import { debounceUntilChanged } from 'helpers/rxjs'
 import { requestFailed } from 'helpers/redux/requests'
 import actions from './projects.actions'
-import { API } from 'api/index';
+import { API } from 'api/index'
 
-import { TRootState } from 'src/redux/root';
+import { TRootState } from 'src/redux/root'
 
 const DEBOUNCE_TIME = 250
 
 // ToDo: can we adjust that
-const requestFailedProjects = requestFailed(actions);
+const requestFailedProjects = requestFailed(actions)
 
 const {
   fetchProjects,

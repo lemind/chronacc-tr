@@ -13,10 +13,10 @@ type TSelectOptions = {
 }
 
 export interface IProjectsCases {
-  updateProject(project: IProject): void;
-  addProject(newProject: IProject): void;
-  deleteProject(projectId: IMongoId): void;
-  load(): void;
+  updateProject(project: IProject): void
+  addProject(newProject: IProject): void
+  deleteProject(projectId: IMongoId): void
+  load(): void
 }
 
 export type IProjectsCasesCommon = IProjectsCases & ICases;

@@ -6,7 +6,7 @@ import actions from './projects.actions'
 type Action = ActionType<typeof actions>;
 
 export interface IProjectsState {
-  list: Array<IProject>,
+  list: IProject[],
   loading: Boolean,
   error: any
 }
@@ -39,7 +39,7 @@ const createProjectType = getType(createProject.request)
 const createProjectSucceededType = getType(createProject.success)
 
 export const reducer = (state: IProjectsState = initialState, action: Action) => {
-  let newList: Array<IProject>
+  let newList: IProject[]
 
   switch (action.type) {
     case fetchProjectsType:
