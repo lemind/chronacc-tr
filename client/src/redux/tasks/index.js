@@ -2,7 +2,7 @@ import { actions } from './tasks.actions'
 import { reducer } from './tasks.reducer'
 import { tasksEpics } from './tasks.epics'
 import { gatewayFactory } from 'helpers/gateway'
-import Gateway from '../Gateway'
+import Gateway from 'src/redux/Gateway'
 
 
 export {
