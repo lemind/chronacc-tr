@@ -11,6 +11,7 @@ import { firstLowerCase } from 'helpers/strings';
  *
  * example: @withGateways(TasksGateway), access - this.gateways.tasksGateway
  */
+// deprecated
 export default function withGateways(...gateways) {
   return (TargetClass) => {
     return class WithGateways extends TargetClass {

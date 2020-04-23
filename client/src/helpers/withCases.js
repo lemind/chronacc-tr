@@ -10,6 +10,7 @@ import { firstLowerCase } from 'helpers/strings';
  *
  * example: @withCases(ProjectCases), access - this.props.projectCases
  */
+// deprecated
 export default function withCases(...cases) {
   return (ComposedComponent) => {
     return class WithCases extends Component {
