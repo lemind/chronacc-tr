@@ -44,7 +44,7 @@ export default function Task({ task, onEdit }) {
 
   return <div>
     <span>{ task.isActive && '_____ ' }</span>
-    <span>{ task.dayStart() }</span>
+    <span>{ task.startDay }</span>
     <span> | </span>
     <span>{ shortTaskId() }</span>
     <span> | </span>

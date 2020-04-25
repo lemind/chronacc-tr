@@ -1,13 +1,13 @@
-import { IProject } from 'models/Project'
 import { getType, ActionType } from 'typesafe-actions'
 
+import { IProject } from 'models/Project'
 import actions from './projects.actions'
 
-type Action = ActionType<typeof actions>;
+type Action = ActionType<typeof actions>
 
 export interface IProjectsState {
   list: IProject[],
-  loading: Boolean,
+  loading: boolean,
   error: any
 }
 

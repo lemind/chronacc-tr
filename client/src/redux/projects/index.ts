@@ -1,4 +1,5 @@
-import { ActionType } from 'typesafe-actions';
+import { ActionType } from 'typesafe-actions'
+
 import actions from './projects.actions'
 import { reducer } from './projects.reducer'
 import projectsEpics from './projects.epics'

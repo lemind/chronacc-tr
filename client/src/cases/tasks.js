@@ -69,7 +69,7 @@ export class TasksCases extends Cases {
 
     if (isTaskCreated) {
       newTask.start()
-      tasksGateway.addTask(newTask)
+      tasksGateway.createTask(newTask)
     } else {
       oldTask.start()
       tasksGateway.updateTask(oldTask)
