@@ -1,23 +1,32 @@
 import Task from 'models/Task'
-import withGateways from 'helpers/withGateways'
 import { casesFactory } from 'helpers/case'
-import Cases from './index'
+import Cases, { ICases, TFollowedStoreSchema } from './index'
 import TasksGateway from 'src/redux/tasks'
+import type { ITask, TInitTask } from 'models/Task'
+import { IMongoId } from 'models/index'
+
+export interface ITaskCases {
+  updateTask(task: ITask): void
+  deleteTask(taskId: IMongoId): void
+  load(init: any): void
+}
+
+export type ITasksCasesCommon = ITaskCases & ICases;
 
 // ToDo: if all are business here?
-@withGateways(TasksGateway)
-export class TasksCases extends Cases {
-  setObservables(){
+// @withGateways(TasksGateway)
+export class TasksCases extends Cases implements ITaskCases {
+  setObservables(): TFollowedStoreSchema[] {
     return [{
       store: 'tasks',
       variables: ['list', 'hasMore', 'loading', 'error']
     }]
   }
 
-  transformServerData(data){
+  transformServerData(data: any): any {
     const { list, ...serverData } = data.tasks.serverData
 
-    const clientList = []
+    const clientList: ITask[] = []
     if (list && list.length > 0) {
       list.forEach(item => {
         clientList.push(new Task(item))
@@ -30,20 +39,20 @@ export class TasksCases extends Cases {
     }
   }
 
-  load(init){
+  load(init: any): void {
     const { tasksGateway } = this.gateways
 
     this.loadFromGateways([{ gateway: tasksGateway, params: { init, name: 'tasks' } }])
   }
 
-  unsubscribe(){
+  unsubscribe(): void {
     const { tasksGateway } = this.gateways
     tasksGateway.unsubscribe()
 
     super.unsubscribe()
   }
 
-  startTask(task){
+  startTask(task?: ITask): void{
     const { tasksGateway } = this.gateways
     let newTask
     const oldTask = task
@@ -54,7 +63,7 @@ export class TasksCases extends Cases {
       isTaskCreated = true
     } else {
       if (!task.hasStartedToday()) {
-        const initTask = {
+        const initTask: TInitTask = {
           description: task.description,
           project: task.project
         }
@@ -70,13 +79,13 @@ export class TasksCases extends Cases {
     if (isTaskCreated) {
       newTask.start()
       tasksGateway.createTask(newTask)
-    } else {
+    } else if (oldTask) {
       oldTask.start()
       tasksGateway.updateTask(oldTask)
     }
   }
 
-  stopActiveTask(){
+  stopActiveTask(): void{
     const { tasksGateway } = this.gateways
     const activeTask = this.getActiveTask()
 
@@ -86,26 +95,26 @@ export class TasksCases extends Cases {
     }
   }
 
-  updateTask(task){
+  updateTask(task: ITask): void {
     const { tasksGateway } = this.gateways
     tasksGateway.updateTask(task)
   }
 
-  deleteTask(taskId){
+  deleteTask(taskId: IMongoId): void{
     const { tasksGateway } = this.gateways
     tasksGateway.deleteTask(taskId)
   }
 
-  getTaskById(id){
-    const tasks = this.state.tasks.list
+  getTaskById(id: IMongoId): ITask | undefined {
+    const tasks = this.getTasks()
     return tasks.find(task => task._id === id)
   }
 
-  getTasks(){
+  getTasks(): ITask[]{
     return this.gateways.tasksGateway.state.tasks.list
   }
 
-  getActiveTask(){
+  getActiveTask(): ITask | null {
     const tasks = this.getTasks()
     const result = tasks.find(task => {
       if (task.isActive) {
@@ -129,4 +138,4 @@ export class TasksCases extends Cases {
 
 }
 
-export default casesFactory(TasksCases, [], 'TasksCases')
+export default casesFactory(TasksCases, [TasksGateway], 'TasksCases')

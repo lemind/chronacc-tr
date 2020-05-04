@@ -14,9 +14,18 @@ export interface ITask {
   description: string
   periods: TPeriod[]
   project: IProject
+  hasStartedToday(): boolean
+  start(): void
+  stop(): void
+  isActive: boolean
 }
 
-export default class Task {
+export type TInitTask = {
+  description?: string
+  project?: IProject
+}
+
+export default class Task implements ITask {
   _id: IMongoId = '0'
   beginTime: number = 0
   _isActive: boolean = false
@@ -24,7 +33,8 @@ export default class Task {
   periods: TPeriod[] = []
   project: IProject
 
-  constructor(initial?: ITask) {
+
+  constructor(initial?: TInitTask) {
     Object.assign(this, initial)
   }
 

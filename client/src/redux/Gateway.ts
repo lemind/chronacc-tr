@@ -16,6 +16,7 @@ export interface IGateway {
   // ToDo: tricky types
   // getState$(): Observable<ObservedValueOf<TAppStore>>
   getState$(): any
+  unsubscribe(): void
   load(init: TInitLoadData): void //abstract
   serverDataPrepared(data: any): void //abstract
 }
@@ -44,7 +45,7 @@ export default class Gateway implements IGateway {
   load(init: TInitLoadData) {}
   serverDataPrepared(data: any) {}
 
-  unsubscribe() {
+  unsubscribe(): void {
     this.unsubscribeFromStore()
   }
 

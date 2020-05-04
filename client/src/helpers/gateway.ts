@@ -1,12 +1,15 @@
-import { IGateway, IGatewayClass } from "src/redux/Gateway";
+import { IGatewayClass } from "src/redux/Gateway";
 import { IProjectsGatewayCommon } from "src/redux/projects";
+import { ITasksGatewayCommon } from "src/redux/tasks";
 
 export interface IGatewaySingletone<T> {
   customName: string
   (): T
 }
 
+// TToDo: overhead?
 export type TGatewayCommon = IProjectsGatewayCommon
+  | ITasksGatewayCommon
 
 export type TGatewaySingletoneCommon = IGatewaySingletone<TGatewayCommon>
 
