@@ -4,11 +4,16 @@ import Cases, { ICases, TFollowedStoreSchema } from './index'
 import TasksGateway from 'src/redux/tasks'
 import type { ITask, TInitTask } from 'models/Task'
 import { IMongoId } from 'models/index'
+import { IProject } from 'models/Project'
 
 export interface ITaskCases {
   updateTask(task: ITask): void
   deleteTask(taskId: IMongoId): void
-  load(init: any): void
+  load(init?: any): void
+  unsubscribe(): void
+  startTask(task?: ITask): void
+  stopActiveTask(): void
+  bindProject(task: ITask, project: IProject | null): void
 }
 
 export type ITasksCasesCommon = ITaskCases & ICases;
@@ -39,7 +44,7 @@ export class TasksCases extends Cases implements ITaskCases {
     }
   }
 
-  load(init: any): void {
+  load(init?: any): void {
     const { tasksGateway } = this.gateways
 
     this.loadFromGateways([{ gateway: tasksGateway, params: { init, name: 'tasks' } }])
@@ -52,7 +57,7 @@ export class TasksCases extends Cases implements ITaskCases {
     super.unsubscribe()
   }
 
-  startTask(task?: ITask): void{
+  startTask(task?: ITask): void {
     const { tasksGateway } = this.gateways
     let newTask
     const oldTask = task
@@ -85,7 +90,7 @@ export class TasksCases extends Cases implements ITaskCases {
     }
   }
 
-  stopActiveTask(): void{
+  stopActiveTask(): void {
     const { tasksGateway } = this.gateways
     const activeTask = this.getActiveTask()
 
@@ -100,7 +105,7 @@ export class TasksCases extends Cases implements ITaskCases {
     tasksGateway.updateTask(task)
   }
 
-  deleteTask(taskId: IMongoId): void{
+  deleteTask(taskId: IMongoId): void {
     const { tasksGateway } = this.gateways
     tasksGateway.deleteTask(taskId)
   }
@@ -129,8 +134,10 @@ export class TasksCases extends Cases implements ITaskCases {
     }
   }
 
-  bindProject(task, project){
-    task.project = project
+  bindProject(task: ITask, project: IProject | null): void {
+    if (task.project) {
+      task.project = project
+    }
 
     const { tasksGateway } = this.gateways
     tasksGateway.updateTask(task)

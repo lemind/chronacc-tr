@@ -7,22 +7,20 @@ import { TColor } from 'models/index'
 
 type TProps = {
   onColorChange(color: string): void
-  color: TColor
+  color: TColor | undefined
 }
+
+const DEFAULT_COLOR: TColor = 'FFF'
 
 export default function ColorBox(props: TProps): JSX.Element | null {
   const [modalIsOpen, setModalIsOpen] = useState(false)
-  const { color } = props
-
-  if (!color) {
-    return null
-  }
+  const color: TColor = props.color || DEFAULT_COLOR
 
   //ToDo: move to css const ones
   const colorStyle = {
     width: '40px',
     height: '25px',
-    background: `#${ color || 'FFF' }`,
+    background: `#${ color }`,
     border: '1px solid black',
     display: 'inline-block',
     cursor: 'pointer'

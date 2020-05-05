@@ -1,4 +1,4 @@
-import { format, dateTime, valueOf } from 'helpers/dateTime'
+import { format, dateTime, valueOf, TMoment } from 'helpers/dateTime'
 import { IMongoId } from "./index"
 import { IProject } from './Project'
 
@@ -13,16 +13,18 @@ export interface ITask {
   _isActive: boolean
   description: string
   periods: TPeriod[]
-  project: IProject
+  project: IProject | null
   hasStartedToday(): boolean
   start(): void
   stop(): void
   isActive: boolean
+  startDay: string
+  summTime: number
 }
 
 export type TInitTask = {
   description?: string
-  project?: IProject
+  project?: IProject | null
 }
 
 export default class Task implements ITask {
@@ -31,7 +33,7 @@ export default class Task implements ITask {
   _isActive: boolean = false
   description: string = ''
   periods: TPeriod[] = []
-  project: IProject
+  project: IProject | null
 
 
   constructor(initial?: TInitTask) {

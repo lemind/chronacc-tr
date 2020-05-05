@@ -22,7 +22,7 @@ const REACT_MODAL_STYLES = {
 
 type TProps = {
   onClose(): void,
-  isOpen: boolean,
+  isOpen?: boolean,
   children: JSX.Element | JSX.Element[]
 }
 

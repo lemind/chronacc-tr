@@ -5,28 +5,36 @@ import useCases from 'helpers/useCases'
 import TasksCases from 'cases/tasks'
 import ProjectsCases from 'cases/projects'
 import { makeOptionFromItem } from 'helpers/select'
+import { ITask } from 'models/Task'
+import { TSelectOption } from 'cases/projects'
+import { IMongoId } from 'models/index'
 
-export default function EditTaskForm(props) {
+type TProps = {
+  task: ITask | null,
+}
+
+export default function EditTaskForm(props: TProps): JSX.Element | null {
   const { tasksCases } = useCases(TasksCases)
   const { projectsCases } = useCases(ProjectsCases)
 
-  const handleChangeProject = (task, optionProject) => {
+  const handleChangeProject = (task: ITask, optionProject: TSelectOption): void => {
     if (!optionProject) {
       tasksCases.bindProject(task, null)
       return
     }
     const project = {
       isNew: optionProject.__isNew__,
-      _id: optionProject.value,
+      _id: optionProject.value as IMongoId,
       name: optionProject.label
     }
 
     tasksCases.bindProject(task, project)
   }
 
-  const updateTask = (e) => {
+  const updateTask = (e: React.FormEvent<HTMLInputElement>): void => {
     const { task } = props
-    task.description = e.target.value
+    if (!task) return
+    task.description = e.currentTarget.value
     tasksCases.updateTask(task)
   }
 

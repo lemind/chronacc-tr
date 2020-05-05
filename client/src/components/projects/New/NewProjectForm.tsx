@@ -4,25 +4,27 @@ import useCases from 'helpers/useCases'
 
 import ProjectsCases from 'cases/projects'
 import ColorBox from 'components/common/elements/ColorBox/ColorBox'
+import Project, { IProject } from 'models/Project'
+import { TColor } from 'models/index'
 
-export default function NewProjectForm() {
+const stubProject = new Project({_id: '0', name: ''})
+
+export default function NewProjectForm(): JSX.Element {
   const { projectsCases } = useCases(ProjectsCases)
 
-  const [tempProject, setTempProject] = useState({_id: '0'})
+  const [tempProject, setTempProject] = useState<IProject>(stubProject)
 
-  const onColorChange = () => {
-    return (newColor) => {
-      setTempProject({ ...tempProject, color: newColor })
-    }
+  const onColorChange = (newColor: TColor): void => {
+    setTempProject({ ...tempProject, color: newColor })
   }
 
-  const createProject = () => {
+  const createProject = (): void => {
     projectsCases.addProject(tempProject)
-    setTempProject({ _id: 0 })
+    setTempProject(stubProject)
   }
 
-  const updateNewProjectName = (e) => {
-    setTempProject({ ...tempProject, name: e.target.value })
+  const updateNewProjectName = (e: React.FormEvent<HTMLInputElement>): void => {
+    setTempProject({ ...tempProject, name: e.currentTarget.value })
   }
 
   return (
@@ -34,8 +36,8 @@ export default function NewProjectForm() {
         onChange={ e => updateNewProjectName(e) }
       />
       <ColorBox
-        model={ tempProject }
-        onColorChange={ onColorChange() }
+        color={ tempProject.color }
+        onColorChange={ onColorChange }
       />
       <button
         onClick={ () => createProject() }

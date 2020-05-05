@@ -6,7 +6,7 @@ import Modal from 'components/common/elements/Modal/Modal'
 const ARE_YOU_SURE_MESSAGE: string = 'Are you sure?'
 
 type TProps = {
-  message: string,
+  message?: string,
   children: JSX.Element,
   onConfirm(): void
 }
