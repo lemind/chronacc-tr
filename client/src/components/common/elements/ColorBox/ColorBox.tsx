@@ -13,7 +13,7 @@ type TProps = {
 const DEFAULT_COLOR: TColor = 'FFF'
 
 export default function ColorBox(props: TProps): JSX.Element | null {
-  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
   const color: TColor = props.color || DEFAULT_COLOR
 
   //ToDo: move to css const ones

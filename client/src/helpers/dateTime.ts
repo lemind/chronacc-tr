@@ -24,7 +24,7 @@ export function format(time: TMoment | null, format: string): string {
   return moment(time).format(format)
 }
 
-export function diff(time: TMoment, measurement: unitOfTime.Diff): number {
+export function diff(time: TMoment, measurement?: unitOfTime.Diff): number {
   return moment().diff(moment(time), measurement)
 }
 

@@ -12,7 +12,7 @@ type TProps = {
 }
 
 export default function ConfirmModal(props: TProps): JSX.Element {
-  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
   const { message, children } = props
   const confirmMessage = message || ARE_YOU_SURE_MESSAGE
 

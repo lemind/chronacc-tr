@@ -14,6 +14,7 @@ export interface ITaskCases {
   startTask(task?: ITask): void
   stopActiveTask(): void
   bindProject(task: ITask, project: IProject | null): void
+  getActiveTask(): ITask | null
 }
 
 export type ITasksCasesCommon = ITaskCases & ICases;
@@ -85,6 +86,7 @@ export class TasksCases extends Cases implements ITaskCases {
       newTask.start()
       tasksGateway.createTask(newTask)
     } else if (oldTask) {
+      //ToDo: async fix: start before stop
       oldTask.start()
       tasksGateway.updateTask(oldTask)
     }

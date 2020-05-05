@@ -29,8 +29,8 @@ export type TСasesActions = {
 type TСasesCommon = TСasesData & TСasesActions
 
 export default function useCases(casesItem: ICasesSingletone): TСasesCommon {
-  const [observables, setObservables] = useState({})
-  const [initedCases, setInitedCases] = useState({})
+  const [observables, setObservables] = useState<TСasesData>({} as TСasesData)
+  const [initedCases, setInitedCases] = useState<TСasesActions>({} as TСasesActions)
 
   useEffect(() => {
     let subscribtions: Subscription[] = []
@@ -51,12 +51,12 @@ export default function useCases(casesItem: ICasesSingletone): TСasesCommon {
         })
       })
 
-      setObservables({ ...newObservables })
+      setObservables({ ...newObservables } as TСasesData)
     })
 
     subscribtions = [...subscribtions, subscribtion]
 
-    setInitedCases({...{[caseName]: newCaseItem}})
+    setInitedCases({...{[caseName]: newCaseItem}} as TСasesActions)
 
     return () => {
       unsubscribe(subscribtions)
@@ -66,5 +66,5 @@ export default function useCases(casesItem: ICasesSingletone): TСasesCommon {
   return {
     ...initedCases,
     ...observables
-  } as TСasesCommon
+  }
 }

@@ -20,6 +20,7 @@ export interface ITask {
   isActive: boolean
   startDay: string
   summTime: number
+  startTime: number
 }
 
 export type TInitTask = {
