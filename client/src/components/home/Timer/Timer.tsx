@@ -37,17 +37,18 @@ export default function Timer() {
 
     const startTime = activeTask && activeTask.startTime
 
-    if (!activeTask || timer) return
-
     if (activeTaskId != null) {
       stopTimer()
     }
+
+    if (!activeTask || timer) return
 
     const timerId = setInterval(() => updateTimeCounter(startTime), SECOND)
 
     showStopButton()
 
     setTimer(timerId)
+
     setActiveTaskId(activeTask._id)
   }
 
