@@ -48,7 +48,7 @@ export default function ProjectsList() {
       <span> | </span>
       <span>
         <ColorBox
-          model={ project }
+          color={ project.color }
           onColorChange={ onColorChange(project) }
         />
       </span>

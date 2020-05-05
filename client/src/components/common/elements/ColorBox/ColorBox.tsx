@@ -3,12 +3,18 @@ import { isFunction } from 'helpers/misc'
 
 import Modal from 'components/common/elements/Modal/Modal'
 import ColorSelector from 'components/common/elements/ColorSelector/ColorSelector'
+import { TColor } from 'models/index'
 
-export default function ColorBox(props){
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { model } = props
+type TProps = {
+  onColorChange(color: string): void
+  color: TColor
+}
 
-  if (!model) {
+export default function ColorBox(props: TProps): JSX.Element | null {
+  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const { color } = props
+
+  if (!color) {
     return null
   }
 
@@ -16,35 +22,34 @@ export default function ColorBox(props){
   const colorStyle = {
     width: '40px',
     height: '25px',
-    background: `#${ model.color || 'FFF' }`,
+    background: `#${ color || 'FFF' }`,
     border: '1px solid black',
     display: 'inline-block',
     cursor: 'pointer'
   }
 
-  const onCloseModal = () => {
-    setIsModalOpen(false)
+  const onCloseModal = (): void => {
+    setModalIsOpen(false)
   }
 
-  const onColorChange = (color) => {
+  const onColorChange = (color: TColor): void => {
     const { onColorChange } = props
     isFunction(onColorChange) && onColorChange(color)
-    setIsModalOpen(false)
+    setModalIsOpen(false)
   }
 
   return (
     <span>
       <div
         style={ colorStyle }
-        onClick={ () => setIsModalOpen(true) }
+        onClick={ () => setModalIsOpen(true) }
       />
       <Modal
-        onClose={ () => setIsModalOpen(false) }
-        closeModal={ () => onCloseModal() }
-        isOpen={ isModalOpen }
+        onClose={ onCloseModal }
+        isOpen={ modalIsOpen }
       >
         <ColorSelector
-          color={ model.color }
+          color={ color }
           onColorChange={ (color) => onColorChange(color) }
         />
       </Modal>

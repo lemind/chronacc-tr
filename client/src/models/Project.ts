@@ -1,14 +1,14 @@
-import { IMongoId } from "./index"
+import { IMongoId, TColor } from "./index"
 
 export interface IProject {
   _id: IMongoId
   name: string
-  color: string
+  color: TColor
 }
 
 export default class Project implements IProject {
   name: string = ''
-  color: string = ''
+  color: TColor = ''
   _id: IMongoId
   constructor(initial?: IProject) {
     Object.assign(this, initial)

@@ -1,7 +1,14 @@
 import React from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 
-export default function ScrollLoad(props) {
+type TProps = {
+  hasMore: boolean,
+  loading: boolean,
+  children: JSX.Element,
+  loadMore(): void
+}
+
+export default function ScrollLoad(props: TProps) {
   const { children, loadMore, hasMore, loading } = props
 
   return (
