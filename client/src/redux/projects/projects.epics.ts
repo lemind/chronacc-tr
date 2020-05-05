@@ -1,16 +1,14 @@
-import { ofType, Epic } from 'redux-observable'
+import { ofType } from 'redux-observable'
 import { mergeMap, map, catchError } from 'rxjs/operators'
-import { getType, ActionType } from 'typesafe-actions'
-import { of } from "rxjs";
+import { getType } from 'typesafe-actions'
+import { of } from "rxjs"
 
 // import { debounceUntilChanged } from 'helpers/rxjs'
 import { requestFailed } from 'helpers/redux/requests'
 import actions from './projects.actions'
 import { API } from 'api/index'
 
-import { TRootState } from 'src/redux/root'
-
-const DEBOUNCE_TIME = 250
+import { TRootEpic } from 'src/redux/root'
 
 // ToDo: can we adjust that
 const requestFailedProjects = requestFailed(actions)
@@ -27,11 +25,7 @@ const updateProjectType = getType(updateProject.request)
 const deleteProjectType = getType(deleteProject.request)
 const createProjectType = getType(createProject.request)
 
-type Action = ActionType<typeof actions>
-
-type EpicType = Epic<Action, Action, TRootState>
-
-const fetchProjectsEpic: EpicType = action$ => action$.pipe(
+const fetchProjectsEpic: TRootEpic = action$ => action$.pipe(
   ofType(fetchProjectsType),
   mergeMap(action => {
     return API.fetchProjects().pipe(
@@ -49,7 +43,7 @@ const fetchProjectsEpic: EpicType = action$ => action$.pipe(
   })
 )
 
-const updateProjectEpic: EpicType = action$ => action$.pipe(
+const updateProjectEpic: TRootEpic = action$ => action$.pipe(
   ofType(updateProjectType),
   mergeMap(action => {
     return API.updateProject(action).pipe(
@@ -68,7 +62,7 @@ const updateProjectEpic: EpicType = action$ => action$.pipe(
   })
 )
 
-const deleteProjectEpic: EpicType = action$ => action$.pipe(
+const deleteProjectEpic: TRootEpic = action$ => action$.pipe(
   ofType(deleteProjectType),
   mergeMap(action => {
     return API.deleteProject(action).pipe(
@@ -89,7 +83,7 @@ const deleteProjectEpic: EpicType = action$ => action$.pipe(
   })
 )
 
-const createProjectEpic: EpicType = action$ => action$.pipe(
+const createProjectEpic: TRootEpic = action$ => action$.pipe(
   ofType(createProjectType),
   mergeMap(action => {
     return API.createProject(action).pipe(

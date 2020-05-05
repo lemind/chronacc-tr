@@ -17,14 +17,14 @@ const updateProject = createAsyncAction(
   'REQUEST_FAILED',
 )<IProject, IProject, Error>()
 
-export const createProject = createAsyncAction(
+const createProject = createAsyncAction(
   'CREATE_PROJECT',
   'CREATE_PROJECT_SUCCEEDED',
   'REQUEST_FAILED',
 )<any, IProject, Error>()
 // 'CREATE_PROJECT', type for project draft
 
-export const deleteProject = createAsyncAction(
+const deleteProject = createAsyncAction(
   'DELETE_PROJECT',
   'DELETE_PROJECT_SUCCEEDED',
   'REQUEST_FAILED',

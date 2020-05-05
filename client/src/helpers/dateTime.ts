@@ -15,7 +15,7 @@ export function valueOf(): number {
   return moment().valueOf()
 }
 
-export function format(time: Moment, format: string): string {
+export function format(time: Moment | null, format: string): string {
   if (!time) {
     return moment().format(format)  
   }

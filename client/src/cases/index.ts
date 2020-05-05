@@ -1,6 +1,8 @@
 import { from as observableFrom, Observable, Subscription, ObservableInput } from 'rxjs';
 import { isObjectEmpty } from 'helpers/objects'
 import { TGatewayCommon, TGatewaySingletoneCommon } from 'helpers/gateway'
+import { IProjectsGatewayCommon } from "src/redux/projects";
+import { ITasksGatewayCommon } from "src/redux/tasks";
 import { firstLowerCase } from 'helpers/strings'
 import type { TRootState } from 'src/redux/root'
 import { TAppStore } from 'src/redux/store'
@@ -15,15 +17,17 @@ export interface ICases {
   getState$(): any
   unsubscribe(): void
   setObservables(): TFollowedStoreSchema[] // abstract
-  load(): void // abstract
+  transformServerData(data: any): any // abstract
 }
 
 export interface ICasesClass {
   new (gateways: TGatewaySingletoneCommon[]): ICases;
 }
 
+// ToDo: we do not check if we have any given gateway
 interface IGatewaysObject {
-  [key: string]: TGatewayCommon
+  projectsGateway: IProjectsGatewayCommon,
+  tasksGateway: ITasksGatewayCommon,
 }
 
 export type TFollowedStoreSchema = {
@@ -40,18 +44,14 @@ export default class Cases implements ICases {
   subscriptions: Subscription[] = []
   states$: Observable<TRootState>
   store: TAppStore
-  gateways: IGatewaysObject
+  gateways: IGatewaysObject = {} as IGatewaysObject
 
   constructor(gateways: TGatewaySingletoneCommon[]) {
     this.initGateways(gateways);
   }
 
-  load() {}
-
   // ToDo: can we init Gateways via https://github.com/microsoft/TypeScript/issues/4881
   initGateways(gateways: TGatewaySingletoneCommon[]): void {
-    this.gateways = {}
-
     for (let gatewayItem of gateways) {
       const gatewayName = firstLowerCase(gatewayItem.customName)
 

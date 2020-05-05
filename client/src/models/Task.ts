@@ -1,28 +1,54 @@
 import { format, dateTime, valueOf } from 'helpers/dateTime'
+import { IMongoId } from "./index"
+import { IProject } from './Project'
 
-export default class Task {
-  constructor(initial) {
-    this._id = 0
-    this.beginTime = null // current period
-    this._isActive = false
-    this.description = ''
-    this.periods = []
-    this.project = null
+type TPeriod = {
+  beginTime: number
+  endTime: number
+}
 
+export interface ITask {
+  _id: IMongoId
+  beginTime: number // current period
+  _isActive: boolean
+  description: string
+  periods: TPeriod[]
+  project: IProject
+  hasStartedToday(): boolean
+  start(): void
+  stop(): void
+  isActive: boolean
+}
+
+export type TInitTask = {
+  description?: string
+  project?: IProject
+}
+
+export default class Task implements ITask {
+  _id: IMongoId = '0'
+  beginTime: number = 0
+  _isActive: boolean = false
+  description: string = ''
+  periods: TPeriod[] = []
+  project: IProject
+
+
+  constructor(initial?: TInitTask) {
     Object.assign(this, initial)
   }
 
-  get isActive() {
+  get isActive(): boolean {
     return !!this.beginTime
   }
 
-  dayStart() {
-    if (!this.periods[0] || !this.periods[0].beginTime) return null
+  get startDay(): string {
+    if (!this.periods[0] || !this.periods[0].beginTime) return ''
     const startTaskTime = dateTime(this.periods[0].beginTime)
     return format(startTaskTime, 'DD/MM')
   }
 
-  hasStartedToday() {
+  hasStartedToday(): boolean {
     const startTaskTime = dateTime(this.periods[0].beginTime)
     const targetDay = format(startTaskTime, 'DD')
     const today = format(null, 'DD')
@@ -30,21 +56,21 @@ export default class Task {
     return targetDay === today
   }
 
-  start() {
+  start(): void {
     this.beginTime = valueOf()
     this._isActive = true
   }
 
-  stop(){
+  stop(): void {
     this._isActive = false
     this.periods.push({
       beginTime: this.beginTime,
       endTime: valueOf()
     })
-    this.beginTime = null
+    this.beginTime = 0
   }
 
-  get summTime() {
+  get summTime(): number {
     let summTime = 0
 
     if (this.periods.length) {
@@ -55,13 +81,13 @@ export default class Task {
     }
 
     if (!summTime) {
-      return null
+      return 0
     }
 
     return summTime
   }
 
-  get startTime() {
+  get startTime(): number {
     const summTime = this.summTime
     let startTime = summTime ? summTime : 0
 

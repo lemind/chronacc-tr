@@ -1,17 +1,8 @@
 import { ajax } from 'rxjs/ajax'
 import { API_HOST, HEADERS } from '../config'
-import { ProjectActionType } from 'src/redux/projects';
-import { IProject } from 'models/Project';
-
-// ToDo move to api/index
-export type TBackDataVersion = {
-  _v: number
-}
-export type TBackDataError = {
-  id: number,
-  message: string
-}
-
+import { ProjectActionType } from 'src/redux/projects'
+import { IProject } from 'models/Project'
+import { TBackDataVersion, TBackDataError } from './index'
 
 type TProjectRaw = IProject & TBackDataVersion
 

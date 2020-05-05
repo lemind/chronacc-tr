@@ -10,7 +10,7 @@ export default class Project implements IProject {
   name: string = ''
   color: string = ''
   _id: IMongoId
-  constructor(initial? :IProject) {
+  constructor(initial?: IProject) {
     Object.assign(this, initial)
   }
 }
