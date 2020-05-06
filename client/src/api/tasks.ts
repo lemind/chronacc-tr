@@ -15,9 +15,9 @@ type TResponse = {
 
 export const tasksAPI = {
   fetchTasks: (action) => {
-    const { params } = action
+    const { payload } = action
 
-    const paramsStr = queryString.stringify(params)
+    const paramsStr = queryString.stringify(payload)
     return ajax.getJSON<TResponse>(`${API_HOST}/tasks?${paramsStr}`)
   },
   createTask: (action: ApiTaskActionType) => {

@@ -135,7 +135,6 @@ export default function Timer() {
 
   if (!tasksCases || !projectsCases) return null
   const activeTask = tasksCases.getActiveTask()
-  if (!activeTask) return null
 
   const options = getProjectsLikeOptions()
 
@@ -147,7 +146,7 @@ export default function Timer() {
     <div>
       <div>time: {daysString} { time }</div>
       <br />
-      <div>
+      {activeTask && <div>
         <input
           value={ activeTask.description || '' }
           onChange={ e => updateTask(e) }
@@ -161,7 +160,7 @@ export default function Timer() {
           options={ options }
           isDisabled={ !activeTask._id }
         />
-      </div>
+      </div>}
       <br />
       { !taskInProgress
         ? <button onClick={ () => start() } data-test="button-start">Start</button>

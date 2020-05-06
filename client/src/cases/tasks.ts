@@ -136,7 +136,7 @@ export class TasksCases extends Cases implements ITaskCases {
   }
 
   bindProject(task: ITask, project: IProject | null): void {
-    if (task.project) {
+    if (project) {
       task.project = project
     }
 
