@@ -136,9 +136,7 @@ export class TasksCases extends Cases implements ITaskCases {
   }
 
   bindProject(task: ITask, project: IProject | null): void {
-    if (project) {
-      task.project = project
-    }
+    task.project = project
 
     const { tasksGateway } = this.gateways
     tasksGateway.updateTask(task)
