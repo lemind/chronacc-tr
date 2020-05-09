@@ -7,9 +7,10 @@ import { IProjectsState } from 'src/redux/projects/projects.reducer'
 import type { IProject } from 'models/Project'
 import { IMongoId } from 'models/index'
 
-type TSelectOptions = {
+export type TSelectOption = {
   value: string | number,
-  label: string
+  label: string,
+  __isNew__?: boolean,
 }
 
 export interface IProjectsCases {
@@ -17,6 +18,7 @@ export interface IProjectsCases {
   addProject(newProject: IProject): void
   deleteProject(projectId: IMongoId): void
   load(): void
+  getListLikeOptions(): TSelectOption[]
 }
 
 export type IProjectsCasesCommon = IProjectsCases & ICases;
@@ -47,7 +49,7 @@ export class ProjectsCases extends Cases implements IProjectsCases {
     projectsGateway.addProject(project)
   }
 
-  getListLikeOptions(): TSelectOptions[] {
+  getListLikeOptions(): TSelectOption[] {
     const { projectsGateway } = this.gateways
     const { list } = <IProjectsState>projectsGateway.state.projects
 

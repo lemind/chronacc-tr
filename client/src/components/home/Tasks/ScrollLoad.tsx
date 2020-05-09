@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 import useCases from 'helpers/useCases'
 import ScrollLoad from 'components/common/elements/ScrollLoad/ScrollLoad'
 import TasksCases from 'cases/tasks'
 
-export default function ScrollLoadTasks(props) {
+export default function ScrollLoadTasks(props): JSX.Element | null {
   const { tasksCases, tasks } = useCases(TasksCases)
 
   const loadMore = () => {

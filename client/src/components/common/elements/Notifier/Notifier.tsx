@@ -3,9 +3,10 @@ import React from 'react'
 import useCases from 'helpers/useCases'
 import TasksCases from 'cases/tasks'
 import ProjectsCases from 'cases/projects'
+import { TBackDataError } from 'api/index'
 
 const getStyles = () => {
-  const notifierStyle = {
+  const notifierStyle: React.CSSProperties = {
     position: 'absolute',
     top: 0,
     right: '5px',
@@ -14,10 +15,10 @@ const getStyles = () => {
     margin: '5px',
   }
 
-  const errorStyle = {
+  const errorStyle: React.CSSProperties = {
     color: '#d61313',
     position: 'relative',
-    zIndex: '10',
+    zIndex: 10,
     maxWidth: '300px',
     wordWrap: 'break-word',
   }
@@ -25,22 +26,22 @@ const getStyles = () => {
   return { errorStyle, notifierStyle }
 }
 
-export default function Notifier() {
+export default function Notifier(): JSX.Element {
   const { tasks } = useCases(TasksCases)
   const { projects } = useCases(ProjectsCases)
 
   const { errorStyle, notifierStyle } = getStyles()
 
-  const getErrorsArray = () => {
+  const getErrorsArray = (): TBackDataError[] => {
     return [
       tasks && tasks.error,
       projects && projects.error
     ]
   }
 
-  const getUniqueErrorsArray = () => {
+  const getUniqueErrorsArray = (): TBackDataError[] => {
     const errors = getErrorsArray()
-    const unique = []
+    const unique = [] as TBackDataError[]
 
     errors.forEach((value) => {
       if (value) {

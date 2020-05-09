@@ -1,7 +1,9 @@
 import React from 'react'
 import isFunction from 'lodash/isFunction'
+import { TColor } from 'models/index'
 
-const COLORS = [
+// ToDo: main consts
+const COLORS: TColor[] = [
   'C22326',
   'F37338',
   'FDB632',
@@ -9,13 +11,18 @@ const COLORS = [
   '801638'
 ]
 
-export default function ColorSelector(props) {
-  const selectColor = (color) => {
+type TProps = {
+  onColorChange(color: string): void
+  color: TColor
+}
+
+export default function ColorSelector(props: TProps): JSX.Element | null {
+  const selectColor = (color: TColor): void => {
     const { onColorChange } = props
     isFunction(onColorChange) && onColorChange(color)
   }
 
-  const renderColor = (color) => {
+  const renderColor = (color: TColor): JSX.Element => {
     const selectedColor = props.color
 
     //ToDo: move to css const ones
@@ -34,15 +41,19 @@ export default function ColorSelector(props) {
       />
   }
 
-  const isColorActive = (color, selectedColor) => {
+  const isColorActive = (color: TColor, selectedColor: TColor): boolean => {
     return color === selectedColor
+  }
+
+  if (!props.color) {
+    return null
   }
 
   return (
     <div>
       { COLORS.map((color) =>
         <div key={ color }>
-          { renderColor(color, isColorActive(color)) }
+          { renderColor(color) }
         </div>
       ) }
     </div>

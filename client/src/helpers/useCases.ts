@@ -4,6 +4,8 @@ import { firstLowerCase } from './strings'
 import { ICasesSingletone } from 'helpers/case'
 import { IProjectsCasesCommon } from 'cases/projects'
 import { IProjectsState } from 'src/redux/projects/projects.reducer'
+import { ITasksState } from 'src/redux/tasks/tasks.reducer'
+import { ITasksCasesCommon } from 'cases/tasks'
 
 
 const unsubscribe = (subscribtions) => {
@@ -13,21 +15,22 @@ const unsubscribe = (subscribtions) => {
   subscribtions = []
 }
 
-// TToDo extend with all data
-// TToDo we might do not have all data from e.g. IProjectsState
-type TСasesData = {
-  [key: string]: IProjectsState,
+
+export type TСasesData = {
+  projects: IProjectsState,
+  tasks: ITasksState,
 }
-// TToDo extend with all actions
-type TСasesActions = {
-  [key: string]: IProjectsCasesCommon,
+
+export type TСasesActions = {
+  projectsCases: IProjectsCasesCommon,
+  tasksCases: ITasksCasesCommon,
 }
 
 type TСasesCommon = TСasesData & TСasesActions
 
 export default function useCases(casesItem: ICasesSingletone): TСasesCommon {
-  const [observables, setObservables] = useState({})
-  const [initedCases, setInitedCases] = useState({})
+  const [observables, setObservables] = useState<TСasesData>({} as TСasesData)
+  const [initedCases, setInitedCases] = useState<TСasesActions>({} as TСasesActions)
 
   useEffect(() => {
     let subscribtions: Subscription[] = []
@@ -48,12 +51,12 @@ export default function useCases(casesItem: ICasesSingletone): TСasesCommon {
         })
       })
 
-      setObservables({ ...newObservables })
+      setObservables({ ...newObservables } as TСasesData)
     })
 
     subscribtions = [...subscribtions, subscribtion]
 
-    setInitedCases({...{[caseName]: newCaseItem}})
+    setInitedCases({...{[caseName]: newCaseItem}} as TСasesActions)
 
     return () => {
       unsubscribe(subscribtions)

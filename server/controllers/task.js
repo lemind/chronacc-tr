@@ -131,7 +131,7 @@ module.exports = {
     const id = req.params.taskId
 
     Task.findOneAndDelete({ _id: id },
-      (err) => {
+      (err, results) => {
         if (err) {
           const errorParams = {
             id: 13,
@@ -141,7 +141,7 @@ module.exports = {
           res.json({ success: false, error });
           return
         }
-        return res.json({ success: true });
+        return res.json({ success: true, results });
       }
     )
   }

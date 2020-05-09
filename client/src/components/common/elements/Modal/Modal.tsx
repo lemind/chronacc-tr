@@ -20,12 +20,18 @@ const REACT_MODAL_STYLES = {
   }
 }
 
-export default class Modal extends React.Component {
-  componentWillMount(){
+type TProps = {
+  onClose(): void,
+  isOpen?: boolean,
+  children: JSX.Element | JSX.Element[]
+}
+
+export default class Modal extends React.Component<TProps> {
+  componentWillMount(): void {
     ReactModal.setAppElement('#app')
   }
 
-  closeModal(e){
+  closeModal(): void {
     const { onClose } = this.props;
     isFunction(onClose) && onClose()
   }
@@ -41,7 +47,7 @@ export default class Modal extends React.Component {
         { ...rest }
       >
         <div>
-          <button onClick={ (e) => this.closeModal(e) }>close</button>
+          <button onClick={ () => this.closeModal() }>close</button>
         </div>
         { children }
       </ReactModal>

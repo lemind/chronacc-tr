@@ -5,9 +5,14 @@ import EditTaskForm from 'components/home/EditTaskForm/EditTaskForm'
 
 import Task from './Task'
 import ScrollLoadTasks from './ScrollLoad'
+import { ITask } from 'models/Task'
 
-export default function Tasks(props) {
-  const [currentEditableTask, setCurrentEditableTask] = useState(null)
+type TProps = {
+  tasks: ITask[]
+}
+
+export default function Tasks(props: TProps): JSX.Element {
+  const [currentEditableTask, setCurrentEditableTask] = useState<ITask | null>(null)
   const { tasks } = props
 
   return (

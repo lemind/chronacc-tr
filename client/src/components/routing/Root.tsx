@@ -8,8 +8,7 @@ const Starter = lazy(() => import('components/home/Starter/Starter'));
 const Projects = lazy(() => import('components/projects/Index/Projects'));
 
 export default class Root extends React.Component {
-
-  render(){
+  render() {
     return (<Router>
       <Suspense fallback={<div>Loading...</div>}>
         <div>

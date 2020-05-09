@@ -6,7 +6,7 @@ import TasksCases from 'cases/tasks'
 import Timer from 'components/home/Timer/Timer'
 import Tasks from 'components/home/Tasks/Tasks'
 
-export default function Starter() {
+export default function Starter(): JSX.Element {
   const { tasksCases, tasks } = useCases(TasksCases)
 
   useEffect(() => {

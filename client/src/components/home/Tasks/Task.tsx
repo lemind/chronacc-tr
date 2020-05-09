@@ -1,41 +1,47 @@
 import React, { useEffect } from 'react'
 
 import useCases from 'helpers/useCases'
-import { utcFormat, TIME_FORMAT } from 'helpers/dateTime'
+import { utcFormat, TIME_FORMAT, TMoment } from 'helpers/dateTime'
 import { isFunction } from 'helpers/misc'
 import TasksCases from 'cases/tasks'
 import ConfirmModal from 'components/common/elements/ConfirmModal/ConfirmModal'
 import { getShortId } from 'helpers/misc';
+import { ITask } from 'models/Task'
 
-export default function Task({ task, onEdit }) {
+type TProps = {
+  task: ITask
+  onEdit(task: ITask): void
+}
+
+export default function Task({ task, onEdit }: TProps): JSX.Element {
   const { tasksCases } = useCases(TasksCases)
 
-  const openEditTaskModal = () => {
+  const openEditTaskModal = (): void => {
     if (isFunction(onEdit)) {
       onEdit(task)
     }
   }
 
-  const formattedTime = (raw) => {
+  const formattedTime = (raw: TMoment): string => {
     if (!raw) return '-'
 
     return utcFormat(raw, TIME_FORMAT)
   }
 
-  const continueTask = () => {
+  const continueTask = (): void => {
     tasksCases.startTask(task)
   }
 
-  const deleteTask = () => {
+  const deleteTask = (): void => {
     tasksCases.deleteTask(task._id)
   }
 
-  const shortTaskId = () => {
-    if (!task || !task._id) return
+  const shortTaskId = (): string => {
+    if (!task || !task._id) return ''
     return getShortId(task._id)
   }
 
-  const disabled = task.isActive
+  const isActionsDisabled = task.isActive
   const projectNameStyle = {
     background: `#${ task.project ? task.project.color : 'FFF' }`,
     color: '#FFF',
@@ -59,14 +65,14 @@ export default function Task({ task, onEdit }) {
     <span>
       <button
         onClick={ continueTask }
-        disabled={ disabled }
+        disabled={ isActionsDisabled }
       >Continue</button>
     </span>
     <span> | </span>
     <span>
       <button
         onClick={ openEditTaskModal }
-        disabled={ disabled }
+        disabled={ isActionsDisabled }
       >Edit</button>
     </span>
     <span> | </span>
@@ -75,7 +81,7 @@ export default function Task({ task, onEdit }) {
         onConfirm={ deleteTask }
       >
         <button
-          disabled={ disabled }
+          disabled={ isActionsDisabled }
         >Delete</button>
       </ConfirmModal>
     </span>

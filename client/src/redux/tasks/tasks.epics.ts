@@ -1,6 +1,7 @@
 import { ofType } from 'redux-observable'
 import { mergeMap, map, catchError } from 'rxjs/operators'
 import { getType } from 'typesafe-actions'
+import { of } from "rxjs"
 
 import { requestFailed } from 'helpers/redux/requests'
 import actions from './tasks.actions'
@@ -8,6 +9,7 @@ import { API } from 'api/index'
 
 import { TRootEpic } from 'src/redux/root'
 
+// deprecated
 const requestFailedTasks = requestFailed(actions);
 
 const {
@@ -35,7 +37,7 @@ const fetchTasksEpic: TRootEpic = action$ => action$.pipe(
 
         return fetchTasks.success(response.result)
       }),
-      catchError(error => requestFailedTasks(error))
+      catchError(error => of(fetchTasks.failure(error)))
     )
   })
 )
@@ -54,7 +56,7 @@ const createTaskEpic: TRootEpic = action$ => action$.pipe(
 
         return createTask.success(response.result)
       }),
-      catchError(error => requestFailedTasks(error))
+      catchError(error => of(createTask.failure(error)))
     )
   })
 )
@@ -73,7 +75,7 @@ const updateTaskEpic: TRootEpic = action$ => action$.pipe(
 
         return updateTask.success(response.result)
       }),
-      catchError(error => requestFailedTasks(error))
+      catchError(error => of(updateTask.failure(error)))
     )
   })
 )
@@ -90,10 +92,10 @@ const deleteTaskEpic: TRootEpic = action$ => action$.pipe(
           })
         }
 
-        const { _id } = response.delete
+        const { _id } = response
         return deleteTask.success(_id)
       }),
-      catchError(error => requestFailedTasks(error))
+      catchError(error => of(deleteTask.failure(error)))
     )
   })
 )
