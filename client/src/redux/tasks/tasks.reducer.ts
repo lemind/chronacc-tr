@@ -27,8 +27,6 @@ const {
   updateTask,
   createTask,
   deleteTask,
-  clearTasks,
-  serverTasksPrepared
 } = actions
 
 const fetchTasksType = getType(fetchTasks.request)

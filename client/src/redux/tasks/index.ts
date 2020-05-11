@@ -39,7 +39,7 @@ export class TasksGateway extends Gateway implements ITasksGateway {
     return 'tasks'
   }
 
-  get myState() {
+  get myState(): ITasksState {
     return this.state[this.myName]
   }
 
