@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import useCases from 'helpers/useCases'
 import { utcFormat, TIME_FORMAT, TMoment } from 'helpers/dateTime'

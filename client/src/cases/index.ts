@@ -1,8 +1,9 @@
-import { from as observableFrom, Observable, Subscription, ObservableInput } from 'rxjs';
+import { from as observableFrom, Observable,
+  Subscription, ObservableInput } from 'rxjs'
 import { isObjectEmpty } from 'helpers/objects'
-import { TGatewayCommon, TGatewaySingletoneCommon } from 'helpers/gateway'
-import { IProjectsGatewayCommon } from "src/redux/projects";
-import { ITasksGatewayCommon } from "src/redux/tasks";
+import { TGatewaySingletoneCommon } from 'helpers/gateway'
+import { IProjectsGatewayCommon } from "src/redux/projects"
+import { ITasksGatewayCommon } from "src/redux/tasks"
 import { firstLowerCase } from 'helpers/strings'
 import type { TRootState } from 'src/redux/root'
 import { TAppStore } from 'src/redux/store'

@@ -1,7 +1,7 @@
 import { casesFactory } from 'helpers/case'
 import Cases, { ICases } from './index'
 import type { TFollowedStoreSchema } from './index'
-import ProjectsGateway, { IProjectsGatewayCommon } from 'src/redux/projects'
+import ProjectsGateway from 'src/redux/projects'
 import { makeOptionFromItem } from 'helpers/select'
 import { IProjectsState } from 'src/redux/projects/projects.reducer'
 import type { IProject } from 'models/Project'
