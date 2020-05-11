@@ -1,21 +1,23 @@
 import { store } from 'src/redux/store'
 import type { TAppStore, TAppDispatch} from 'src/redux/store'
 
-import { from as observableFrom, ObservableInput } from 'rxjs'
+import { from as observableFrom, ObservableInput,
+  ObservedValueOf, Observable } from 'rxjs'
 import { TRootState } from './root'
 
 export type TInitLoadData = {
   reset: boolean
 }
 
+type TAppStoreObsInp = ObservableInput<any> & TAppStore
+
 export interface IGateway {
   state: TRootState
   dispatch: TAppDispatch
   unsubscribeFromStore: Function
   store: TAppStore
-  // ToDo: tricky types
-  // getState$(): Observable<ObservedValueOf<TAppStore>>
-  getState$(): any
+  // TToDo: recheck
+  getState$(): Observable<ObservedValueOf<TAppStoreObsInp>>
   unsubscribe(): void
   load(init: TInitLoadData): void //abstract
   serverDataPrepared(data: any): void //abstract
@@ -50,8 +52,6 @@ export default class Gateway implements IGateway {
   }
 
   getState$() {
-    type TAppStoreObsInp = ObservableInput<any> & TAppStore
-
     return observableFrom<TAppStoreObsInp>(<TAppStoreObsInp>store)
   }
 }
