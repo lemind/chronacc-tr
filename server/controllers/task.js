@@ -31,7 +31,7 @@ module.exports = {
         id: 1,
         message: 'DB connection error'
       };
-      const error = errorsHelper.handleError(errorParams, err);
+      const error = errorsHelper.handleError(errorParams);
       res.json({ success: false, error });
       return;
     }
@@ -131,7 +131,7 @@ module.exports = {
     const id = req.params.taskId
 
     Task.findOneAndDelete({ _id: id },
-      (err) => {
+      (err, results) => {
         if (err) {
           const errorParams = {
             id: 13,
@@ -141,7 +141,7 @@ module.exports = {
           res.json({ success: false, error });
           return
         }
-        return res.json({ success: true });
+        return res.json({ success: true, results });
       }
     )
   }

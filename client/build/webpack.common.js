@@ -8,7 +8,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
-  entry: ['@babel/polyfill', './src/app.js'],
+  entry: ['@babel/polyfill', './src/app.tsx'],
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/',
@@ -18,8 +18,8 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js/,
-        use: ['babel-loader'],
+        test: /\.(ts|js|jsx|tsx)?$/,
+        use: ['babel-loader','ts-loader'],
         exclude: path.resolve(__dirname, '../node_modules')
       },
       {
@@ -57,6 +57,7 @@ module.exports = {
     ]
   },
   resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.json'],
     alias: {
       src: path.resolve(__dirname, '../src/'),
       components: path.resolve(__dirname, '../src/components/'),

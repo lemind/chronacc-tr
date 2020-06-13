@@ -1,10 +1,5 @@
 import React, {Component} from 'react'
-import toLower from 'lodash/toLower'
-
-// ToDo: helper string
-const firstLowerCase = (s) => {
-  return toLower(s[0]) + s.substr(1);
-}
+import { firstLowerCase } from 'helpers/strings';
 
 /**
  * Provides Cases to component.
@@ -15,6 +10,7 @@ const firstLowerCase = (s) => {
  *
  * example: @withCases(ProjectCases), access - this.props.projectCases
  */
+// deprecated
 export default function withCases(...cases) {
   return (ComposedComponent) => {
     return class WithCases extends Component {

@@ -1,10 +1,6 @@
 import React, {Component} from 'react'
-import toLower from 'lodash/toLower'
+import { firstLowerCase } from 'helpers/strings';
 
-// ToDo: helper string
-const firstLowerCase = (s) => {
-  return toLower(s[0]) + s.substr(1);
-}
 
 /**
  * Provides Gateways.
@@ -15,6 +11,7 @@ const firstLowerCase = (s) => {
  *
  * example: @withGateways(TasksGateway), access - this.gateways.tasksGateway
  */
+// deprecated
 export default function withGateways(...gateways) {
   return (TargetClass) => {
     return class WithGateways extends TargetClass {

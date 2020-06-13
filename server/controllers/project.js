@@ -83,6 +83,7 @@ module.exports = {
         )
       },
       ordersUpdate: function(callback) {
+        // ToDo: business logic; move to FE
         Task.update(
           { project: id },
           { project: null },
