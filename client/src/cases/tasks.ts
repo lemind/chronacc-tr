@@ -25,6 +25,7 @@ export class TasksCases extends Cases implements ITaskCases {
   setObservables(): TFollowedStoreSchema[] {
     return [{
       store: 'tasks',
+      // ToDo: should we use consts?
       variables: ['list', 'hasMore', 'loading', 'error']
     }]
   }
@@ -68,6 +69,8 @@ export class TasksCases extends Cases implements ITaskCases {
       newTask = new Task()
       isTaskCreated = true
     } else {
+      // do we need something to put logic of task creating?
+      // some middle thing between cases and entity logic
       if (!task.hasStartedToday()) {
         const initTask: TInitTask = {
           description: task.description,
