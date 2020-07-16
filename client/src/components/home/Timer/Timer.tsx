@@ -149,7 +149,7 @@ export default function Timer() {
       {activeTask && <div>
         <input
           value={ activeTask.description || '' }
-          onChange={ e => updateTask(e) }
+          onBlur={ e => updateTask(e) }
           disabled={ !activeTask._id }
         />
         <CreatableSelect
