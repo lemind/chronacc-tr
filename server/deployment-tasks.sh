@@ -4,4 +4,5 @@ sleep 3
 
 echo "migrate-mongo status"
 
-migrate-mongo up && migrate-mongo status
+# ToDo
+# migrate-mongo up && migrate-mongo status
