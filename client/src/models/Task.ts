@@ -10,7 +10,6 @@ type TPeriod = {
 export interface ITask {
   _id: IMongoId
   beginTime: number // current period
-  _isActive: boolean
   description: string
   periods: TPeriod[]
   project: IProject | null
@@ -31,7 +30,6 @@ export type TInitTask = {
 export default class Task implements ITask {
   _id: IMongoId = '0'
   beginTime: number = 0
-  _isActive: boolean = false
   description: string = ''
   periods: TPeriod[] = []
   project: IProject | null
@@ -61,11 +59,9 @@ export default class Task implements ITask {
 
   start(): void {
     this.beginTime = valueOf()
-    this._isActive = true
   }
 
   stop(): void {
-    this._isActive = false
     this.periods.push({
       beginTime: this.beginTime,
       endTime: valueOf()

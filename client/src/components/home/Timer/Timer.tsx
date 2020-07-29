@@ -41,7 +41,9 @@ export default function Timer() {
       stopTimer()
     }
 
-    if (!activeTask || timer) return
+    if (!activeTask || timer) {
+      return
+    }
 
     const timerId = setInterval(() => updateTimeCounter(startTime), SECOND)
 
@@ -163,8 +165,8 @@ export default function Timer() {
       </div>}
       <br />
       { !taskInProgress
-        ? <button onClick={ () => start() } data-test="button-start">Start</button>
-        : <button onClick={ () => stop() } data-test="button-stop">Stop</button>
+        ? <button onClick={ start } data-test="button-start">Start</button>
+        : <button onClick={ stop } data-test="button-stop">Stop</button>
       }
     </div>
   )
