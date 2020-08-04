@@ -8,10 +8,11 @@ import ConfirmModal from 'components/common/elements/ConfirmModal/ConfirmModal'
 import { getShortId } from 'helpers/misc'
 import { ITask } from 'models/Task'
 import { cc } from 'helpers/classUtils'
+import { COLORS } from 'src/styleVars'
 
 import './task.less'
 
-const PROJECT_DEFAULT_COLOR = 'E4E4E4'
+const PROJECT_DEFAULT_COLOR = COLORS.projectDefaultColor
 
 type TProps = {
   task: ITask

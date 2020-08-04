@@ -11,6 +11,7 @@ import { ITask } from 'models/Task'
 import { IProject } from 'models/Project'
 
 import './timer.less'
+import { COLORS } from 'src/styleVars'
 
 const SECOND = 1000
 // ToDo: main consts
@@ -146,6 +147,10 @@ export default function Timer() {
     ? `${duration(days, "day").humanize()} `
     : ''
 
+  const projectColorStyle = {
+    background: `#${ activeTask?.project?.color || COLORS.projectDefaultColor }`,
+  }
+
   return (
     <div className="timer">
       <div className="timerFirstLine">
@@ -175,6 +180,10 @@ export default function Timer() {
           options={ options }
           isDisabled={ !activeTask._id }
           className="timerProject"
+        />
+        <div
+          className='timerProjectColor'
+          style={ projectColorStyle }
         />
       </div>}
     </div>
