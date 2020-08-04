@@ -17,8 +17,21 @@ export default function Tasks(props: TProps): JSX.Element {
 
   return (
     <div>
-      <br />
-      <h5>Tasks</h5>
+      <h3>Your tasks</h3>
+      <div className='taskHeader'>
+        <div className='taskStartDay'>
+          day
+        </div>
+        <div className='taskProjectNameWrapper'>
+          project
+        </div>
+        <div className='taskDesc'>
+          desc
+        </div>
+        <div className='taskTime'>
+          time
+        </div>
+      </div>
       <ScrollLoadTasks>
         { tasks.map((task, index) =>
           <div key={ task._id }>

@@ -5,8 +5,13 @@ import { utcFormat, TIME_FORMAT, TMoment } from 'helpers/dateTime'
 import { isFunction } from 'helpers/misc'
 import TasksCases from 'cases/tasks'
 import ConfirmModal from 'components/common/elements/ConfirmModal/ConfirmModal'
-import { getShortId } from 'helpers/misc';
+import { getShortId } from 'helpers/misc'
 import { ITask } from 'models/Task'
+import { cc } from 'helpers/classUtils'
+
+import './task.less'
+
+const PROJECT_DEFAULT_COLOR = 'E4E4E4'
 
 type TProps = {
   task: ITask
@@ -36,55 +41,45 @@ export default function Task({ task, onEdit }: TProps): JSX.Element {
     tasksCases.deleteTask(task._id)
   }
 
+  // dev purpose
   const shortTaskId = (): string => {
     if (!task || !task._id) return ''
     return getShortId(task._id)
   }
 
   const isActionsDisabled = task.isActive
-  const projectNameStyle = {
-    background: `#${ task.project ? task.project.color : 'FFF' }`,
-    color: '#FFF',
-    padding: '5px'
+  const projectNameBgStyle = {
+    background: `#${ task.project?.color || PROJECT_DEFAULT_COLOR }`,
   }
 
-  return <div>
-    <span>{ task.isActive && '_____ ' }</span>
-    <span>{ task.startDay }</span>
-    <span> | </span>
-    <span>{ shortTaskId() }</span>
-    <span> | </span>
-    <span
-      style={ projectNameStyle }
-    >{ task.project && task.project.name }</span>
-    <span> | </span>
-    <span>{ task.description }</span>
-    <span> | </span>
-    <span>{ formattedTime(task.summTime) }</span>
-    <span> | </span>
-    <span>
-      <button
-        onClick={ continueTask }
-        disabled={ isActionsDisabled }
-      >Continue</button>
-    </span>
-    <span> | </span>
-    <span>
-      <button
-        onClick={ openEditTaskModal }
-        disabled={ isActionsDisabled }
-      >Edit</button>
-    </span>
-    <span> | </span>
-    <span>
-      <ConfirmModal
-        onConfirm={ deleteTask }
+  const activeClass = task.isActive && 'task_active'
+
+  return <div className={cc('task', activeClass)}>
+    <div className='taskStartDay'>{ task.startDay }</div>
+    <div className='taskProjectNameWrapper'>
+      <div
+        className='taskProjectName'
+        style={ projectNameBgStyle }
       >
-        <button
-          disabled={ isActionsDisabled }
-        >Delete</button>
-      </ConfirmModal>
-    </span>
-    <span>{ task.isActive && ' _____' }</span>
+        { task.project && task.project.name }
+      </div>
+    </div>
+    <div className='taskDesc'>{ task.description }</div>
+    <div className='taskTime'>{ formattedTime(task.summTime) }</div>
+    <button
+      onClick={ continueTask }
+      disabled={ isActionsDisabled }
+    >Continue</button>
+    <button
+      onClick={ openEditTaskModal }
+      disabled={ isActionsDisabled }
+    >Edit</button>
+    <ConfirmModal
+      onConfirm={ deleteTask }
+    >
+      <button
+        disabled={ isActionsDisabled }
+      >Delete</button>
+    </ConfirmModal>
   </div>
 }
