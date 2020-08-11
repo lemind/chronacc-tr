@@ -9,6 +9,8 @@ import { ITask } from 'models/Task'
 import { TSelectOption } from 'cases/projects'
 import { IMongoId } from 'models/index'
 
+import './editTaskForm.less'
+
 type TProps = {
   task: ITask | null,
 }
@@ -45,19 +47,35 @@ export default function EditTaskForm(props: TProps): JSX.Element | null {
 
   const projectOptions = projectsCases.getListLikeOptions()
 
+  // ToDo: make cmp for timerProjectColor
+  const projectColorStyle = {
+    background: `#${ task?.project?.color }`,
+  }
+
   return (
-    <div>
-      <input
-        value={ task.description || '' }
-        onChange={ e => updateTask(e) }
-      />
-      <CreatableSelect
-        isClearable
-        name='project'
-        value={ task.project && makeOptionFromItem(task.project) }
-        onChange={ (projectOption) => handleChangeProject(task, projectOption) }
-        options={ projectOptions }
-      />
+    <div className="editTaskForm">
+      <div className="editTaskLine">
+        <label>Description</label>
+        <input
+          value={ task.description || '' }
+          onChange={ e => updateTask(e) }
+        />
+      </div>
+      <div className="editTaskLine">
+        <label>Project</label>
+        <CreatableSelect
+          isClearable
+          name='project'
+          value={ task.project && makeOptionFromItem(task.project) }
+          onChange={ (projectOption) => handleChangeProject(task, projectOption) }
+          options={ projectOptions }
+          className="timerProject"
+        />
+        <div
+          className='timerProjectColor'
+          style={ projectColorStyle }
+        />
+      </div>
     </div>
   )
 

@@ -46,6 +46,7 @@ export default function Tasks(props: TProps): JSX.Element {
 
       {currentEditableTask && <Modal
         onClose={ () => setCurrentEditableTask(null) }
+        title="Edit task"
       >
         <EditTaskForm
           task={ currentEditableTask }
