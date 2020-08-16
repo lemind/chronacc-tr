@@ -4,10 +4,12 @@ import { isFunction } from 'helpers/misc'
 import Modal from 'components/common/elements/Modal/Modal'
 import ColorSelector from 'components/common/elements/ColorSelector/ColorSelector'
 import { TColor } from 'models/index'
+import './colorBox.less'
 
 type TProps = {
   onColorChange(color: string): void
   color: TColor | undefined
+  className?: string
 }
 
 const DEFAULT_COLOR: TColor = 'FFF'
@@ -16,14 +18,8 @@ export default function ColorBox(props: TProps): JSX.Element | null {
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
   const color: TColor = props.color || DEFAULT_COLOR
 
-  //ToDo: move to css const ones
   const colorStyle = {
-    width: '40px',
-    height: '25px',
     background: `#${ color }`,
-    border: '1px solid black',
-    display: 'inline-block',
-    cursor: 'pointer'
   }
 
   const onCloseModal = (): void => {
@@ -37,8 +33,9 @@ export default function ColorBox(props: TProps): JSX.Element | null {
   }
 
   return (
-    <span>
+    <div className={ props.className }>
       <div
+        className="colorBox"
         style={ colorStyle }
         onClick={ () => setModalIsOpen(true) }
       />
@@ -51,6 +48,6 @@ export default function ColorBox(props: TProps): JSX.Element | null {
           onColorChange={ (color) => onColorChange(color) }
         />
       </Modal>
-    </span>
+    </div>
   )
 }

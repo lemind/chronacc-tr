@@ -6,6 +6,7 @@ import ProjectsCases from 'cases/projects'
 import ColorBox from 'components/common/elements/ColorBox/ColorBox'
 import Project, { IProject } from 'models/Project'
 import { TColor } from 'models/index'
+import './newProjectForm.less'
 
 const stubProject = new Project({_id: '0', name: ''})
 
@@ -28,23 +29,19 @@ export default function NewProjectForm(): JSX.Element {
   }
 
   return (
-    <div>
-      <div>________________________________________</div>
-      <br />
+    <div className="newProjectForm">
       <input
         value={ tempProject.name || '' }
         onChange={ e => updateNewProjectName(e) }
       />
       <ColorBox
+        className="newProjectColorBox"
         color={ tempProject.color }
         onColorChange={ onColorChange }
       />
       <button
         onClick={ () => createProject() }
       >Create project</button>
-      <div>________________________________________</div>
-      <br />
-      <br />
     </div>
   )
 }
