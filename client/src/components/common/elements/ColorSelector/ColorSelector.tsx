@@ -1,6 +1,8 @@
 import React from 'react'
 import isFunction from 'lodash/isFunction'
 import { TColor } from 'models/index'
+import './colorSelector.less'
+import { cc } from 'helpers/classUtils'
 
 // ToDo: main consts
 const COLORS: TColor[] = [
@@ -10,6 +12,8 @@ const COLORS: TColor[] = [
   '027878',
   '801638'
 ]
+
+const DEFAULT_COLOR: TColor = 'FFF'
 
 type TProps = {
   onColorChange(color: string): void
@@ -25,17 +29,17 @@ export default function ColorSelector(props: TProps): JSX.Element | null {
   const renderColor = (color: TColor): JSX.Element => {
     const selectedColor = props.color
 
-    //ToDo: move to css const ones
     const colorStyle = {
-      width: '40px',
-      height: '25px',
-      background: `#${ color || 'FFF' }`,
-      border: isColorActive(color, selectedColor) ? '1px solid black' : 'none',
-      display: 'inline-block',
-      cursor: 'pointer'
+      background: `#${ color || DEFAULT_COLOR }`,
     }
 
+    const activeClassName = isColorActive(color, selectedColor)
+      ? 'colorSelectorColorItem_active'
+      : ''
+    const colorClassName = cc('colorSelectorColorItem', activeClassName)
+
     return <div
+        className={ colorClassName }
         style={ colorStyle }
         onClick={ () => selectColor(color) }
       />

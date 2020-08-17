@@ -120,7 +120,8 @@ export class TasksCases extends Cases implements ITaskCases {
   }
 
   getTasks(): ITask[]{
-    return this.gateways.tasksGateway.state.tasks.list
+    const state = this.gateways.tasksGateway.store.getState()
+    return state.tasks.list
   }
 
   getActiveTask(): ITask | null {

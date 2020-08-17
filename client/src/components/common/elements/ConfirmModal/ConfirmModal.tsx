@@ -3,6 +3,8 @@ import { isFunction } from 'helpers/misc'
 
 import Modal from 'components/common/elements/Modal/Modal'
 
+import './confirmModal.less'
+
 const ARE_YOU_SURE_MESSAGE: string = 'Are you sure?'
 
 type TProps = {
@@ -34,8 +36,9 @@ export default function ConfirmModal(props: TProps): JSX.Element {
       <Modal
         onClose={ onCloseModal }
         isOpen={ modalIsOpen }
+        title="Deleting"
       >
-        <div>{ confirmMessage }</div>
+        <div className="confirmModalBody" >{ confirmMessage }</div>
         <button onClick={ () => confirm() }>Ok</button>
         <button onClick={ () => setModalIsOpen(false) }>Cancel</button>
       </Modal>

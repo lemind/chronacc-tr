@@ -4,8 +4,8 @@ import useCases from 'helpers/useCases'
 import ProjectsCases from 'cases/projects'
 import ColorBox from 'components/common/elements/ColorBox/ColorBox'
 import ConfirmModal from 'components/common/elements/ConfirmModal/ConfirmModal'
-import { getShortId } from 'helpers/misc'
 import { IProject } from 'models/Project'
+import './projectsList.less'
 
 export default function ProjectsList() {
   const { projectsCases, projects } = useCases(ProjectsCases)
@@ -29,38 +29,26 @@ export default function ProjectsList() {
     }
   }
 
-  const getShortProjectId = (project: IProject) => {
-    if (!project || !project._id) return
-    return getShortId(project._id)
-  }
-
   // ToDo: extract
   const renderProject = (project: IProject): JSX.Element => {
-    return <div>
-      <span>{ getShortProjectId(project) }</span>
-      <span> | </span>
-      <span>
-        <input
-          value={ project.name }
-          onChange={ e => updateProject(project, e) }
-        />
-      </span>
-      <span> | </span>
-      <span>
-        <ColorBox
-          color={ project.color }
-          onColorChange={ onColorChange(project) }
-        />
-      </span>
-      <span> | </span>
-      <span>
-        <ConfirmModal
-          onConfirm={ () => deleteProject(project) }
-          message='Projects for all related tasks will be vanished forever. Are you sure?'
-        >
-          <button>Delete</button>
-        </ConfirmModal>
-      </span>
+    return <div className="projectsListItem">
+      <input
+        value={ project.name }
+        onChange={ e => updateProject(project, e) }
+      />
+
+      <ColorBox
+        color={ project.color }
+        onColorChange={ onColorChange(project) }
+        className="projectItemColorBox"
+      />
+
+      <ConfirmModal
+        onConfirm={ () => deleteProject(project) }
+        message='Projects for all related tasks will be vanished forever. Are you sure?'
+      >
+        <button>Delete</button>
+      </ConfirmModal>
     </div>
   }
 
@@ -79,7 +67,7 @@ export default function ProjectsList() {
 
   return (
     <div>
-      <h5>Projects list</h5>
+      <h3>Projects list</h3>
       { projectsList.map((project, index) =>
         <div key={ project._id }>
           <br />

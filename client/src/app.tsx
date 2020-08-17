@@ -6,6 +6,8 @@ import { store } from 'src/redux/store'
 
 import Root from './components/routing/Root'
 
+import './app.less'
+
 const renderApp = () => (
   render(
     <Provider store={ store }>

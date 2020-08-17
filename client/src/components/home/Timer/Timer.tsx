@@ -10,6 +10,9 @@ import { IMongoId } from 'models/index'
 import { ITask } from 'models/Task'
 import { IProject } from 'models/Project'
 
+import './timer.less'
+import { COLORS } from 'src/styleVars'
+
 const SECOND = 1000
 // ToDo: main consts
 const DEFAULT_COLOR = 'c22326'
@@ -41,7 +44,9 @@ export default function Timer() {
       stopTimer()
     }
 
-    if (!activeTask || timer) return
+    if (!activeTask || timer) {
+      return
+    }
 
     const timerId = setInterval(() => updateTimeCounter(startTime), SECOND)
 
@@ -142,16 +147,31 @@ export default function Timer() {
     ? `${duration(days, "day").humanize()} `
     : ''
 
+  const projectColorStyle = {
+    background: `#${ activeTask?.project?.color || COLORS.projectDefaultColor }`,
+  }
+
   return (
-    <div>
-      <div>time: {daysString} { time }</div>
-      <br />
-      {activeTask && <div>
+    <div className="timer">
+      <div className="timerFirstLine">
+        <div className="timerTimeBlock">
+          timer:
+          <span className="timerTime">{daysString} { time }</span>
+        </div>
+        { !taskInProgress
+          ? <button onClick={ start } data-test="button-start">Start</button>
+          : <button onClick={ stop } data-test="button-stop">Stop</button>
+        }
+      </div>
+      {activeTask && <div className="timerSecondLine">
+        <label>Description</label>
         <input
           value={ activeTask.description || '' }
           onChange={ e => updateTask(e) }
           disabled={ !activeTask._id }
+          className="timerDesc"
         />
+        <label>Project</label>
         <CreatableSelect
           isClearable
           name='project'
@@ -159,13 +179,13 @@ export default function Timer() {
           onChange={ (optionProject) => handleChangeProject(activeTask, optionProject) }
           options={ options }
           isDisabled={ !activeTask._id }
+          className="timerProject"
+        />
+        <div
+          className='timerProjectColor'
+          style={ projectColorStyle }
         />
       </div>}
-      <br />
-      { !taskInProgress
-        ? <button onClick={ () => start() } data-test="button-start">Start</button>
-        : <button onClick={ () => stop() } data-test="button-stop">Stop</button>
-      }
     </div>
   )
 }
