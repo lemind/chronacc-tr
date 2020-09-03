@@ -60,11 +60,6 @@ export const reducer = (state: IProjectsState = initialState, action: Action) =>
         error: action.payload
       }
     case updateProjectType:
-      return {
-        ...state,
-        loading: true
-      }
-    case updateProjectSucceededType:
       newList = state.list.map((item, index) => {
         if (item._id !== action.payload._id) {
           return item
@@ -76,6 +71,11 @@ export const reducer = (state: IProjectsState = initialState, action: Action) =>
       return {
         ...state,
         list: newList,
+        loading: true
+      }
+    case updateProjectSucceededType:
+      return {
+        ...state,
         loading: false
       }
     case deleteProjectType:

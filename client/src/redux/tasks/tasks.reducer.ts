@@ -53,9 +53,18 @@ export const reducer = (state: ITasksState = initialState, action: Action) => {
         loading: true
       }
     case updateTaskType:
+      newList = state.list.map((item, index) => {
+        if (item._id !== action.payload._id) {
+          return item
+        }
+
+        return Object.assign(item, {...action.payload})
+      })
+
       return {
         ...state,
-        loading: true
+        loading: true,
+        list: newList
       }
     case deleteTaskType:
       return {
@@ -99,17 +108,10 @@ export const reducer = (state: ITasksState = initialState, action: Action) => {
         list: newList
       }
     case updateTaskSucceededType:
-      newList = state.list.map((item, index) => {
-        if (item._id !== action.payload._id) {
-          return item
-        }
-
-        return Object.assign(item, {...action.payload})
-      })
+      // ToDo: consider to merge server data with client one
       return {
         ...state,
         loading: false,
-        list: newList
       }
     case deleteTaskSucceededType:
       return {
