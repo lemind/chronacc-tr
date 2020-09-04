@@ -30,6 +30,8 @@ export default function EditTaskForm(props: TProps): JSX.Element | null {
       name: optionProject.label
     }
 
+    // set real project?
+
     tasksCases.bindProject(task, project)
   }
 

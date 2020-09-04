@@ -59,6 +59,18 @@ export class ProjectsCases extends Cases implements IProjectsCases {
     })
   }
 
+  // ToDo: add kinda helper for cases?
+  getProjects(): IProject[]{
+    const { projectsGateway } = this.gateways
+    const state = projectsGateway.store.getState()
+    return state.projects.list
+  }
+
+  getProjectById(id: IMongoId): IProject | undefined {
+    const projects = this.getProjects()
+    return projects.find(project => project._id === id)
+  }
+
 }
 
 export default casesFactory(ProjectsCases, [ProjectsGateway], 'ProjectsCases')
