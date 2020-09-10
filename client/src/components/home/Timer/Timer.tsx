@@ -106,11 +106,15 @@ export default function Timer() {
   }
 
   const handleChangeProject = (activeTask: ITask, optionProject: TSelectOption): void => {
-    const project = {
-      isNew: optionProject.__isNew__,
-      _id: optionProject.value,
-      name: optionProject.label
-    } as IProject
+    let project = projectsCases.getProjectById(optionProject.value as IMongoId)
+
+    if (!project) {
+      project = {
+        isNew: optionProject.__isNew__,
+        _id: optionProject.value as IMongoId,
+        name: optionProject.label
+      } as IProject
+    }
 
     if (optionProject.__isNew__) {
       project.color = DEFAULT_COLOR
@@ -122,7 +126,7 @@ export default function Timer() {
   useEffect(() => {
     startTimer()
 
-    if (projects && projects.list.length === 0) {
+    if (projects && !projects.fetched) {
       projectsCases.load()
     }
   }, [tasks])

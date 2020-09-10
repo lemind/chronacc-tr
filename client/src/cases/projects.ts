@@ -19,6 +19,7 @@ export interface IProjectsCases {
   deleteProject(projectId: IMongoId): void
   load(): void
   getListLikeOptions(): TSelectOption[]
+  getProjectById(projectId: IMongoId): IProject | undefined
 }
 
 export type IProjectsCasesCommon = IProjectsCases & ICases;
@@ -26,7 +27,7 @@ export type IProjectsCasesCommon = IProjectsCases & ICases;
 // @withGateways(ProjectsGateway) // obsolete
 export class ProjectsCases extends Cases implements IProjectsCases {
   setObservables(): TFollowedStoreSchema[] {
-    return [{store: 'projects', variables: ['list', 'error']}]
+    return [{store: 'projects', variables: ['list', 'error', 'fetched']}]
   }
 
   load(): void {

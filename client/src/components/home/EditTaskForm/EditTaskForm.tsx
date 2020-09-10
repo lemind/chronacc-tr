@@ -24,13 +24,16 @@ export default function EditTaskForm(props: TProps): JSX.Element | null {
       tasksCases.bindProject(task, null)
       return
     }
-    const project = {
-      isNew: optionProject.__isNew__,
-      _id: optionProject.value as IMongoId,
-      name: optionProject.label
-    }
 
-    // set real project?
+    let project = projectsCases.getProjectById(optionProject.value as IMongoId)
+
+    if (!project) {
+      project = {
+        isNew: optionProject.__isNew__,
+        _id: optionProject.value as IMongoId,
+        name: optionProject.label
+      }
+    }
 
     tasksCases.bindProject(task, project)
   }

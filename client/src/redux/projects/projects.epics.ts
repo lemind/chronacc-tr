@@ -25,6 +25,7 @@ const updateProjectType = getType(updateProject.request)
 const deleteProjectType = getType(deleteProject.request)
 const createProjectType = getType(createProject.request)
 
+// ToDo: prevent many reqs
 const fetchProjectsEpic: TRootEpic = action$ => action$.pipe(
   ofType(fetchProjectsType),
   mergeMap(action => {
