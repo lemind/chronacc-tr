@@ -8,13 +8,15 @@ type Action = ActionType<typeof actions>
 export interface IProjectsState {
   list: IProject[],
   loading: boolean,
-  error: any
+  error: any,
+  fetched: boolean,
 }
 
 export const initialState: IProjectsState = {
   list: [],
   loading: false,
-  error: null
+  error: null,
+  fetched: false,
 };
 
 const {
@@ -51,7 +53,8 @@ export const reducer = (state: IProjectsState = initialState, action: Action) =>
       return {
         ...state,
         list: action.payload,
-        loading: false
+        loading: false,
+        fetched: true,
       }
     case requestFailedType:
       return {
