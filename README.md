@@ -1,22 +1,24 @@
 # Chronacc-tr
 
-Chronacc is time a tracking system. It is a pet project, which helps me to try new tools and approaches.
+Chronacc-tr is a time tracking system. It is a pet project, which helps me to try new tools and approaches.
 
 Live version here - https://chronacc-tr.herokuapp.com/
 
 ### Plan first to do:
 
+- [x] Add styles
 - [ ] Check client structure
 - [ ] Check server structure
 - [ ] Add tags
-- [ ] Add styles
+- [ ] Solve code ToDos
+- [ ] Add auth
 
 ## How to start it
 
-#### What the software need to install before
-```
-docker docker-compose
-```
+#### What the software you should install before use
+
+_docker docker-compose_
+
 
 #### Mongo image
 ```
