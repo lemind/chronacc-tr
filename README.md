@@ -12,6 +12,7 @@ Live version here - https://chronacc-tr.herokuapp.com/
 - [ ] Add tags
 - [ ] Solve code ToDos
 - [ ] Add auth
+- [ ] Add missing tests
 
 ## How to start it
 

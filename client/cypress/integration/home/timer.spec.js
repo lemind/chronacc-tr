@@ -1,23 +1,5 @@
-function add (a, b) {
-  return a + b
-}
-
-function subtract (a, b) {
-  return a - b
-}
-
-function divide (a, b) {
-  return a / b
-}
-
-function multiply (a, b) {
-  return a * b
-}
-// -- End: Our Application Code --
-
-// -- Start: Our Cypress Tests --
-describe('Unit test our math functions', function() {
-  context('math', function() {
+describe('Test our main actions', function() {
+  context('main', function() {
     it('app el exist', function() {
       cy.visit(Cypress.config('homePage'))
 
@@ -42,18 +24,6 @@ describe('Unit test our math functions', function() {
       cy.get('[data-test="button-start"]').click()
       cy.get('[data-test="button-stop"]').should('exist')
       cy.get('[data-test="button-stop"]').click()
-    })
-
-    it('can subtract numbers', function() {
-      expect(subtract(5, 12)).to.eq(-7)
-    })
-
-    specify('can divide numbers', function() {
-      expect(divide(27, 9)).to.eq(3)
-    })
-
-    specify('can multiply numbers', function() {
-      expect(multiply(5, 4)).to.eq(20)
     })
   })
 })
