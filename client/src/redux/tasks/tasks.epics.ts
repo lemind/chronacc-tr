@@ -92,7 +92,7 @@ const deleteTaskEpic: TRootEpic = action$ => action$.pipe(
           })
         }
 
-        const { _id } = response
+        const { _id } = response.results
         return deleteTask.success(_id)
       }),
       catchError(error => of(deleteTask.failure(error)))
