@@ -3,8 +3,8 @@ import React, { useEffect } from 'react'
 import useCases from 'helpers/useCases'
 
 import TasksCases from 'cases/tasks'
-import Timer from 'components/home/Timer/Timer'
-import Tasks from 'components/home/Tasks/Tasks'
+import Timer from 'components/pages/home/Timer/Timer'
+import Tasks from 'components/pages/home/Tasks/Tasks'
 
 export default function Starter(): JSX.Element {
   const { tasksCases, tasks } = useCases(TasksCases)

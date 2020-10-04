@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import Modal from 'components/common/elements/Modal/Modal'
-import EditTaskForm from 'components/home/EditTaskForm/EditTaskForm'
+import EditTaskForm from 'components/pages/home/EditTaskForm/EditTaskForm'
 
 import Task from './Task'
 import ScrollLoadTasks from './ScrollLoad'

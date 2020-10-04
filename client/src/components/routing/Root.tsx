@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import Header from 'components/common/blocks/Header/Header'
 
-const Starter = lazy(() => import('components/home/Starter/Starter'));
-const Projects = lazy(() => import('components/projects/Index/Projects'));
+const Starter = lazy(() => import('components/pages/home/Starter/Starter'));
+const Projects = lazy(() => import('components/pages/projects/Index/Projects'));
 
 export default class Root extends React.Component {
   render() {
