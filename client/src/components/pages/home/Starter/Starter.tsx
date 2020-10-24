@@ -5,6 +5,7 @@ import useCases from 'helpers/useCases'
 import TasksCases from 'cases/tasks'
 import Timer from 'components/pages/home/Timer/Timer'
 import Tasks from 'components/pages/home/Tasks/Tasks'
+import LoginForm from 'components/common/blocks/Auth/LoginForm'
 
 export default function Starter(): JSX.Element {
   const { tasksCases, tasks } = useCases(TasksCases)
@@ -27,6 +28,7 @@ export default function Starter(): JSX.Element {
     <div>
       <div>
         <Timer />
+        <LoginForm />
       </div>
       <Tasks tasks={ tasksList } />
     </div>
