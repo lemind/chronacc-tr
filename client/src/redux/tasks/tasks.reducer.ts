@@ -58,7 +58,7 @@ export const reducer = (state: ITasksState = initialState, action: Action) => {
           return item
         }
 
-        return Object.assign(item, {...action.payload})
+        return {...item, ...action.payload}
       })
 
       return {
@@ -100,7 +100,7 @@ export const reducer = (state: ITasksState = initialState, action: Action) => {
           return item
         }
 
-        return Object.assign(item, {...action.payload})
+        return {...item, ...action.payload}
       })
       return {
         ...state,

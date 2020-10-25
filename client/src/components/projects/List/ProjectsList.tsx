@@ -2,10 +2,10 @@ import React, { useEffect } from 'react'
 
 import useCases from 'helpers/useCases'
 import ProjectsCases from 'cases/projects'
-import ColorBox from 'components/common/elements/ColorBox/ColorBox'
-import ConfirmModal from 'components/common/elements/ConfirmModal/ConfirmModal'
-import { IProject } from 'models/Project'
+
+import ProjectItem from './ProjectItem'
 import './projectsList.less'
+
 
 export default function ProjectsList() {
   const { projectsCases, projects } = useCases(ProjectsCases)
@@ -22,46 +22,6 @@ export default function ProjectsList() {
     }
   }, [projectsCases])
 
-  const onColorChange = (project: IProject) => {
-    return (newColor) => {
-      project.color = newColor
-      projectsCases.updateProject(project)
-    }
-  }
-
-  // ToDo: extract
-  const renderProject = (project: IProject): JSX.Element => {
-    return <div className="projectsListItem">
-      <input
-        value={ project.name }
-        onChange={ e => updateProject(project, e) }
-      />
-
-      <ColorBox
-        color={ project.color }
-        onColorChange={ onColorChange(project) }
-        className="projectItemColorBox"
-      />
-
-      <ConfirmModal
-        onConfirm={ () => deleteProject(project) }
-        message='Projects for all related tasks will be vanished forever. Are you sure?'
-      >
-        <button>Delete</button>
-      </ConfirmModal>
-    </div>
-  }
-
-  const deleteProject = (project: IProject): void => {
-    projectsCases.deleteProject(project._id)
-  }
-
-  const updateProject = (project: IProject, e: React.FormEvent<HTMLInputElement>): void => {
-    project.name = e.currentTarget.value
-    projectsCases.updateProject(project)
-  }
-
-
   if (!projects) return null
   let projectsList = projects ? projects.list : []
 
@@ -71,7 +31,7 @@ export default function ProjectsList() {
       { projectsList.map((project, index) =>
         <div key={ project._id }>
           <br />
-          { renderProject(project) }
+          <ProjectItem project={project} projectsCases={projectsCases} />
         </div>
       ) }
     </div>
