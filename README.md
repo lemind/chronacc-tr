@@ -2,16 +2,20 @@
 
 Chronacc-tr is a time tracking system. It is a pet project, which helps me to try new tools and approaches.
 
-Live version here - https://chronacc-tr.herokuapp.com/
+Live versions temporary does work.
+Due to I missed the shutdown  :-\
+https://docs.mlab.com/shutdown-of-heroku-add-on/
+Live version here - ~~https://chronacc-tr.herokuapp.com/~~
 
 ### Plan first to do:
 
+- [ ] Migrate the db to to Atlas
 - [x] Add styles
 - [ ] Check client structure
 - [ ] Check server structure
 - [ ] Add tags
 - [ ] Solve code ToDos
-- [ ] Add auth
+- [ ] Add auth (in progress)
 - [ ] Add missing tests
 
 ## How to start it
