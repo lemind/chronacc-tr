@@ -2,7 +2,7 @@
 
 Chronacc-tr is a time tracking system. It is a pet project, which helps me to try new tools and approaches.
 
-Live versions temporary does work.
+Live version temporary does not work.
 Due to I missed the shutdown  :-\
 https://docs.mlab.com/shutdown-of-heroku-add-on/
 Live version here - ~~https://chronacc-tr.herokuapp.com/~~
