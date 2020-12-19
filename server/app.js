@@ -12,7 +12,7 @@ dotenv.config();
 
 const router = express.Router()
 
-const mongoUri = process.env.MONGODB_URI_ATLAS
+let mongoUri = process.env.MONGODB_URI
 
 const migrate = require('./db/migrate');
 
@@ -24,6 +24,8 @@ if (process.env.NODE_ENV === 'production') {
   };
 
   migrate.migrate(env);
+
+  mongoUri = process.env.MONGODB_URI_ATLAS;
 }
 
 try {
