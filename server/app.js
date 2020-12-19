@@ -12,14 +12,15 @@ dotenv.config();
 
 const router = express.Router()
 
-const mongoUri = process.env.MONGODB_URI
+const mongoUri = process.env.MONGODB_URI_ATLAS
 
 const migrate = require('./db/migrate');
 
 if (process.env.NODE_ENV === 'production') {
   const env = {
     'process.env.MONGODB_URI': `"${process.env.MONGODB_URI}"`,
-    'process.env.MONGODB_URI_DATABASE_NAME': `"${process.env.MONGODB_URI_DATABASE_NAME}"`
+    'process.env.MONGODB_URI_DATABASE_NAME': `"${process.env.MONGODB_URI_DATABASE_NAME}"`,
+    'process.env.MONGODB_URI_ATLAS': `"${process.env.MONGODB_URI_ATLAS}"`
   };
 
   migrate.migrate(env);
@@ -30,7 +31,7 @@ try {
     //useMongoClient: true
   })
 } catch (error) {
-  console.log('Connecting mongoose error', err);
+  console.log('Connecting mongoose error', error);
 }
 
 mongoose.connection.on('error', function(err){
