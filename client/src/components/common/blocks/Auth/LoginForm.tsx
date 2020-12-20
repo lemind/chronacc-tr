@@ -1,6 +1,6 @@
 import React from 'react'
 
-import './LoginForm.less'
+import './loginForm.less'
 
 // ToDo: move to validators
 function validateEmail(email) {
@@ -150,7 +150,7 @@ export default class LoginForm extends React.PureComponent<any> {
       return (!this.state.form.email || !this.state.form.password)
     }
 
-    return this.doesFormHaveErrors()
+    // return this.doesFormHaveErrors()
   }
 
   get renderSubmit() {
