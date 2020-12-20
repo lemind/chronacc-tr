@@ -17,7 +17,6 @@ export interface IAuthCases {
 
 export type IAuthCasesCommon = IAuthCases & ICases;
 
-// @withGateways(ProjectsGateway) // obsolete
 export class AuthCases extends Cases implements IAuthCases {
   setObservables(): TFollowedStoreSchema[] {
     return [{store: 'auth', variables: ['user', 'error', 'fetched']}]
