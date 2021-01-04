@@ -8,6 +8,7 @@ import { firstLowerCase } from 'helpers/strings'
 import type { TRootState } from 'src/redux/root'
 import { TAppStore } from 'src/redux/store'
 import { IGateway } from 'src/redux/Gateway'
+import { IAuthGatewayCommon } from 'src/redux/auth'
 
 export interface ICases {
   subscriptions: Subscription[]
@@ -26,9 +27,11 @@ export interface ICasesClass {
 }
 
 // ToDo: we do not check if we have any given gateway
+// ToDo: overhead
 interface IGatewaysObject {
   projectsGateway: IProjectsGatewayCommon,
   tasksGateway: ITasksGatewayCommon,
+  authGateway: IAuthGatewayCommon,
 }
 
 export type TFollowedStoreSchema = {

@@ -1,5 +1,6 @@
 import { tasksAPI } from './tasks'
 import { projectsAPI } from './projects'
+import { authAPI } from './auth'
 
 export type TBackDataVersion = {
   _v: number
@@ -11,5 +12,6 @@ export type TBackDataError = {
 
 export const API = {
   ...tasksAPI,
-  ...projectsAPI
+  ...projectsAPI,
+  ...authAPI,
 }

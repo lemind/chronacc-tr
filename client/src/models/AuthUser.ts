@@ -1,4 +1,8 @@
 
+// TToDo
+export type TokenType = string
+export type ErrorType = object | null
+
 export type AuthUserType = {
   name?: string,
   email: string
@@ -10,12 +14,12 @@ export type AuthUserFormType = {
 }
 
 export interface IAuthUser {
-  token: string
+  token: TokenType
   user: AuthUserType;
 }
 
 export default class AuthUser implements IAuthUser {
-  token: string = ''
+  token: TokenType = ''
   user: AuthUserType = {
     email: ''
   }

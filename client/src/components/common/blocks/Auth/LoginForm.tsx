@@ -83,14 +83,14 @@ export default class LoginForm extends React.PureComponent<any> {
   }
 
   beforeMount() {
-    // ToDo: get it back after token saving to LocalStorage added
     // if (!authService.isTokenExpired()) {
     //   this.isEmailShown = true
     //   this.userEmail = authService.getEmail()
     // }
   }
 
-  handleBlurEmail() {
+  handleBlurEmail(e) {
+    this.setState({form: {...this.state.form, email: e.currentTarget.value}})
     if (!validateEmail(this.state.form.email)) {
       this.addError('email', invalidEmail)
     } else {
@@ -120,13 +120,17 @@ export default class LoginForm extends React.PureComponent<any> {
     }
   }
 
-  handleBlurPassword() {
+  handleBlurPassword(e) {
+    this.setState({form: {...this.state.form, password: e.currentTarget.value}})
+
     if (!this.state.form.password2) return
 
     this.checkPasswordsEquality()
   }
 
-  handleBlurPassword2() {
+  handleBlurPassword2(e) {
+    this.setState({form: {...this.state.form, password2: e.currentTarget.value}})
+
     this.checkPasswordsEquality()
   }
 
@@ -149,21 +153,19 @@ export default class LoginForm extends React.PureComponent<any> {
     } else {
       return (!this.state.form.email || !this.state.form.password)
     }
-
-    // return this.doesFormHaveErrors()
   }
 
   get renderSubmit() {
     if (this.state.isRegisterShown) {
       return <button
         className="login__submit"
-        onClick={ this.register }
+        onClick={ () => this.register() }
         disabled= { this.isSubmitDisabled }
       >register</button>
     } else {
       return <button
         className="login__submit"
-        onClick={ this.login }
+        onClick={ () => this.login() }
         disabled= { this.isSubmitDisabled }
       >login</button>
     }
@@ -174,7 +176,7 @@ export default class LoginForm extends React.PureComponent<any> {
       <label>e-mail</label>
       <input
         className="login__email"
-        onBlur={ this.handleBlurEmail }
+        onBlur={ (e) => this.handleBlurEmail(e) }
       />
       {this.state.formErrors.email.map((error, index) =>
         <div key={ error }>
@@ -190,7 +192,7 @@ export default class LoginForm extends React.PureComponent<any> {
       <input
         className="login__password"
         type="password"
-        onBlur={ this.handleBlurPassword }
+        onBlur={ (e) => this.handleBlurPassword(e) }
       />
       {this.state.formErrors.password.map((error, index) =>
         <div key={ error }>
@@ -208,7 +210,7 @@ export default class LoginForm extends React.PureComponent<any> {
       <input
         className="login__password"
         type="password"
-        onBlur={ this.handleBlurPassword2 }
+        onBlur={ (e) => this.handleBlurPassword2(e) }
       />
       {this.state.formErrors.password2.map((error, index) =>
         <div key={ error }>
