@@ -41,7 +41,7 @@ export const reducer = (state: IAuthState = initialState, action: Action) => {
     case loginSuccededType:
       return {
         ...state,
-        token: action.payload .token,
+        token: action.payload.token,
         user: action.payload.user,
         loading: false,
       }
@@ -59,7 +59,7 @@ export const reducer = (state: IAuthState = initialState, action: Action) => {
     case signupSuccededType:
       return {
         ...state,
-        token: action.payload .token,
+        token: action.payload.token,
         user: action.payload.user,
         loading: false,
       }

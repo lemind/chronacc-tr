@@ -29,7 +29,7 @@ const loginEpic: TRootEpic = action$ => action$.pipe(
           })
         }
 
-        return login.success(response.result)
+        return login.success(response)
       }),
       catchError(error => of(login.failure(error)))
     )
@@ -48,7 +48,7 @@ const signupEpic: TRootEpic = action$ => action$.pipe(
           })
         }
 
-        return signup.success(response.result)
+        return signup.success(response)
       }),
       catchError(error => of(signup.failure(error)))
     )

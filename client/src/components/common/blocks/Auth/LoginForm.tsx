@@ -23,6 +23,7 @@ type errorsType = {
 
 const user: any = null
 
+// WIP
 export class LoginForm extends React.Component<any, any, any> {
   state = {
     form: {
@@ -56,12 +57,12 @@ export class LoginForm extends React.Component<any, any, any> {
   }
 
   login() {
-    const user = {
+    const user: AuthUserFormType = {
       email: this.state.form.email,
       password: this.state.form.password,
     }
-    console.log('login');
-    // store.dispatch('login', user)
+
+    this.props.authCases.login({user: user})
   }
 
   register() {
@@ -69,8 +70,8 @@ export class LoginForm extends React.Component<any, any, any> {
       email: this.state.form.email,
       password: this.state.form.password,
     }
-    console.log('register');
-    this.props.authCases.signup(newUser)
+
+    this.props.authCases.signup({user: newUser})
   }
 
   showRegister = () => {
@@ -100,7 +101,7 @@ export class LoginForm extends React.Component<any, any, any> {
     }
   }
 
-  // ToDo: move to helpers?
+  // ToDo: move to helpers
   addError(fieldName, errorMessage) {
     this.state.formErrors[fieldName].push(errorMessage)
     this.state.formErrors[fieldName] = [...new Set(this.state.formErrors[fieldName])]
