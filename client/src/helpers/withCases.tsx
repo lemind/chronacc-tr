@@ -1,5 +1,6 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { firstLowerCase } from 'helpers/strings';
+import { ICasesSingletone } from './case';
 
 /**
  * Provides Cases to component.
@@ -10,10 +11,14 @@ import { firstLowerCase } from 'helpers/strings';
  *
  * example: @withCases(ProjectCases), access - this.props.projectCases
  */
-// deprecated
-export default function withCases(...cases) {
-  return (ComposedComponent) => {
-    return class WithCases extends Component {
+
+// TToDo!
+export default function withCases(...cases: ICasesSingletone[]): Function {
+  return (ComposedComponent: React.ComponentType) => {
+    return class WithCases extends Component<any, any> {
+      cases: ICasesSingletone[] | object
+      subscribtions: any[]
+
       constructor(props){
         super(props)
 
@@ -59,8 +64,10 @@ export default function withCases(...cases) {
 
       render() {
         return (
-          <ComposedComponent { ...{ ...this.props, ...this.cases, ...this.state.observables } } />
-        );
+          <ComposedComponent
+            { ...{ ...this.props, ...this.cases, ...this.state.observables } }
+          />
+        )
       }
     }
   }

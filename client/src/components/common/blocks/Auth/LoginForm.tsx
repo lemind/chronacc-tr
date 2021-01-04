@@ -1,6 +1,9 @@
 import React from 'react'
 
 import './loginForm.less'
+import withCases from 'helpers/withCases'
+import AuthCases from 'cases/auth'
+import { AuthUserFormType } from 'models/AuthUser';
 
 // ToDo: move to validators
 function validateEmail(email) {
@@ -20,7 +23,7 @@ type errorsType = {
 
 const user: any = null
 
-export default class LoginForm extends React.PureComponent<any> {
+export class LoginForm extends React.Component<any, any, any> {
   state = {
     form: {
       email: '',
@@ -62,13 +65,12 @@ export default class LoginForm extends React.PureComponent<any> {
   }
 
   register() {
-    const newUser = {
+    const newUser: AuthUserFormType = {
       email: this.state.form.email,
       password: this.state.form.password,
-      password2: this.state.form.password2
     }
     console.log('register');
-    // store.dispatch('register', newUser)
+    this.props.authCases.signup(newUser)
   }
 
   showRegister = () => {
@@ -239,3 +241,5 @@ export default class LoginForm extends React.PureComponent<any> {
     )
   }
 }
+
+export default withCases(AuthCases)(LoginForm)
