@@ -1,13 +1,13 @@
 import { getType, ActionType } from 'typesafe-actions'
 
-import { IAuthUser, TokenType, ErrorType } from 'models/AuthUser'
+import { AuthUserType, TokenType, ErrorType } from 'models/AuthUser'
 import actions from './auth.actions'
 
 type Action = ActionType<typeof actions>
 
 interface IAuthState {
   token: TokenType,
-  user: IAuthUser | null,
+  user: AuthUserType | null,
   loading: boolean,
   error: ErrorType
 }

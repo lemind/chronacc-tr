@@ -41,8 +41,7 @@ export class LoginForm extends React.Component<any, any, any> {
   }
 
   get storeUser() {
-    return user
-    // return this.$store.getters['user']
+    return this.props.authCases.getUser()
   }
 
   get userEmail() {

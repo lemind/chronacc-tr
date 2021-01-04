@@ -3,9 +3,11 @@
 export type TokenType = string
 export type ErrorType = object | null
 
+export type AuthUserEmail = string
+
 export type AuthUserType = {
   name?: string,
-  email: string
+  email: AuthUserEmail
 }
 
 export type AuthUserFormType = {

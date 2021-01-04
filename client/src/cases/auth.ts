@@ -1,7 +1,7 @@
 import { casesFactory } from 'helpers/case'
 import Cases, { ICases } from './index'
 import type { TFollowedStoreSchema } from './index'
-import { AuthUserFormType } from '../models/AuthUser'
+import { AuthUserFormType, AuthUserType } from '../models/AuthUser'
 import AuthGateway from 'src/redux/auth'
 
 export interface IAuthCases {
@@ -24,6 +24,12 @@ export class AuthCases extends Cases implements IAuthCases {
   signup(user: AuthUserFormType): void {
     const { authGateway } = this.gateways
     authGateway.signup(user)
+  }
+
+  getUser(): AuthUserType | null {
+    const { authGateway } = this.gateways
+    const state = authGateway.store.getState()
+    return state.auth.user
   }
 }
 
