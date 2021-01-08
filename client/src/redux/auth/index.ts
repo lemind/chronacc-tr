@@ -6,7 +6,7 @@ import authEpics from './auth.epics'
 import { gatewayFactory } from 'helpers/gateway'
 import Gateway, { IGateway } from 'src/redux/Gateway'
 
-import { AuthUserFormType } from 'models/AuthUser'
+import { AuthUserFormType, AuthUserEmail } from 'models/AuthUser'
 
 export type AuthActionType = ActionType<typeof actions>
 
@@ -19,6 +19,7 @@ export {
 export interface IAuthGateway {
   login(user: AuthUserFormType): void
   signup(newProject: AuthUserFormType): void
+  getAuthUserEmail(): AuthUserEmail | null
 }
 
 export type IAuthGatewayCommon = IAuthGateway & IGateway
@@ -32,6 +33,9 @@ export class AuthGateway extends Gateway implements IAuthGateway {
     this.dispatch(actions.signup.request(user))
   }
 
+  getAuthUserEmail(): AuthUserEmail | null {
+    return this.state.auth.user?.email || null
+  }
 }
 
 export default gatewayFactory<IAuthGatewayCommon>(AuthGateway)

@@ -11,7 +11,7 @@ export type AuthUserType = {
 }
 
 export type AuthUserFormType = {
-  email: string
+  email: AuthUserEmail
   password: string,
 }
 

@@ -5,6 +5,8 @@ import TasksGateway from 'src/redux/tasks'
 import type { ITask, TInitTask } from 'models/Task'
 import { IMongoId } from 'models/index'
 import { IProject } from 'models/Project'
+import AuthGateway from 'src/redux/auth'
+import { AuthCases } from './auth'
 
 export interface ITaskCases {
   updateTask(task: ITask): void
@@ -104,8 +106,17 @@ export class TasksCases extends Cases implements ITaskCases {
     }
   }
 
+  setAuthUserEmail(task: ITask): ITask {
+    const { authGateway } = this.gateways
+    task.authUserEmail = authGateway.getAuthUserEmail()
+    return task
+  }
+
   updateTask(task: ITask): void {
     const { tasksGateway } = this.gateways
+
+    task = this.setAuthUserEmail(task)
+
     tasksGateway.updateTask(task)
   }
 
@@ -148,4 +159,4 @@ export class TasksCases extends Cases implements ITaskCases {
 
 }
 
-export default casesFactory(TasksCases, [TasksGateway], 'TasksCases')
+export default casesFactory(TasksCases, [TasksGateway, AuthGateway], 'TasksCases')

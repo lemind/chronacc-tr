@@ -8,6 +8,7 @@ let TaskSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
+    authUserEmail: String,
     periods: Array,
     project: {
       type: mongoose.Schema.Types.ObjectId,
