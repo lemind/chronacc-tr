@@ -116,9 +116,13 @@ export class TasksCases extends Cases implements ITaskCases {
 
   setAuth(task: ITask | any): ITask {
     const { authGateway } = this.gateways
-    task.auth = {
-      authUserEmail: authGateway.getAuthUserEmail()
+    const authUserEmail = authGateway.getAuthUserEmail()
+    task.auth = {}
+
+    if (authUserEmail) {
+      task.auth.authUserEmail = authUserEmail
     }
+
     return task
   }
 

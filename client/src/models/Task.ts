@@ -21,7 +21,7 @@ export interface ITask {
   startDay: string
   summTime: number
   startTime: number
-  authUserEmail: AuthUserEmail | null
+  authUserEmail?: AuthUserEmail
 }
 
 export type TInitTask = {
@@ -35,8 +35,6 @@ export default class Task implements ITask {
   description: string = ''
   periods: TPeriod[] = []
   project: IProject | null
-  authUserEmail: null
-
 
   constructor(initial?: TInitTask) {
     Object.assign(this, initial)
