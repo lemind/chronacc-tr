@@ -20,6 +20,7 @@ export interface IAuthGateway {
   login(user: AuthUserFormType): void
   signup(newProject: AuthUserFormType): void
   getAuthUserEmail(): AuthUserEmail | null
+  logout(): void
 }
 
 export type IAuthGatewayCommon = IAuthGateway & IGateway
@@ -31,6 +32,10 @@ export class AuthGateway extends Gateway implements IAuthGateway {
 
   signup(user: AuthUserFormType): void {
     this.dispatch(actions.signup.request(user))
+  }
+
+  logout(): void {
+    this.dispatch(actions.logout())
   }
 
   getAuthUserEmail(): AuthUserEmail | null {

@@ -20,7 +20,7 @@ export const initialState: IAuthState = {
 }
 
 const {
-  login, signup
+  login, signup, logout
 } = actions
 
 const loginType = getType(login.request)
@@ -29,6 +29,8 @@ const loginFailedType = getType(login.failure)
 
 const signupType = getType(signup.request)
 const signupSuccededType = getType(signup.success)
+
+const logoutType = getType(logout)
 
 export const reducer = (state: IAuthState = initialState, action: Action) => {
 
@@ -62,6 +64,10 @@ export const reducer = (state: IAuthState = initialState, action: Action) => {
         token: action.payload.token,
         user: action.payload.user,
         loading: false,
+      }
+    case logoutType:
+      return {
+        ...initialState,
       }
     default:
       return state

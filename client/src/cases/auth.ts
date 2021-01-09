@@ -26,6 +26,11 @@ export class AuthCases extends Cases implements IAuthCases {
     authGateway.signup(user)
   }
 
+  logout(): void {
+    const { authGateway } = this.gateways
+    authGateway.logout()
+  }
+
   getUser(): AuthUserType | null {
     const { authGateway } = this.gateways
     const state = authGateway.store.getState()

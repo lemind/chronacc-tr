@@ -1,4 +1,4 @@
-import { createAsyncAction } from 'typesafe-actions'
+import { createAsyncAction, createAction} from 'typesafe-actions'
 import { IAuthUser, AuthUserFormType } from 'models/AuthUser'
 
 // TTODO
@@ -16,7 +16,12 @@ const signup = createAsyncAction(
   'REQUEST_FAILED',
 )<AuthUserFormType, IAuthUser, Error>()
 
+const logout = createAction(
+  'LOGOUT',
+)<void>()
+
 export default {
   login,
   signup,
+  logout,
 }

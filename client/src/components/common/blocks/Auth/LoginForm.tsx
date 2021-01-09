@@ -73,6 +73,10 @@ export class LoginForm extends React.Component<any, any, any> {
     this.props.authCases.signup({user: newUser})
   }
 
+  logout() {
+    this.props.authCases.logout()
+  }
+
   showRegister = () => {
     this.setState({
       isRegisterShown: true
@@ -222,10 +226,17 @@ export class LoginForm extends React.Component<any, any, any> {
     </div>
   }
 
+  renderLogout() {
+    return (
+      <button onClick={() => this.logout()} >logout</button>
+    )
+  }
+
   render() {
     return (
       <div className="login-form">
         {this.isEmailShown && this.userEmail}
+        {this.isEmailShown && this.renderLogout()}
         {!this.isEmailShown && <div>
             <h5>
               <span onClick={ this.showLogin }>Login</span>
