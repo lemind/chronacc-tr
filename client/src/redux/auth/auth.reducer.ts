@@ -5,7 +5,7 @@ import actions from './auth.actions'
 
 type Action = ActionType<typeof actions>
 
-interface IAuthState {
+export interface IAuthState {
   token: TokenType,
   user: AuthUserType | null,
   loading: boolean,

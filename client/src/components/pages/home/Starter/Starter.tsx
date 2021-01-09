@@ -6,9 +6,11 @@ import TasksCases from 'cases/tasks'
 import Timer from 'components/pages/home/Timer/Timer'
 import Tasks from 'components/pages/home/Tasks/Tasks'
 import LoginForm from 'components/common/blocks/Auth/LoginForm'
+import AuthCases from 'cases/auth'
 
 export default function Starter(): JSX.Element {
   const { tasksCases, tasks } = useCases(TasksCases)
+  const { authCases, auth } = useCases(AuthCases)
 
   useEffect(() => {
     if (tasksCases) {
@@ -21,6 +23,16 @@ export default function Starter(): JSX.Element {
       tasksCases && tasksCases.unsubscribe()
     }
   }, [tasksCases])
+
+  useEffect(() => {
+    if (tasksCases) {
+      tasksCases.load({reset: true})
+    }
+
+    return () => {
+      authCases && authCases.unsubscribe()
+    }
+  }, [auth?.user])
 
   const tasksList = tasks ? tasks.list : []
 
