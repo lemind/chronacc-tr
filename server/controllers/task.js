@@ -42,10 +42,12 @@ module.exports = {
       condition = {
         '_id': { $lt: req.query.lastId },
       }
+    }
 
-      if (req.query.authUserEmail) {
-        condition.authUserEmail = { $lt: req.query.authUserEmail }
-      }
+    if (req.query.authUserEmail) {
+      condition.authUserEmail = { $eq: req.query.authUserEmail }
+    } else {
+      condition.authUserEmail = { $exists: false }
     }
 
     Task.find(condition)
