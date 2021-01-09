@@ -41,7 +41,7 @@ export type TFollowedStoreSchema = {
 
 type TLoadGatewayData = {
   gateway: IGateway,
-  params: {init?: any, name: string}
+  params: {init?: any, name: string, props?: any}
 }
 
 export default class Cases implements ICases {
@@ -70,9 +70,9 @@ export default class Cases implements ICases {
   loadFromGateways(gateways: TLoadGatewayData[]): void {
     gateways.forEach(gatewayObject => {
       const { gateway, params } = gatewayObject
-      const { init, name } = params;
+      const { init, name, props } = params;
 
-      gateway.load(init)
+      gateway.load(init, props)
 
       this.states$ = gateway.getState$()
 

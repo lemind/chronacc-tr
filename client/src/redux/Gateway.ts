@@ -9,6 +9,10 @@ export type TInitLoadData = {
   reset: boolean
 }
 
+export type TProps = {
+  auth: any
+}
+
 type TAppStoreObsInp = ObservableInput<any> & TAppStore
 
 export interface IGateway {
@@ -19,7 +23,7 @@ export interface IGateway {
   // TToDo: recheck
   getState$(): Observable<ObservedValueOf<TAppStoreObsInp>>
   unsubscribe(): void
-  load(init: TInitLoadData): void //abstract
+  load(init: TInitLoadData, props: TProps): void //abstract
   serverDataPrepared(data: any): void //abstract
 }
 
@@ -44,7 +48,7 @@ export default class Gateway implements IGateway {
     this.store = store
   }
 
-  load(init: TInitLoadData) {}
+  load(init: TInitLoadData, props: TProps) {}
   serverDataPrepared(data: any) {}
 
   unsubscribe(): void {

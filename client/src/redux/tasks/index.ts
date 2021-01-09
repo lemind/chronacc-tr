@@ -5,7 +5,7 @@ import actions, { fetchTasks, updateTask,
 import { reducer, ITasksState } from './tasks.reducer'
 import tasksEpics from './tasks.epics'
 import { gatewayFactory } from 'helpers/gateway'
-import Gateway, { IGateway, TInitLoadData } from 'src/redux/Gateway'
+import Gateway, { IGateway, TInitLoadData, TProps } from 'src/redux/Gateway'
 
 import { IMongoId } from 'models/index'
 import { ITask } from 'models/Task'
@@ -29,7 +29,7 @@ export interface ITasksGateway {
   updateTask(task: ITask): void
   createTask(newTask: ITask): void
   deleteTask(taskId: IMongoId): void
-  load(init: TInitLoadData): void
+  load(init: TInitLoadData, props: TProps): void
 }
 
 export type ITasksGatewayCommon = ITasksGateway & IGateway
@@ -55,14 +55,17 @@ export class TasksGateway extends Gateway implements ITasksGateway {
     this.dispatch(actions.deleteTask.request(taskId))
   }
 
-  load(init: TInitLoadData): void {
+  load(init: TInitLoadData, props: TProps): void {
     if (this.myState.loading) return
 
     if (init) {
       init.reset && this.dispatch(actions.clearTasks())
     }
 
-    const params: any = {}
+    // ToDo: extract
+    const params: any = {
+      authUserEmail: props?.auth && props.auth?.authUserEmail
+    }
 
     const tasksList = this.state.tasks.list
     if (tasksList.length > 0) {

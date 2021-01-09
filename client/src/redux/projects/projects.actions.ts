@@ -22,7 +22,6 @@ const createProject = createAsyncAction(
   'CREATE_PROJECT_SUCCEEDED',
   'REQUEST_FAILED',
 )<any, IProject, Error>()
-// 'CREATE_PROJECT', type for project draft
 
 const deleteProject = createAsyncAction(
   'DELETE_PROJECT',
