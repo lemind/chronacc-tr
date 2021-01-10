@@ -123,7 +123,7 @@ module.exports = {
     const newTask = { description, periods, tags, beginTime }
 
     if (auth && auth.authUserEmail) {
-      newTask.authUserEmail = authUserEmail
+      newTask.authUserEmail = auth.authUserEmail
     }
     if (project && project._id) {
       newTask.project = project._id
