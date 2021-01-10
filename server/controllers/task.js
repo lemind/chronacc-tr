@@ -78,9 +78,14 @@ module.exports = {
   addTask: (req, res, next) => {
     const { description, periods, tags, beginTime, project, auth } = req.body
 
-    const authUserEmail = auth && auth.authUserEmail
+    const newTask = { description, beginTime, periods, tags, project }
 
-    new Task({ description, beginTime, periods, tags, project, authUserEmail })
+    const authUserEmail = auth && auth.authUserEmail
+    if (authUserEmail) {
+      newTask.authUserEmail = authUserEmail
+    }
+
+    new Task(newTask)
       .save( async (err, task) => {
         if (err) {
           const errorParams = {
@@ -115,12 +120,17 @@ module.exports = {
       }
     }
 
+    const newTask = { description, periods, tags, beginTime }
+
+    if (auth && auth.authUserEmail) {
+      newTask.authUserEmail = authUserEmail
+    }
+    if (project && project._id) {
+      newTask.project = project._id
+    }
+
     Task.findOneAndUpdate( { _id: _id },
-      {
-        description, periods, tags, beginTime,
-        project: project && project._id,
-        authUserEmail: auth && auth.authUserEmail,
-      },
+      newTask,
       { new: true },
       async (err, task) => {
         if (err) {
