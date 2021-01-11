@@ -23,7 +23,7 @@ type errorsType = {
 
 const user: any = null
 
-// WIP
+// stubish cmp
 export class LoginForm extends React.Component<any, any, any> {
   state = {
     form: {
@@ -45,10 +45,8 @@ export class LoginForm extends React.Component<any, any, any> {
   }
 
   get userEmail() {
-    if (this.storeUser) {
-      return this.storeUser.email
-    }
-    return this.storeUser && this.storeUser?.email
+    const userEmail = this.storeUser && this.storeUser?.email
+    return <span data-test="label-email">{userEmail}</span>
   }
 
   get isEmailShown() {
@@ -173,6 +171,7 @@ export class LoginForm extends React.Component<any, any, any> {
         className="login__submit"
         onClick={ () => this.login() }
         disabled= { this.isSubmitDisabled }
+        data-test="button-login"
       >login</button>
     }
   }
@@ -183,9 +182,10 @@ export class LoginForm extends React.Component<any, any, any> {
       <input
         className="login__email"
         onBlur={ (e) => this.handleBlurEmail(e) }
+        data-test="input-email"
       />
       {this.state.formErrors.email.map((error, index) =>
-        <div key={ error }>
+        <div className="login__error" key={ error }>
           { error }
         </div>
       )}
@@ -199,9 +199,10 @@ export class LoginForm extends React.Component<any, any, any> {
         className="login__password"
         type="password"
         onBlur={ (e) => this.handleBlurPassword(e) }
+        data-test="input-password"
       />
       {this.state.formErrors.password.map((error, index) =>
-        <div key={ error }>
+        <div className="login__error" key={ error }>
           { error }
         </div>
       )}
@@ -219,7 +220,7 @@ export class LoginForm extends React.Component<any, any, any> {
         onBlur={ (e) => this.handleBlurPassword2(e) }
       />
       {this.state.formErrors.password2.map((error, index) =>
-        <div key={ error }>
+        <div className="login__error" key={ error }>
           { error }
         </div>
       )}
@@ -234,7 +235,7 @@ export class LoginForm extends React.Component<any, any, any> {
 
   render() {
     return (
-      <div className="login-form">
+      <div className="login-form" data-test="login-form">
         {this.isEmailShown && this.userEmail}
         {this.isEmailShown && this.renderLogout()}
         {!this.isEmailShown && <div>

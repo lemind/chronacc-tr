@@ -68,7 +68,7 @@ export class TasksGateway extends Gateway implements ITasksGateway {
     }
 
     const tasksList = this.state.tasks.list
-    if (tasksList.length > 0 && !init.reset) {
+    if (tasksList.length > 0 && !init?.reset) {
       params.lastId = tasksList[tasksList.length - 1]._id
     }
 
