@@ -113,7 +113,7 @@ export const reducer = (state: ITasksState = initialState, action: Action) => {
           return item
         }
 
-        return new Task({...item, ...action.payload})
+        return {...item, ...action.payload}
       })
 
       return {
