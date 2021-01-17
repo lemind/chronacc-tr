@@ -1,6 +1,7 @@
 import { format, dateTime, valueOf } from 'helpers/dateTime'
 import { IMongoId } from "./index"
 import { IProject } from './Project'
+import { AuthUserEmail } from './AuthUser'
 
 type TPeriod = {
   beginTime: number
@@ -20,6 +21,7 @@ export interface ITask {
   startDay: string
   summTime: number
   startTime: number
+  authUserEmail?: AuthUserEmail
 }
 
 export type TInitTask = {
@@ -33,7 +35,6 @@ export default class Task implements ITask {
   description: string = ''
   periods: TPeriod[] = []
   project: IProject | null
-
 
   constructor(initial?: TInitTask) {
     Object.assign(this, initial)

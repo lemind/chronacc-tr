@@ -1,6 +1,6 @@
 import { getType, ActionType } from 'typesafe-actions'
 
-import { ITask } from 'models/Task'
+import Task, { ITask } from 'models/Task'
 import actions, { clearTaskType,
   serverTasksPreparedType } from './tasks.actions'
 
@@ -119,7 +119,7 @@ export const reducer = (state: ITasksState = initialState, action: Action) => {
       return {
         ...state,
         loading: false,
-        list: newList
+        list: newList,
       }
     case deleteTaskSucceededType:
       return {

@@ -5,6 +5,7 @@ import TasksGateway from 'src/redux/tasks'
 import type { ITask, TInitTask } from 'models/Task'
 import { IMongoId } from 'models/index'
 import { IProject } from 'models/Project'
+import AuthGateway from 'src/redux/auth'
 
 export interface ITaskCases {
   updateTask(task: ITask): void
@@ -49,7 +50,18 @@ export class TasksCases extends Cases implements ITaskCases {
   load(init?: any): void {
     const { tasksGateway } = this.gateways
 
-    this.loadFromGateways([{ gateway: tasksGateway, params: { init, name: 'tasks' } }])
+    const props = this.setAuth({})
+
+    this.loadFromGateways([
+      {
+        gateway: tasksGateway,
+        params: {
+          init,
+          name: 'tasks',
+          props: props,
+        }
+      }
+    ])
   }
 
   unsubscribe(): void {
@@ -60,7 +72,6 @@ export class TasksCases extends Cases implements ITaskCases {
   }
 
   startTask(task?: ITask): void {
-    const { tasksGateway } = this.gateways
     let newTask
     const oldTask = task
     let isTaskCreated = false
@@ -87,25 +98,47 @@ export class TasksCases extends Cases implements ITaskCases {
 
     if (isTaskCreated) {
       newTask.start()
-      tasksGateway.createTask(newTask)
+      this.createTask(newTask)
     } else if (oldTask) {
       oldTask.start()
-      tasksGateway.updateTask(oldTask)
+      this.updateTask(oldTask)
     }
   }
 
   stopActiveTask(): void {
-    const { tasksGateway } = this.gateways
     const activeTask = this.getActiveTask()
 
     if (activeTask) {
       activeTask.stop()
-      tasksGateway.updateTask(activeTask)
+      this.updateTask(activeTask)
     }
+  }
+
+  setAuth(task: ITask | any): ITask {
+    const { authGateway } = this.gateways
+    const authUserEmail = authGateway.getAuthUserEmail()
+    task.auth = {}
+
+    if (authUserEmail) {
+      task.auth.authUserEmail = authUserEmail
+    }
+
+    return task
+  }
+
+  createTask(task: ITask): void {
+    const { tasksGateway } = this.gateways
+
+    task = this.setAuth(task)
+
+    tasksGateway.createTask(task)
   }
 
   updateTask(task: ITask): void {
     const { tasksGateway } = this.gateways
+
+    task = this.setAuth(task)
+
     tasksGateway.updateTask(task)
   }
 
@@ -144,4 +177,4 @@ export class TasksCases extends Cases implements ITaskCases {
 
 }
 
-export default casesFactory(TasksCases, [TasksGateway], 'TasksCases')
+export default casesFactory(TasksCases, [TasksGateway, AuthGateway], 'TasksCases')

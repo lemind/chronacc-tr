@@ -5,7 +5,9 @@ import { ICasesSingletone } from 'helpers/case'
 import { IProjectsCasesCommon } from 'cases/projects'
 import { IProjectsState } from 'src/redux/projects/projects.reducer'
 import { ITasksState } from 'src/redux/tasks/tasks.reducer'
+import { IAuthState } from 'src/redux/auth/auth.reducer'
 import { ITasksCasesCommon } from 'cases/tasks'
+import { IAuthCasesCommon } from 'cases/auth';
 
 
 const unsubscribe = (subscribtions) => {
@@ -15,15 +17,17 @@ const unsubscribe = (subscribtions) => {
   subscribtions = []
 }
 
-
+// TToDo
 export type TСasesData = {
   projects: IProjectsState,
   tasks: ITasksState,
+  auth: IAuthState,
 }
 
 export type TСasesActions = {
   projectsCases: IProjectsCasesCommon,
   tasksCases: ITasksCasesCommon,
+  authCases: IAuthCasesCommon,
 }
 
 type TСasesCommon = TСasesData & TСasesActions

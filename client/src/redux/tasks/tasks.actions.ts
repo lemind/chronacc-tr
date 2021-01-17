@@ -2,14 +2,18 @@ import { createAsyncAction, action } from 'typesafe-actions'
 
 import { IMongoId } from "models/index"
 import { ITask } from "models/Task"
+import { AuthUserEmail } from 'models/AuthUser'
 
 type Error = {}
+export type FetchParams = {
+  AuthUserEmail: AuthUserEmail
+}
 
 export const fetchTasks = createAsyncAction(
   'FETCH_TASKS',
   'FETCH_TASKS_SUCCEEDED',
   'REQUEST_FAILED',
-)<string, ITask[], Error>()
+)<FetchParams, ITask[], Error>()
 
 export const updateTask = createAsyncAction(
   'UPDATE_TASK',

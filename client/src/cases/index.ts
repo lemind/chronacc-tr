@@ -8,6 +8,7 @@ import { firstLowerCase } from 'helpers/strings'
 import type { TRootState } from 'src/redux/root'
 import { TAppStore } from 'src/redux/store'
 import { IGateway } from 'src/redux/Gateway'
+import { IAuthGatewayCommon } from 'src/redux/auth'
 
 export interface ICases {
   subscriptions: Subscription[]
@@ -26,9 +27,11 @@ export interface ICasesClass {
 }
 
 // ToDo: we do not check if we have any given gateway
+// ToDo: overhead
 interface IGatewaysObject {
   projectsGateway: IProjectsGatewayCommon,
   tasksGateway: ITasksGatewayCommon,
+  authGateway: IAuthGatewayCommon,
 }
 
 export type TFollowedStoreSchema = {
@@ -38,7 +41,7 @@ export type TFollowedStoreSchema = {
 
 type TLoadGatewayData = {
   gateway: IGateway,
-  params: {init?: any, name: string}
+  params: {init?: any, name: string, props?: any}
 }
 
 export default class Cases implements ICases {
@@ -67,9 +70,9 @@ export default class Cases implements ICases {
   loadFromGateways(gateways: TLoadGatewayData[]): void {
     gateways.forEach(gatewayObject => {
       const { gateway, params } = gatewayObject
-      const { init, name } = params;
+      const { init, name, props } = params;
 
-      gateway.load(init)
+      gateway.load(init, props)
 
       this.states$ = gateway.getState$()
 

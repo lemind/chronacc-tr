@@ -126,7 +126,7 @@ export default function Timer() {
   useEffect(() => {
     startTimer()
 
-    if (projects && !projects.fetched) {
+    if (projects && !projects.fetched && !projects.loading) {
       projectsCases.load()
     }
   }, [tasks])

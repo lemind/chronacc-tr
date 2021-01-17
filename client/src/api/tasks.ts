@@ -4,6 +4,7 @@ import queryString from 'query-string'
 import { ApiTaskActionType } from 'src/redux/tasks'
 import { ITask } from 'models/Task'
 import { TBackDataVersion, TBackDataError } from './index'
+import { getHeadersWithToken } from './auth'
 
 type TTaskRaw = ITask & TBackDataVersion
 
@@ -21,23 +22,27 @@ export const tasksAPI = {
     return ajax.getJSON<TResponse>(`${API_HOST}/tasks?${paramsStr}`)
   },
   createTask: (action: ApiTaskActionType) => {
+    // ToDo: extract?
+    const headers = getHeadersWithToken()
     return ajax.post(
       `${API_HOST}/task`,
       action.payload,
-      HEADERS
+      headers
     );
   },
   updateTask: (action: ApiTaskActionType) => {
+    const headers = getHeadersWithToken()
     return ajax.put(
       `${API_HOST}/task`,
       action.payload,
-      HEADERS
+      headers
     );
   },
   deleteTask: (action: ApiTaskActionType) => {
+    const headers = getHeadersWithToken()
     return ajax.delete(
       `${API_HOST}/task/${ action.payload }`,
-      HEADERS
+      headers
     );
   },
 

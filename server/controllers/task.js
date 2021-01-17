@@ -37,8 +37,17 @@ module.exports = {
     }
 
     let condition = {}
+
     if (req.query.lastId) {
-      condition = { '_id': { $lt: req.query.lastId }}
+      condition = {
+        '_id': { $lt: req.query.lastId },
+      }
+    }
+
+    if (req.query.authUserEmail) {
+      condition.authUserEmail = { $eq: req.query.authUserEmail }
+    } else {
+      condition.authUserEmail = { $exists: false }
     }
 
     Task.find(condition)
@@ -67,9 +76,16 @@ module.exports = {
       })
   },
   addTask: (req, res, next) => {
-    const { description, periods, tags, beginTime, project } = req.body
+    const { description, periods, tags, beginTime, project, auth } = req.body
 
-    new Task({ description, beginTime, periods, tags, project })
+    const newTask = { description, beginTime, periods, tags, project }
+
+    const authUserEmail = auth && auth.authUserEmail
+    if (authUserEmail) {
+      newTask.authUserEmail = authUserEmail
+    }
+
+    new Task(newTask)
       .save( async (err, task) => {
         if (err) {
           const errorParams = {
@@ -87,7 +103,7 @@ module.exports = {
       })
   },
   updateTask: async (req, res, next) => {
-    const { _id, description, periods, tags, beginTime } = req.body
+    const { _id, description, periods, tags, beginTime, auth } = req.body
 
     let { project } = req.body
     if (project && project.isNew){
@@ -104,11 +120,17 @@ module.exports = {
       }
     }
 
+    const newTask = { description, periods, tags, beginTime }
+
+    if (auth && auth.authUserEmail) {
+      newTask.authUserEmail = auth.authUserEmail
+    }
+    if (project && project._id) {
+      newTask.project = project._id
+    }
+
     Task.findOneAndUpdate( { _id: _id },
-      {
-        description, periods, tags, beginTime,
-        project: project && project._id
-      },
+      newTask,
       { new: true },
       async (err, task) => {
         if (err) {
