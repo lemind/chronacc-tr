@@ -57,7 +57,7 @@
     "json-loader": "~0.5.7",
     "less": "~3.0.4",
     "less-loader": "~4.1.0",
-    "lodash": "~4.17.11",
+    "lodash": "~4.17.19",
     "loose-envify": "~1.4.0",
     "mini-css-extract-plugin": "0.9.0",
     "moment": "~2.22.2",
