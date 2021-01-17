@@ -6,8 +6,8 @@ describe('Test our main actions',
       // ToDo: temp login
       cy.visit(Cypress.config('homePage'))
 
-      const userEmail = 'test@test.com'
-      const userPassword = 'test'
+      const userEmail = Cypress.env('TEST_USER_EMAIL')
+      const userPassword = Cypress.env('TEST_USER_PASSWORD')
 
       cy.get('[data-test="input-email"]').type(userEmail).blur()
       cy.get('[data-test="input-password"]').type(userPassword).blur()

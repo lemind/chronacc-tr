@@ -15,9 +15,8 @@ describe('Test auth', function() {
 
     it('auth with test user', function() {
       cy.visit(Cypress.config('homePage'))
-      // ToDo: extract
-      const userEmail = 'test@test.com'
-      const userPassword = 'test'
+      const userEmail = Cypress.env('TEST_USER_EMAIL')
+      const userPassword = Cypress.env('TEST_USER_PASSWORD')
 
       cy.get('[data-test="label-email"]').should('not.exist')
 

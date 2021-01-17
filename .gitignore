@@ -5,6 +5,7 @@ npm-debug.*
 dist
 
 *.env
+*.env.json
 coverage
 
 data-node
