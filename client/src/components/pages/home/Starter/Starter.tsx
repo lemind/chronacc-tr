@@ -8,6 +8,8 @@ import Tasks from 'components/pages/home/Tasks/Tasks'
 import LoginForm from 'components/common/blocks/Auth/LoginForm'
 import AuthCases from 'cases/auth'
 
+import Task from 'models/Task'
+
 export default function Starter(): JSX.Element {
   const { tasksCases, tasks } = useCases(TasksCases)
   const { authCases, auth } = useCases(AuthCases)
@@ -34,7 +36,8 @@ export default function Starter(): JSX.Element {
     }
   }, [auth?.user])
 
-  const tasksList = tasks ? tasks.list : []
+  // ToDo: get model from Case
+  const tasksList = tasks ? tasks.list.map(task => new Task(task)) : []
 
   return (
     <div>

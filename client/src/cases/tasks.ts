@@ -159,14 +159,10 @@ export class TasksCases extends Cases implements ITaskCases {
 
   getActiveTask(): ITask | null {
     const tasks = this.getTasks()
-    const result = tasks.find(task => {
-      if (task.isActive) {
-        return task
-      }
-    })
+    const result = tasks.find(task => task.isActive)
 
     if (result) {
-      return new Task(result)
+      return result
     } else {
       return null
     }
