@@ -6,7 +6,8 @@ Live version here - https://chronacc-tr.herokuapp.com/
 
 ### Plan first to do:
 
-- [ ] Add auth (in progress)
+- [x] Add auth
+- [x] Extend main tests
 - [ ] POC Try React Context like a state
 - [x] Add styles
 - [x] Check client structure
