@@ -38,6 +38,11 @@ export default function Timer() {
       return
     }
 
+    if (activeTask === null) {
+      stopTimer()
+      showStartButton()
+    }
+
     const startTime = activeTask && activeTask.startTime
 
     if (activeTaskId != null) {
