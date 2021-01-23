@@ -1,5 +1,7 @@
 # Chronacc-tr
 
+[![Build Status](https://travis-ci.com/lemind/chronacc-tr.svg?branch=master)](https://travis-ci.com/lemind/chronacc-tr)
+
 Chronacc-tr is a time tracking system. It is a pet project, which helps me to try new tools and approaches.
 
 Live version here - https://chronacc-tr.herokuapp.com/
@@ -8,13 +10,13 @@ Live version here - https://chronacc-tr.herokuapp.com/
 
 - [x] Add auth
 - [x] Extend main tests
+- [ ] Add missing tests
 - [ ] POC Try React Context like a state
 - [x] Add styles
 - [x] Check client structure
 - [ ] Check server structure
 - [ ] Add tags
 - [ ] Arrange code ToDos
-- [ ] Add missing tests
 
 ## How to start it
 
