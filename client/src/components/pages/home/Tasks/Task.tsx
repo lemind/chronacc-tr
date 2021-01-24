@@ -65,7 +65,7 @@ export default function Task({ task, onEdit }: TProps): JSX.Element {
         { task.project && task.project.name }
       </div>
     </div>
-    <div className='taskDesc'>{ task.description }</div>
+    <div className='taskDesc' data-test="tasks-list-item-desc">{ task.description }</div>
     <div className='taskTime'>{ formattedTime(task.summTime) }</div>
     {!task.isActive && <>
       <button

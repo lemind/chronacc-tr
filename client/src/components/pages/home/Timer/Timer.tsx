@@ -179,6 +179,7 @@ export default function Timer() {
           onChange={ e => updateTask(e) }
           disabled={ !activeTask._id }
           className="timerDesc"
+          data-test="input-desc"
         />
         <label>Project</label>
         <CreatableSelect
