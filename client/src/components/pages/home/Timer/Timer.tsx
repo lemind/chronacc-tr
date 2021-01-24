@@ -165,7 +165,7 @@ export default function Timer() {
       <div className="timerFirstLine">
         <div className="timerTimeBlock">
           timer:
-          <span className="timerTime">{daysString} { time }</span>
+          <span className="timerTime" data-test="timer-time" >{daysString} { time }</span>
         </div>
         { !taskInProgress
           ? <button onClick={ start } data-test="button-start">Start</button>

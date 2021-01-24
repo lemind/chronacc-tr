@@ -37,5 +37,11 @@ describe('Test our main actions',
       cy.get('[data-test="button-stop"]').should('exist')
       cy.get('[data-test="button-stop"]').click()
     })
+
+    it('time element exist after start clicked', function() {
+      cy.get('[data-test="button-start"]').click()
+      cy.get('[data-test="timer-time"]').should('exist')
+      cy.get('[data-test="button-stop"]').click()
+    })
   })
 })
