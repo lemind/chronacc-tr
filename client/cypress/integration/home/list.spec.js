@@ -35,5 +35,34 @@ describe('Test list actions',
         .get('[data-test="tasks-list-item-desc"]')
         .contains(taskDesc)
     })
+
+    it('start old same day task with same desc', function() {
+      const firstTaskDesc = 'first task description'
+      const secondTaskDesc = 'second task description'
+
+      cy.get('[data-test="button-start"]').click()
+      cy.get('[data-test="input-desc"]').type(firstTaskDesc).blur()
+      cy.wait(500)
+      cy.get('[data-test="button-stop"]').click()
+
+      cy.get('[data-test="button-start"]').click()
+      cy.get('[data-test="input-desc"]').type(secondTaskDesc).blur()
+      cy.wait(500)
+
+      cy.get('[data-test="tasks-list-item"]')
+        .eq(1)
+        .get('[data-test="tasks-list-item-button-continue"]')
+        .first()
+        .click()
+      // ToDo: await for real req is ness here?
+      cy.wait(500)
+
+      cy.get('[data-test="tasks-list-item"]')
+        .first()
+        .get('[data-test="tasks-list-item-desc"]')
+        .contains(firstTaskDesc)
+
+      cy.get('[data-test="button-stop"]').click()
+    })
   })
 })

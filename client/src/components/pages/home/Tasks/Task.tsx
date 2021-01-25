@@ -71,6 +71,7 @@ export default function Task({ task, onEdit }: TProps): JSX.Element {
       <button
         onClick={ continueTask }
         disabled={ isActionsDisabled }
+        data-test="tasks-list-item-button-continue"
       >Continue</button>
       <button
         onClick={ openEditTaskModal }
