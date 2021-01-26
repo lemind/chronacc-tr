@@ -25,7 +25,7 @@ script:
   - npm i
   - npm run build
   - npm run start:ci &
-  - npm run cy:run
+  - cypress run --record --key $CYPRESS_RECORD_KEY
   - kill $(jobs -p) || true
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
