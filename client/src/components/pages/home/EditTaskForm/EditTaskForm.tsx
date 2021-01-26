@@ -64,6 +64,7 @@ export default function EditTaskForm(props: TProps): JSX.Element | null {
         <input
           value={ task.description || '' }
           onChange={ e => updateTask(e) }
+          data-test="edit-task-form-input"
         />
       </div>
       <div className="editTaskLine">

@@ -76,6 +76,7 @@ export default function Task({ task, onEdit }: TProps): JSX.Element {
       <button
         onClick={ openEditTaskModal }
         disabled={ isActionsDisabled }
+        data-test="tasks-list-item-button-edit"
       >Edit</button>
       <ConfirmModal
         onConfirm={ deleteTask }

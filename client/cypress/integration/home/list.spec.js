@@ -64,5 +64,31 @@ describe('Test list actions',
 
       cy.get('[data-test="button-stop"]').click()
     })
+
+    it('edit task desc', function() {
+      const firstTaskDesc = 'first task description'
+      const secondTaskDesc = 'second task description'
+
+      cy.get('[data-test="button-start"]').click()
+      cy.get('[data-test="input-desc"]').type(firstTaskDesc).blur()
+      cy.wait(500)
+      cy.get('[data-test="button-stop"]').click()
+
+      cy.get('[data-test="tasks-list-item"]')
+        .eq(1)
+        .get('[data-test="tasks-list-item-button-edit"]')
+        .first()
+        .click()
+
+      cy.get('[data-test="edit-task-form-input"]')
+        .clear()
+        .type(secondTaskDesc)
+        .blur()
+
+      cy.get('[data-test="tasks-list-item"]')
+        .first()
+        .get('[data-test="tasks-list-item-desc"]')
+        .contains(new RegExp(secondTaskDesc, 'g'))
+    })
   })
 })
