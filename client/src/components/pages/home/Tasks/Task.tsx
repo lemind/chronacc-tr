@@ -83,6 +83,7 @@ export default function Task({ task, onEdit }: TProps): JSX.Element {
       >
         <button
           disabled={ isActionsDisabled }
+          data-test="tasks-list-item-button-delete"
         >Delete</button>
       </ConfirmModal>
     </>}

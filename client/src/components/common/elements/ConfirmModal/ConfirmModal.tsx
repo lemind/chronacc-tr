@@ -39,7 +39,10 @@ export default function ConfirmModal(props: TProps): JSX.Element {
         title="Deleting"
       >
         <div className="confirmModalBody" >{ confirmMessage }</div>
-        <button onClick={ () => confirm() }>Ok</button>
+        <button
+          onClick={ () => confirm() }
+          data-test="confirm-modal-ok"
+        >Ok</button>
         <button onClick={ () => setModalIsOpen(false) }>Cancel</button>
       </Modal>
     </span>

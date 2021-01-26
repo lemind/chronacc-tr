@@ -90,5 +90,34 @@ describe('Test list actions',
         .get('[data-test="tasks-list-item-desc"]')
         .contains(new RegExp(secondTaskDesc, 'g'))
     })
+
+    it('delete task', function() {
+      const firstTaskDesc = 'check task'
+      const secondTaskDesc = 'should be deleted task'
+
+      cy.get('[data-test="button-start"]').click()
+      cy.get('[data-test="input-desc"]').type(firstTaskDesc).blur()
+      cy.wait(500)
+      cy.get('[data-test="button-stop"]').click()
+
+      cy.get('[data-test="button-start"]').click()
+      cy.get('[data-test="input-desc"]').type(secondTaskDesc).blur()
+      cy.wait(500)
+      cy.get('[data-test="button-stop"]').click()
+
+      cy.get('[data-test="tasks-list-item"]')
+        .eq(1)
+        .get('[data-test="tasks-list-item-button-delete"]')
+        .first()
+        .click()
+
+      cy.get('[data-test="confirm-modal-ok"]')
+        .click()
+
+      cy.get('[data-test="tasks-list-item"]')
+        .first()
+        .get('[data-test="tasks-list-item-desc"]')
+        .contains(new RegExp(firstTaskDesc, 'g'))
+    })
   })
 })
