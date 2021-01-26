@@ -89,6 +89,9 @@ describe('Test list actions',
         .first()
         .get('[data-test="tasks-list-item-desc"]')
         .contains(new RegExp(secondTaskDesc, 'g'))
+
+      cy.get('[data-test="modal-close-button"]')
+        .click()
     })
 
     it('delete task', function() {
