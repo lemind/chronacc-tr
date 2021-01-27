@@ -49,13 +49,16 @@ describe('Test list actions',
       cy.get('[data-test="input-desc"]').type(secondTaskDesc).blur()
       cy.wait(500)
 
+      const taskApi = `${Cypress.config('apiUrl')}/task`
+      cy.intercept(taskApi).as('taskApi')
+
       cy.get('[data-test="tasks-list-item"]')
         .eq(1)
         .get('[data-test="tasks-list-item-button-continue"]')
         .first()
         .click()
-      // ToDo: await for real req is ness here?
-      cy.wait(500)
+
+      cy.wait('@taskApi')
 
       cy.get('[data-test="tasks-list-item"]')
         .first()
