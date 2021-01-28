@@ -24,6 +24,7 @@ export default function Timer() {
   const [taskInProgress, setTaskInProgress] = useState<boolean>(false)
   const [time, setTime] = useState<string | null>(null)
   const [timer, setTimer] = useState<number | null>(null)
+  const [unsavedDesc, setUnsavedDesc] = useState<string | null>(null)
   const [activeTaskId, setActiveTaskId] = useState<IMongoId | null>(null)
   const [days, setDays] = useState<number | null>(null)
 
@@ -107,7 +108,12 @@ export default function Timer() {
     if (activeTask) {
       activeTask.description = e.currentTarget.value
       tasksCases.updateTask(activeTask)
+      setUnsavedDesc(null)
     }
+  }
+
+  const updateStateDesc = (e: React.FormEvent<HTMLInputElement>): void => {
+    setUnsavedDesc(e.currentTarget.value)
   }
 
   const handleChangeProject = (activeTask: ITask, optionProject: TSelectOption): void => {
@@ -175,8 +181,9 @@ export default function Timer() {
       {activeTask && <div className="timerSecondLine">
         <label>Description</label>
         <input
-          value={ activeTask.description || '' }
-          onChange={ e => updateTask(e) }
+          value={ unsavedDesc || activeTask.description || '' }
+          onChange={ e => updateStateDesc(e) }
+          onBlur={ e => updateTask(e) }
           disabled={ !activeTask._id }
           className="timerDesc"
           data-test="input-desc"
