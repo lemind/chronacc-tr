@@ -18,6 +18,9 @@ describe('Test list actions',
       cy.get('[data-test="button-login"]').click()
 
       cy.wait('@auth')
+
+      const testActiveTasksApi = `${Cypress.config('apiUrl')}/testActiveTasks/${userEmail}`
+      cy.request('DELETE', testActiveTasksApi)
     })
 
     it('list el exist', function() {

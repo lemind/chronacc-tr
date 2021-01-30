@@ -1,5 +1,5 @@
 {
   "homePage": "localhost:8090",
-  "apiUrl": "http://localhost:3001/api/",
+  "apiUrl": "http://localhost:3001/api",
   "projectId": "679d26"
 }
