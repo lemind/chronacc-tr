@@ -77,7 +77,10 @@ module.exports = {
       hash: true
     }),
     // new BundleAnalyzerPlugin(),
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new webpack.DefinePlugin({
+      'process.env.API_PORT': JSON.stringify(process.env.API_PORT),
+    })
   ],
   optimization: {
     splitChunks: {
