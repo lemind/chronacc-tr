@@ -10,7 +10,8 @@ Live version here - https://chronacc-tr.herokuapp.com/
 
 - [x] Add auth
 - [x] Extend main tests
-- [ ] Add missing tests
+- [ ] Add missing tests (in progress)
+- [ ] POC GraphQL
 - [ ] POC Try React Context like a state
 - [x] Add styles
 - [x] Check client structure
