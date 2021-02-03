@@ -18,6 +18,7 @@ const NUMBER_ITEMS_PER_LOAD = 20
 // entities
 // 1* - tasks
 // 2* - projects
+// 3* - test
 // actions
 // *0 - fetch
 // *1 - add
@@ -158,6 +159,30 @@ module.exports = {
           const errorParams = {
             id: 13,
             message: 'Deleting task error'
+          };
+          const error = errorsHelper.handleError(errorParams, err);
+          res.json({ success: false, error });
+          return
+        }
+        return res.json({ success: true, results });
+      }
+    )
+  },
+  // ToDo: create test API helpers
+  deleteTestActiveTasks: (req, res, next) => {
+    const authUserEmail = req.params.authUserEmail
+
+    const condition = {
+      authUserEmail: { $eq: authUserEmail },
+      beginTime: { $ne: 0 },
+    }
+
+    Task.deleteMany(condition,
+      (err, results) => {
+        if (err) {
+          const errorParams = {
+            id: 3,
+            message: 'Deleting test tasks error'
           };
           const error = errorsHelper.handleError(errorParams, err);
           res.json({ success: false, error });

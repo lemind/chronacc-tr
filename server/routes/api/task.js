@@ -30,4 +30,9 @@ module.exports = (router) => {
   router
     .route('/task/:taskId')
     .delete(taskController.deleteTask)
+
+  router
+    .route('/testActiveTasks/:authUserEmail')
+    .delete(taskController.deleteTestActiveTasks)
+
 }
