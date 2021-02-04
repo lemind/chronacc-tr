@@ -3,6 +3,16 @@ describe('Test list actions',
   function() {
   context('list', function() {
     before(() => {
+      const userEmail = Cypress.env('TEST_USER_EMAIL')
+
+      cy.getApiUrl().then(apiUrl => {
+        const testActiveTasksApi = `${apiUrl}/testActiveTasks/${userEmail}`
+        cy.log(testActiveTasksApi)
+        cy.request('DELETE', testActiveTasksApi)
+      })
+    })
+
+    beforeEach(() => {
       // ToDo: temp login
       cy.visit(Cypress.config('homePage'))
 
@@ -18,8 +28,12 @@ describe('Test list actions',
       cy.get('[data-test="button-login"]').click()
 
       cy.wait('@auth')
+    })
 
+    afterEach(() => {
       cy.getApiUrl().then(apiUrl => {
+        const userEmail = Cypress.env('TEST_USER_EMAIL')
+
         const testActiveTasksApi = `${apiUrl}/testActiveTasks/${userEmail}`
         cy.log(testActiveTasksApi)
         cy.request('DELETE', testActiveTasksApi)
@@ -86,7 +100,7 @@ describe('Test list actions',
       cy.get('[data-test="button-stop"]').click()
 
       cy.get('[data-test="tasks-list-item"]')
-        .eq(1)
+        .eq(0)
         .get('[data-test="tasks-list-item-button-edit"]')
         .first()
         .click()
