@@ -1,5 +1,5 @@
 import { ofType } from 'redux-observable'
-import { mergeMap, map, catchError } from 'rxjs/operators'
+import { mergeMap, map, catchError, debounceTime } from 'rxjs/operators'
 import { getType } from 'typesafe-actions'
 import { of } from "rxjs"
 
@@ -30,6 +30,7 @@ const fetchProjectsEpic: TRootEpic = action$ => action$.pipe(
   ofType(fetchProjectsType),
   mergeMap(action => {
     return API.fetchProjects().pipe(
+      debounceTime(500),
       map(res => {
         if (!res.success) {
           return fetchProjects.failure({

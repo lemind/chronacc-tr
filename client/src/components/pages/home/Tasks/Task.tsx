@@ -65,22 +65,25 @@ export default function Task({ task, onEdit }: TProps): JSX.Element {
         { task.project && task.project.name }
       </div>
     </div>
-    <div className='taskDesc'>{ task.description }</div>
+    <div className='taskDesc' data-test="tasks-list-item-desc">{ task.description }</div>
     <div className='taskTime'>{ formattedTime(task.summTime) }</div>
     {!task.isActive && <>
       <button
         onClick={ continueTask }
         disabled={ isActionsDisabled }
+        data-test="tasks-list-item-button-continue"
       >Continue</button>
       <button
         onClick={ openEditTaskModal }
         disabled={ isActionsDisabled }
+        data-test="tasks-list-item-button-edit"
       >Edit</button>
       <ConfirmModal
         onConfirm={ deleteTask }
       >
         <button
           disabled={ isActionsDisabled }
+          data-test="tasks-list-item-button-delete"
         >Delete</button>
       </ConfirmModal>
     </>}

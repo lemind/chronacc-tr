@@ -16,7 +16,7 @@ export default function Tasks(props: TProps): JSX.Element {
   const { tasks } = props
 
   return (
-    <div>
+    <div data-test="tasks-list">
       <h3>Your tasks</h3>
       <div className='taskHeader'>
         <div className='taskStartDay'>
@@ -34,7 +34,7 @@ export default function Tasks(props: TProps): JSX.Element {
       </div>
       <ScrollLoadTasks>
         { tasks.map((task, index) =>
-          <div key={ task._id }>
+          <div key={ task._id } data-test="tasks-list-item">
             <br />
             <Task
               task={ task }

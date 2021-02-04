@@ -55,6 +55,7 @@ export default class Modal extends React.Component<TProps> {
             <button
               className="modalClose"
               onClick={ this.closeModal }
+              data-test="modal-close-button"
             >x</button>
           </div>
           { children }

@@ -1,3 +1,7 @@
 {
-  "homePage": "localhost:8090"
+  "homePage": "localhost:8090",
+  "env": {
+    "apiUrl": "http://localhost:3001/api"
+  },
+  "projectId": "679d26"
 }

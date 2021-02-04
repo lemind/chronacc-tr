@@ -2,7 +2,7 @@ describe('Test our main actions',
 
   function() {
   context('main', function() {
-    before(() => {
+    beforeEach(() => {
       // ToDo: temp login
       cy.visit(Cypress.config('homePage'))
 
@@ -20,6 +20,16 @@ describe('Test our main actions',
       cy.wait('@auth')
     })
 
+    afterEach(() => {
+      cy.getApiUrl().then(apiUrl => {
+        const userEmail = Cypress.env('TEST_USER_EMAIL')
+
+        const testActiveTasksApi = `${apiUrl}/testActiveTasks/${userEmail}`
+        cy.log(testActiveTasksApi)
+        cy.request('DELETE', testActiveTasksApi)
+      })
+    })
+
     it('app el exist', function() {
       cy.get('[data-test="app"]').should('exist')
     })
@@ -35,7 +45,11 @@ describe('Test our main actions',
     it('stop button shown after start clicked', function() {
       cy.get('[data-test="button-start"]').click()
       cy.get('[data-test="button-stop"]').should('exist')
-      cy.get('[data-test="button-stop"]').click()
+    })
+
+    it('time element exist after start clicked', function() {
+      cy.get('[data-test="button-start"]').click()
+      cy.get('[data-test="timer-time"]').should('exist')
     })
   })
 })

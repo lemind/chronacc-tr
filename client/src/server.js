@@ -23,5 +23,5 @@ const port = process.env.PORT || 8090
 const address = process.env.ADDRESS || "0.0.0.0"
 
 app.listen(port, address, function(){
-  console.log("Running chronacc on port " + port)
+  console.log(`Running chronacc tmp on ${address}:${port}`)
 });

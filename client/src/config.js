@@ -1,4 +1,4 @@
-var port = process.env.PORT || 3001;
+var port = process.env.API_PORT || 3001;
 
 export let API_HOST
 export let AUTH_API_HOST = `https://cube-7-auth.herokuapp.com/api`
