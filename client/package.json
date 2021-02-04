@@ -90,7 +90,7 @@
   },
   "devDependencies": {
     "redux-devtools-extension": "~2.13.2",
-    "webpack-bundle-analyzer": "~3.6.1",
+    "webpack-bundle-analyzer": "~3.8.0",
     "webpack-dev-server": "~3.2.1"
   }
 }
