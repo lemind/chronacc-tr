@@ -54,7 +54,7 @@ export default function Timer() {
       return
     }
 
-    const timerId = setInterval(() => updateTimeCounter(startTime), SECOND)
+    const timerId = window.setInterval(() => updateTimeCounter(startTime), SECOND)
 
     showStopButton()
 
