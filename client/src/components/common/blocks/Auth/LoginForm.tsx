@@ -94,12 +94,13 @@ export class LoginForm extends React.Component<any, any, any> {
   }
 
   handleBlurEmail(e) {
-    this.setState({form: {...this.state.form, email: e.currentTarget.value}})
-    if (!validateEmail(this.state.form.email)) {
-      this.addError('email', invalidEmail)
-    } else {
-      this.deleteError('email', invalidEmail)
-    }
+    this.setState({form: {...this.state.form, email: e.currentTarget.value}}, () => {
+      if (!validateEmail(this.state.form.email)) {
+        this.addError('email', invalidEmail)
+      } else {
+        this.deleteError('email', invalidEmail)
+      }
+    })
   }
 
   // ToDo: move to helpers
